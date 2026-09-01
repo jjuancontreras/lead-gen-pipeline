@@ -10,11 +10,16 @@
     "campaign": "tsx bin/campaign.ts",
     "console": "tsx bin/console.ts",
     "test": "tsx --test \"test/**/*.test.ts\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify": "tsx bin/verify-leads.ts",
+    "worklist": "tsx bin/worklist.ts"
   },
   "devDependencies": {
     "@types/node": "^22",
     "tsx": "^4",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
   }
 }

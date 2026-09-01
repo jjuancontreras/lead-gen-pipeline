@@ -99,7 +99,11 @@ export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
   if (lead.email) { score += 10; reasons.push('email available'); }
   else if (lead.phone) { score += 5; reasons.push('phone available'); }
   else if (lead.instagram || lead.facebook) { score += 3; reasons.push('social DM only'); }
-  else { score -= 8; reasons.push('no contact channel found'); }
+  // Small penalty only: Maps verification does not look at Instagram or
+  // Facebook bios, so "none found" here usually means "not looked for yet".
+  // A heavier penalty would drop good leads a whole tier before enrichment
+  // has had a chance to run.
+  else { score -= 3; reasons.push('no contact channel found yet'); }
 
   const tier: Tier = score >= 55 ? 'A' : score >= 32 ? 'B' : 'C';
   const status: Status = tier === 'C' ? 'nurture' : 'verified';
