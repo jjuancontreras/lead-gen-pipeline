@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/*
+ * PLACEHOLDER PALETTE - replace every value from this project's DESIGN.md.
+ *
+ * These are deliberately neutral greys. If a demo still looks like this,
+ * the visual system has not been derived yet. Do NOT copy a palette from a
+ * sibling project: reuse the stack and the motion system, derive the colours
+ * fresh from the client's own photos and branding.
+ *
+ * Roles, not names - components reference the role, DESIGN.md sets the value:
+ *   bg / bg-soft        page background, alternating band
+ *   surface / -raised   cards and panels
+ *   brand / brand-dim   primary identity colour and its muted form
+ *   accent / -warm      secondary highlights
+ *   text / text-dim     body copy and muted copy
+ *
+ * Contrast: every text-on-background pair must clear WCAG AA 4.5:1.
+ * The palette sampler proposes values; a human still has to check them.
+ */
+:root {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f4;
+  --color-surface: #e7e5e4;
+  --color-surface-raised: #d6d3d1;
+  --color-brand: #57534e;
+  --color-brand-dim: #78716c;
+  --color-text: #1c1917;
+  --color-text-dim: #57534e;
+  --color-accent: #44403c;
+  --color-accent-warm: #78716c;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-bg-soft: var(--color-bg-soft);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-brand: var(--color-brand);
+  --color-brand-dim: var(--color-brand-dim);
+  --color-text: var(--color-text);
+  --color-text-dim: var(--color-text-dim);
+  --color-accent: var(--color-accent);
+  --color-accent-warm: var(--color-accent-warm);
+  --font-display: var(--font-display-family);
+  --font-body: var(--font-body-family);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-text);
+}
+
+.text-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.brush-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.brush-underline::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: -0.18em;
+  height: 0.22em;
+  background: linear-gradient(90deg, transparent, var(--color-brand) 15%, var(--color-brand) 85%, transparent);
+  border-radius: 999px;
+  transform: skewX(-8deg);
+}
+
+@keyframes ember-drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120px) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.animate-ember {
+  animation: ember-drift 4s ease-in infinite;
+}

@@ -1,0 +1,46 @@
+{
+  "brand": {
+    "name": "BUSINESS NAME",
+    "tagline": "",
+    "description": "",
+    "category": "",
+    "logo": "",
+    "email": "",
+    "voice": "",
+    "social": {
+      "instagram": "",
+      "instagramHandle": "",
+      "tiktok": "",
+      "tiktokHandle": "",
+      "facebook": "",
+      "facebookHandle": "",
+      "threads": ""
+    }
+  },
+  "branches": [
+    {
+      "id": "main",
+      "name": "BUSINESS NAME",
+      "shortName": "Main",
+      "address": "",
+      "phone": "",
+      "phoneDisplay": "",
+      "hours": "",
+      "hoursVerified": false,
+      "mapQuery": "",
+      "menuStyle": "full",
+      "notes": ""
+    }
+  ],
+  "menu": {
+    "categories": []
+  },
+  "assets": {
+    "hero": "",
+    "texture": "",
+    "gallery": []
+  },
+  "openItemsToConfirm": [
+    "Every field in this file is unconfirmed until sourced from the client's own channels. Delete each line here as you verify it, and leave the rest rendered on the page so nothing invented is presented as fact."
+  ]
+}

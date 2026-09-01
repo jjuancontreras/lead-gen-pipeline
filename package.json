@@ -12,7 +12,8 @@
     "test": "tsx --test \"test/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "verify": "tsx bin/verify-leads.ts",
-    "worklist": "tsx bin/worklist.ts"
+    "worklist": "tsx bin/worklist.ts",
+    "new-demo": "tsx bin/new-demo.ts"
   },
   "devDependencies": {
     "@types/node": "^22",
