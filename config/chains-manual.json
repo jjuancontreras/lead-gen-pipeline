@@ -1,0 +1,26 @@
+{
+  "_note": "Override list, deliberately MINIMAL. It holds only names the generated chain-index misses - typically chains OSM undercounts inside the Metro Manila bbox, or short/long name variants that normalize apart (e.g. \"Seattle's Best\" counts 4 while \"Seattle's Best Coffee\" counts 24). Anything the index already catches is removed on purpose: keeping it here would obscure which mechanism is doing the work. Re-prune after each chain-index rebuild.",
+  "denylist": [
+    "7 eleven",
+    "alfamart",
+    "army navy",
+    "buffet 101",
+    "chic boy",
+    "coffee bean",
+    "conti s",
+    "dads world buffet",
+    "family mart",
+    "max s restaurant",
+    "ministop",
+    "old spaghetti house",
+    "pancake house",
+    "puregold",
+    "rai rai ken",
+    "sambo kojin",
+    "savemore",
+    "seattles best",
+    "the alley by vikings",
+    "vikings",
+    "yakimix"
+  ]
+}

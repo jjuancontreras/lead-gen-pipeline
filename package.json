@@ -1,0 +1,20 @@
+{
+  "name": "pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Client acquisition pipeline: source -> qualify -> demo -> outreach",
+  "scripts": {
+    "chain-index": "tsx bin/build-chain-index.ts",
+    "source": "tsx bin/source-area.ts",
+    "campaign": "tsx bin/campaign.ts",
+    "console": "tsx bin/console.ts",
+    "test": "tsx --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

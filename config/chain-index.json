@@ -1,0 +1,5868 @@
+{
+  "generatedAt": "2026-09-01T15:25:52.295Z",
+  "bbox": [
+    14.4,
+    120.94,
+    14.78,
+    121.14
+  ],
+  "label": "Metro Manila",
+  "totalPois": 20568,
+  "distinctNames": 11984,
+  "counts": {
+    "121": 2,
+    "maxs restaurant": 62,
+    "starbucks": 270,
+    "shakeys": 96,
+    "mcdonalds": 292,
+    "mercury drug": 383,
+    "chowking": 172,
+    "red ribbon": 100,
+    "jollibee": 392,
+    "pancake house": 57,
+    "chihuahua": 2,
+    "chooks to go": 123,
+    "coffee bean tea leaf": 63,
+    "bacolod chicken inasal": 13,
+    "tropical hut": 19,
+    "krispy kreme": 39,
+    "baliwag": 113,
+    "tgi fridays": 13,
+    "kaya": 4,
+    "greenery kitchen": 2,
+    "dampa": 2,
+    "via mare": 5,
+    "shinjuku": 4,
+    "kenny rogers roasters": 34,
+    "ucc coffee cafe terrace": 2,
+    "watami": 5,
+    "brothers burger": 8,
+    "kfc": 164,
+    "milas lechon": 2,
+    "pancit malabon": 4,
+    "soms noodle house": 2,
+    "dencios": 5,
+    "watsons": 138,
+    "fitness first": 9,
+    "st marc cafe": 2,
+    "big scoop": 4,
+    "pizza hut": 63,
+    "mesa": 12,
+    "yellow cab pizza": 45,
+    "choi garden": 3,
+    "new kamameshi sushi bar": 2,
+    "goldilocks": 135,
+    "pan de": 57,
+    "wendys": 43,
+    "yamato bakery cafe": 3,
+    "buddys": 6,
+    "dolors kakanin": 3,
+    "inasal": 2,
+    "luk foo cantonese kitchen": 3,
+    "brazil brazil": 3,
+    "ryu ramen curry": 2,
+    "coffee project": 18,
+    "nike": 8,
+    "rub ribs bbq": 3,
+    "andoks": 170,
+    "jorge bike shop": 2,
+    "toho antigua": 2,
+    "gerrys": 2,
+    "anytime fitness": 57,
+    "ma mon luk": 2,
+    "seafood island": 3,
+    "south star drug": 20,
+    "burger king": 62,
+    "baliwag lechon": 18,
+    "tokyo tokyo": 49,
+    "swagat": 2,
+    "tropical hut hamburger": 2,
+    "contis": 18,
+    "melos steakhouse": 2,
+    "army navy": 36,
+    "turks": 20,
+    "cravings": 2,
+    "tapa king": 25,
+    "seattles best coffee": 24,
+    "davids salon": 22,
+    "yellow cab": 16,
+    "tgp": 288,
+    "24 chicken": 18,
+    "yoshinoya": 5,
+    "bonchon chicken": 43,
+    "bos coffee": 17,
+    "north park": 22,
+    "figaro": 13,
+    "sisig society": 2,
+    "armynavy": 3,
+    "sinangag express": 10,
+    "amici": 4,
+    "mang inasal": 157,
+    "reyes haircutters": 11,
+    "apartment 1b": 2,
+    "bellinis": 2,
+    "hap chan": 27,
+    "razons": 8,
+    "dunkin": 165,
+    "sandwich guy": 8,
+    "slimmers world": 3,
+    "new bombay": 3,
+    "don henricos": 3,
+    "burger machine": 63,
+    "tan tan men house": 2,
+    "blackbeards seafood island": 2,
+    "outback steakhouse": 3,
+    "ramen nagi": 13,
+    "pho hoa": 17,
+    "super bowl of china": 4,
+    "tsurumaru udon x tempura": 2,
+    "popeyes": 33,
+    "cuevas bakery": 5,
+    "greenwich": 51,
+    "abi drug": 5,
+    "trends salon": 2,
+    "smile elephant": 2,
+    "museum cafe": 3,
+    "gerrys grill": 21,
+    "zus coffee": 31,
+    "kitaro": 3,
+    "cafe mary grace": 7,
+    "kopi roti": 2,
+    "bacolod chicken house": 2,
+    "henlin": 2,
+    "serye": 2,
+    "cabalen": 6,
+    "generika": 108,
+    "rose pharmacy": 4,
+    "old swiss inn": 2,
+    "cupcakes by sonja": 2,
+    "doloras hauz of pancit malabon": 22,
+    "subway": 39,
+    "bread talk": 9,
+    "italiannis": 17,
+    "teriyaki boy": 7,
+    "bakahan at manukan": 2,
+    "rmc bakery": 2,
+    "julies": 22,
+    "reyes haircutter": 3,
+    "siomai house": 15,
+    "boie drug": 2,
+    "agave mexican cantina": 3,
+    "salon de": 2,
+    "southstar drug": 56,
+    "fortune bakeshop": 2,
+    "jts manukan": 5,
+    "bugsys bar bistro": 2,
+    "angels pizza": 25,
+    "but first coffee": 10,
+    "ya kun kaya toast": 2,
+    "executive optical": 13,
+    "ha yuan": 3,
+    "flaming wings": 3,
+    "serenitea": 20,
+    "panaderia pantoja": 3,
+    "reyes barbeque": 3,
+    "cafe breton": 8,
+    "coffee bean": 4,
+    "saladstop": 6,
+    "sunrise buckets": 3,
+    "gotobox": 3,
+    "khao khai thai chicken house": 3,
+    "tender bobs": 3,
+    "jims": 2,
+    "san isidro health center": 2,
+    "samgyupsalamat": 13,
+    "savory": 8,
+    "f salon": 3,
+    "costa coffee": 2,
+    "mango": 7,
+    "uncle cheffy": 4,
+    "dairy queen": 19,
+    "tim hortons": 23,
+    "whistlestop": 3,
+    "rekado atbp": 2,
+    "cosmopolitan salon": 2,
+    "oyster boy": 2,
+    "ucc coffee vienna cafe": 2,
+    "mendokoro": 2,
+    "janco ukay ukay": 2,
+    "pizza hut express": 2,
+    "sarabia optical": 4,
+    "pancit ng taga": 3,
+    "plaza ibarra": 2,
+    "generika drugstore": 21,
+    "farmacia ni dok": 26,
+    "bicycle world": 2,
+    "classic savory": 17,
+    "icebergs": 10,
+    "j co": 20,
+    "rufos famous tapa": 2,
+    "mixue": 14,
+    "pizzaderia": 4,
+    "manam": 13,
+    "greyhound cafe": 3,
+    "kowloon house": 23,
+    "banapple": 11,
+    "jacks loft": 3,
+    "sky garden": 2,
+    "centralle medical": 3,
+    "dells foodhall": 2,
+    "lechon manok ni sr pedro": 18,
+    "botika ng bayan": 3,
+    "kims ramyun": 2,
+    "aling banangs": 6,
+    "nails glow": 2,
+    "project pie": 3,
+    "mann hann": 13,
+    "inengs special bbq": 6,
+    "causeway": 2,
+    "lido cocina tsina": 8,
+    "ferinos bibingka": 4,
+    "uncle moes shawarma hub": 6,
+    "kudos": 2,
+    "carlos pizza": 2,
+    "behrouz": 4,
+    "tok yu": 2,
+    "bon chon": 4,
+    "binalot": 10,
+    "little quiapo": 2,
+    "amber": 7,
+    "cafe bonjour": 2,
+    "ersao": 8,
+    "mang boks manok": 2,
+    "golds gym": 9,
+    "nathaniels": 5,
+    "coffee beanery": 2,
+    "mr parks bread cake": 3,
+    "cowboy grill": 3,
+    "ang lechon manok ni sr pedro": 7,
+    "dennys": 11,
+    "starbucks reserve": 9,
+    "lets chow": 2,
+    "jjs pares": 2,
+    "sbarro": 15,
+    "bizu patisserie": 4,
+    "banana leaf": 3,
+    "papa johns": 16,
+    "peri peri": 12,
+    "cibo": 10,
+    "gloria jeans coffee": 2,
+    "arya": 2,
+    "santis delicatessen": 3,
+    "mama lous": 3,
+    "brunos barbers": 5,
+    "lydias lechon": 9,
+    "nanbantei yakitori bar": 2,
+    "lido": 4,
+    "goodah": 8,
+    "cafe france": 9,
+    "causeway seafood restaurant": 3,
+    "padis point": 10,
+    "a veneto": 4,
+    "pares mami house": 4,
+    "red ribbon bakeshop": 2,
+    "french baker": 14,
+    "luk yuen": 6,
+    "eng bee tin chinese deli": 2,
+    "eng bee tin": 8,
+    "k2 pharmacy": 6,
+    "cuevas bread": 7,
+    "greenjoy": 2,
+    "gloria maris": 2,
+    "atoys pork chop": 2,
+    "shawarma snack center": 2,
+    "mister siomai": 2,
+    "gap": 8,
+    "hanamaruken ramen": 2,
+    "bibingkinitan": 3,
+    "reyes barbecue": 4,
+    "cosmopolitan": 2,
+    "marithe francois girbaud": 3,
+    "aling lucys panciteria": 2,
+    "bistro ravioli": 2,
+    "tempura": 3,
+    "racks": 10,
+    "cafe via mare": 3,
+    "hokkaido ramen santouka": 5,
+    "index salon": 5,
+    "8 cuts burger blends": 7,
+    "uniqlo": 25,
+    "brothers burgers": 2,
+    "lots a pizza": 2,
+    "potato corner": 72,
+    "bacolod chk n bbq house": 2,
+    "hungry juan": 3,
+    "kar rhen": 2,
+    "best of luck": 2,
+    "atos cafe": 2,
+    "mary grace": 24,
+    "black scoop": 4,
+    "kimono ken": 6,
+    "hbc": 7,
+    "grill queen": 4,
+    "goto king": 3,
+    "secret fresh": 2,
+    "charlies grind and grill": 2,
+    "chic boy": 4,
+    "yang chow": 6,
+    "country chicken": 4,
+    "bench": 19,
+    "beckys kitchen": 2,
+    "i love milktea": 13,
+    "lord stows bakery": 5,
+    "pepetons": 2,
+    "yakimix": 3,
+    "lugawan ni bro": 4,
+    "botica ng bayan": 2,
+    "rue bourbon": 4,
+    "kuse": 2,
+    "generics pharmacy": 21,
+    "nitz restaurant": 2,
+    "big guys pizza": 5,
+    "purple oven": 5,
+    "sen lek thai noodles": 2,
+    "abe": 3,
+    "pinkberry": 3,
+    "marugame udon": 16,
+    "dominos": 25,
+    "rapa generics pharmacy": 2,
+    "sizzlin pepper steak": 2,
+    "mom tinas": 2,
+    "persia grill": 2,
+    "ilocos empanada": 3,
+    "my thai": 5,
+    "tong yang": 6,
+    "chatime": 23,
+    "giligans": 13,
+    "vikings": 4,
+    "lunars bakery": 5,
+    "chilis": 8,
+    "dulcinea": 2,
+    "burger ni bro": 2,
+    "validosa": 3,
+    "chocolat": 2,
+    "waffle time": 8,
+    "davids tea house": 18,
+    "shi lin": 3,
+    "beauty parlor": 3,
+    "tokyo bubble tea": 3,
+    "chucks deli": 2,
+    "kettle": 2,
+    "frankies": 7,
+    "adobo connection": 3,
+    "chopstop": 3,
+    "luk foo": 4,
+    "katherines cafe": 3,
+    "nanbantei of tokyo": 2,
+    "bon appetea": 6,
+    "boardwalk": 2,
+    "sr pedro": 12,
+    "almon marina": 5,
+    "soi": 2,
+    "jims recipe": 2,
+    "mongolian quick stop": 2,
+    "mexicali": 4,
+    "maxs": 2,
+    "king sisig": 6,
+    "razons of guagua": 6,
+    "tito chef": 2,
+    "burgoo": 2,
+    "barbershop": 7,
+    "va bene pasta deli": 2,
+    "going straight salon": 2,
+    "zubuchon": 2,
+    "perfect pint": 4,
+    "buffet": 3,
+    "manoy cucuz panciteria": 2,
+    "wow hair salon": 5,
+    "julies bakeshop": 8,
+    "j donuts coffee": 2,
+    "black box coffee": 2,
+    "cafe mediterranean": 3,
+    "ramboys": 3,
+    "baliwag lechon manok": 16,
+    "lola nenas": 12,
+    "dental clinic": 21,
+    "minute burger": 80,
+    "tess eatery": 2,
+    "burger": 3,
+    "delicious": 2,
+    "abesamis optical": 2,
+    "tianlala": 2,
+    "dunkin donuts": 29,
+    "maricopa restaurant": 2,
+    "bijin nabe": 2,
+    "romulo cafe": 3,
+    "manangs chicken": 2,
+    "d original pares": 3,
+    "hong kong noodle dimsum house": 2,
+    "amis restaurant": 2,
+    "angels burger": 109,
+    "savory restaurant": 3,
+    "just thai": 2,
+    "tealive": 13,
+    "moonleaf tea shop": 2,
+    "ling nam": 3,
+    "dimsum treats": 8,
+    "cotton on": 6,
+    "lola idangs": 3,
+    "j cuppacakes": 2,
+    "tous les jours": 7,
+    "ooma": 4,
+    "mango tree": 2,
+    "poco deli": 2,
+    "buffalo wild wings": 4,
+    "tapsilog avenue": 3,
+    "megason diagnostic clinic": 2,
+    "big better burgers": 2,
+    "romantic baboy": 22,
+    "exit": 2,
+    "barn": 2,
+    "ginos brick oven pizza": 4,
+    "mamou": 3,
+    "cold stone creamery": 5,
+    "zagu": 14,
+    "hawker chan": 4,
+    "rai rai ken": 3,
+    "old spaghetti house": 4,
+    "kuya korea": 2,
+    "sarahs": 2,
+    "wild flour": 2,
+    "yabu": 7,
+    "lorenzos way": 2,
+    "earth kitchen": 2,
+    "single origin": 6,
+    "d plaza": 3,
+    "bardolci": 2,
+    "rodics diner": 8,
+    "sentro": 2,
+    "cafe tribu": 2,
+    "sr pedro lechon manok": 4,
+    "ginza bairin": 2,
+    "happy lemon": 6,
+    "dental care clinic": 2,
+    "zarks burgers": 3,
+    "hap chan restaurant": 2,
+    "silantro": 2,
+    "din tai fung": 8,
+    "pepper lunch": 14,
+    "dohtonbori": 5,
+    "shake shack": 10,
+    "maximus pizza": 4,
+    "healing galing": 2,
+    "crazy katsu": 4,
+    "cake2go": 8,
+    "bakers fair": 10,
+    "white hat": 2,
+    "barber shop": 13,
+    "las veras restaurant": 2,
+    "sisig": 2,
+    "lotsa pizza": 9,
+    "nailandia": 3,
+    "musashi tei": 2,
+    "infinitea": 17,
+    "frazzled cook": 2,
+    "mad marks": 5,
+    "milkcow": 2,
+    "riozen": 2,
+    "ba nois": 4,
+    "alba": 2,
+    "balkan": 2,
+    "fancy crepes": 2,
+    "lugang cafe": 4,
+    "famous belgian waffles": 6,
+    "zarks burger": 5,
+    "lay bare waxing salon": 2,
+    "generics": 2,
+    "tipsy pig gastropub": 2,
+    "hanako": 3,
+    "kanzen sushi roll": 5,
+    "lemuria": 2,
+    "casa armas": 2,
+    "moonleaf": 8,
+    "b t mexican kitchen": 2,
+    "fresh": 2,
+    "maru korean restaurant": 2,
+    "pares house": 2,
+    "sisig hooray": 4,
+    "fish go": 2,
+    "yardstick coffee": 2,
+    "paulinas cycle center": 2,
+    "maisen": 2,
+    "pavilion canteen": 2,
+    "don c lechon manok": 2,
+    "hot star": 4,
+    "dakasi": 5,
+    "bingsu": 2,
+    "taste of joy": 3,
+    "misto": 3,
+    "tsujiri": 2,
+    "tobys estate": 7,
+    "tides": 2,
+    "las flores": 5,
+    "kainan sa banda rito": 2,
+    "dexters pizza": 4,
+    "brownies unlimited": 3,
+    "davids cut": 3,
+    "janco surplus": 2,
+    "fleur de lis": 2,
+    "botika ng barangay": 2,
+    "beach house": 2,
+    "dental edge": 2,
+    "mary pauline salon": 5,
+    "cha tuk chak": 6,
+    "mr liempo": 9,
+    "mapalad bakery": 3,
+    "terrys": 2,
+    "dr lui dental clinic": 2,
+    "mitsuyado sei men": 3,
+    "ucc clockwork": 6,
+    "inasal chicken bacolod": 3,
+    "my thai kitchen": 2,
+    "refinery": 2,
+    "crisostomo": 2,
+    "acebedo optical": 9,
+    "hen lin": 14,
+    "jamaican": 2,
+    "jag": 3,
+    "kambal pandesal": 19,
+    "old navy": 2,
+    "puma": 3,
+    "eye society": 2,
+    "shrimp bucket": 4,
+    "gringo": 5,
+    "coffee shop": 3,
+    "chemistea milk tea cafe": 2,
+    "mary grace cafe": 3,
+    "sibyullee": 2,
+    "wildflour": 4,
+    "kuya js": 3,
+    "guess": 7,
+    "llaollao": 8,
+    "anixs house of kare kare": 2,
+    "afters": 2,
+    "dongalos best tapsilog": 3,
+    "kuya j": 12,
+    "lay bare": 5,
+    "barcino": 5,
+    "wholesome table": 2,
+    "ninak": 2,
+    "black scoop cafe": 14,
+    "khas food house": 2,
+    "daddys toasted siopao": 2,
+    "takoyadon": 4,
+    "lemon square bakery treats": 11,
+    "burp": 2,
+    "crazy wings": 2,
+    "crabaholic": 2,
+    "kanto freestyle breakfast": 4,
+    "elorde fight factory": 2,
+    "farinas ilocos empanada": 12,
+    "aristocrat": 6,
+    "ucc cafe terrace": 2,
+    "matgalne": 2,
+    "octoboy": 2,
+    "bulalo world": 6,
+    "st louis": 2,
+    "tipness gym": 4,
+    "xo heritage bistro": 3,
+    "goto believe": 4,
+    "cupcakes by gremlins": 2,
+    "reds": 2,
+    "genesis hot pandesal": 2,
+    "comets eatery": 2,
+    "ice cream": 3,
+    "madbrews": 2,
+    "dcream": 3,
+    "yvan navy": 3,
+    "frappeetea": 2,
+    "wicked waffle": 2,
+    "its caffeine": 2,
+    "rice in a box": 5,
+    "petra pepita": 5,
+    "merced": 2,
+    "index": 3,
+    "love desserts": 2,
+    "simply bread": 2,
+    "mister kabab": 2,
+    "pixies sinugba": 4,
+    "santinos": 3,
+    "master siomai": 17,
+    "cafe nenzo": 2,
+    "fix bench salon": 5,
+    "penshoppe": 21,
+    "levis": 8,
+    "hong kong noodles": 2,
+    "yowell": 3,
+    "cinnabon": 8,
+    "coco ichibanya": 6,
+    "jipan": 2,
+    "sarabia": 4,
+    "meshwe": 2,
+    "true blends": 2,
+    "shokudo": 2,
+    "burger matsing": 2,
+    "dentacare": 5,
+    "3n bakery": 4,
+    "nonos": 11,
+    "tim ho wan": 10,
+    "ramen kuroda": 9,
+    "bicols best toasted siopao": 3,
+    "aristocrat restaurant": 4,
+    "mandarin sky": 3,
+    "zarks": 3,
+    "snack shack": 3,
+    "caffe bene": 2,
+    "12 10": 2,
+    "ikkoryu fukuoka ramen": 2,
+    "martabak cafe": 2,
+    "kenshin": 2,
+    "turtles ktv": 2,
+    "genki sushi": 5,
+    "tenya": 8,
+    "kumpares asian pares": 2,
+    "fireside": 2,
+    "go salads": 3,
+    "queen j": 2,
+    "s r new york style pizza": 14,
+    "prime care": 2,
+    "lets face it": 5,
+    "dermstrata": 5,
+    "specialized": 3,
+    "smilemakers dental clinic": 4,
+    "salazar bakery": 5,
+    "lobby": 2,
+    "don benitos": 11,
+    "medline dialysis center": 2,
+    "qubiertos": 3,
+    "bonchon": 6,
+    "buddys pancit lucban": 2,
+    "gong cha": 16,
+    "seattles best": 4,
+    "mongkok": 2,
+    "cre8 salon": 6,
+    "calda pizza": 2,
+    "tori box": 2,
+    "h m": 11,
+    "red panda": 2,
+    "freds revolucion": 2,
+    "cuevas bakeshop": 2,
+    "tagpuan": 2,
+    "michaela": 2,
+    "mang boks": 6,
+    "dadas litson": 9,
+    "jamba juice": 4,
+    "amo yamie crib": 3,
+    "wasabi sushi bar": 2,
+    "soy bean": 5,
+    "fely js kitchen": 3,
+    "batangas lomi": 3,
+    "fruitas": 10,
+    "jamaican patty": 2,
+    "skin station": 3,
+    "medical city": 7,
+    "nwow": 2,
+    "suzhou dimsum": 2,
+    "starrs famous shakes": 2,
+    "5 loaves fish": 2,
+    "crab n crew": 2,
+    "fila": 2,
+    "people are people": 2,
+    "hokkaido ramen bangaichi": 2,
+    "hugot cafe": 2,
+    "pepper lunch express": 2,
+    "green pastures": 2,
+    "bon pho roll": 5,
+    "callows burger": 2,
+    "su zhou": 2,
+    "icecreamhouse": 2,
+    "king chef": 5,
+    "dannys sinugba": 3,
+    "balai pandesal": 23,
+    "pares sa naia avenue": 2,
+    "salad stop": 4,
+    "paotsin": 2,
+    "sarsa": 2,
+    "la creperie": 7,
+    "fuzz buzz beauty parlour": 2,
+    "epic salon": 2,
+    "kanto freestyle": 3,
+    "generics drugstore": 2,
+    "oakley": 3,
+    "natasha": 2,
+    "watsons pharmacy": 12,
+    "pan de cielo": 2,
+    "plains prints": 5,
+    "boulangerie": 3,
+    "ideal vision": 5,
+    "healthway": 2,
+    "kerimoto": 2,
+    "hortaleza": 3,
+    "mr kimbob": 3,
+    "vision express": 5,
+    "animal bite center": 4,
+    "solid looks optical clinic": 2,
+    "aling banang": 6,
+    "ikinari steak": 3,
+    "kanin club": 2,
+    "planet grapes": 2,
+    "omakase": 3,
+    "brotzeit": 4,
+    "sugarhouse": 2,
+    "bikers cafe": 2,
+    "new bistro deli": 5,
+    "texas roadhouse": 5,
+    "little india": 2,
+    "bagets": 2,
+    "ohana dentistry": 2,
+    "mrs fields": 2,
+    "music plaza": 2,
+    "s3b fashion collection": 2,
+    "cellos doughnuts": 2,
+    "hong kong noodles dimsum house": 2,
+    "farmacia liza": 2,
+    "gamot publiko": 6,
+    "dominos pizza": 4,
+    "everything but cheese": 3,
+    "grind": 3,
+    "wow salon": 2,
+    "pao bicycle shop": 2,
+    "northern coffee experience": 2,
+    "beyond flavors": 2,
+    "sincerity cafe restaurant": 2,
+    "kumori": 7,
+    "eat fresh": 7,
+    "crepeman cafe": 3,
+    "zure rx drug": 3,
+    "takashi": 2,
+    "plantation": 2,
+    "thai mango": 3,
+    "congo grille": 3,
+    "choobi choobi": 3,
+    "tasty dumplings": 2,
+    "masuki": 3,
+    "pares": 4,
+    "park n go": 2,
+    "tita paring suman latik": 2,
+    "ultimate liempo haus": 2,
+    "thrift shop": 2,
+    "mister donut": 23,
+    "takara tires": 2,
+    "muhlach ensaymada": 3,
+    "kamiseta": 3,
+    "pantoja": 2,
+    "bulalohan sa": 2,
+    "fika": 2,
+    "dayrits": 2,
+    "gubat": 2,
+    "tori ichi": 2,
+    "shanghai saloon": 2,
+    "lepicerie gourmande": 2,
+    "siomai king": 8,
+    "gilligans": 4,
+    "balayan ni kuyang": 2,
+    "tea gumps": 2,
+    "ramos bakeshop": 2,
+    "sacred heart of jesus pharmacy": 3,
+    "ga2 pharmacy": 3,
+    "chimmy": 2,
+    "ngipinista klinika": 2,
+    "nuat thai": 2,
+    "maki haus": 2,
+    "best friends": 3,
+    "ukay ukay paradise": 2,
+    "tapsilogan": 2,
+    "gordos crispy pata": 9,
+    "hair cut": 2,
+    "tlc flower shop": 2,
+    "nikkei": 2,
+    "treehouse": 2,
+    "nail spa": 2,
+    "coco fresh tea juice": 16,
+    "macao imperial tea": 16,
+    "team sir george salon": 3,
+    "ryan bikes": 2,
+    "banh mi kitchen": 4,
+    "bbq bob": 3,
+    "charles keith": 2,
+    "giordano": 9,
+    "arrow": 3,
+    "breadtalk": 14,
+    "surplus shop": 2,
+    "bioessence": 2,
+    "oppa chicken": 2,
+    "lugawan": 3,
+    "chef von": 2,
+    "panay tinapay": 2,
+    "360 salon": 2,
+    "carmens best": 2,
+    "captains burger": 2,
+    "bubba lab": 2,
+    "hassan kabab and steaks": 2,
+    "ace deo optical": 2,
+    "crosta": 3,
+    "st martin polyclinic": 2,
+    "f salon legarda": 2,
+    "watson": 2,
+    "mandarin chinese drug center": 2,
+    "mama lous italian kitchen": 2,
+    "mccafe": 3,
+    "mang tinapay": 2,
+    "randys donuts": 6,
+    "burgatory": 2,
+    "goto bob": 7,
+    "taco bell": 5,
+    "owndays": 7,
+    "highlands coffee": 6,
+    "speedo": 2,
+    "michael kors": 2,
+    "lartizan": 2,
+    "little flour": 2,
+    "farron cafe": 2,
+    "farmery": 2,
+    "zapp donuts and drinks": 2,
+    "anytime veal burger": 2,
+    "auntie annes": 8,
+    "taters": 6,
+    "happy haus donuts": 3,
+    "marlyns steakhouse": 2,
+    "takoyaki": 2,
+    "avon": 2,
+    "belgian waffles": 2,
+    "victorias secret": 4,
+    "family doc": 3,
+    "markys prime bakeshop": 2,
+    "uncle moes": 2,
+    "fish": 2,
+    "andys lomi bulalo": 2,
+    "carmen eatery": 2,
+    "pares retiro": 5,
+    "retro smile dental": 2,
+    "shawarma shack": 24,
+    "glm bakery": 2,
+    "shawarma kabab": 2,
+    "dolors kakanin and pansit malabon": 2,
+    "royaltea": 4,
+    "js squared seafoods restaurant": 2,
+    "oriental palace": 3,
+    "king of wings": 2,
+    "good munch": 2,
+    "i lab chicken": 2,
+    "kuyas": 2,
+    "manila creamery": 2,
+    "cosmic": 2,
+    "prezmar pharmacy": 2,
+    "botejyu": 8,
+    "human": 3,
+    "bayo": 4,
+    "dermclinic": 3,
+    "brow lounge": 4,
+    "posh nails": 2,
+    "oxygen": 7,
+    "forme": 2,
+    "dermcare": 2,
+    "albeth bakehouse": 2,
+    "coffee spot": 3,
+    "burger garage": 2,
+    "bike shop": 2,
+    "cuts tots": 2,
+    "piandre": 2,
+    "overdoughs": 2,
+    "kds barbers": 2,
+    "bag o shrimps": 2,
+    "giving cafe": 2,
+    "tapaddiction": 2,
+    "paps barbershop": 3,
+    "hard rock cafe": 2,
+    "chick n juicy": 12,
+    "locavore": 4,
+    "wink laser studio": 2,
+    "medical city clinic": 5,
+    "sambokojin": 2,
+    "turtles family ktv": 2,
+    "rightway pharmacy": 2,
+    "realmed pharmacy": 4,
+    "soms thai food": 2,
+    "salinio": 2,
+    "savemore pharmacy": 2,
+    "health center": 2,
+    "single origin osteria": 2,
+    "orange bucket": 2,
+    "quick relief pharmacy": 8,
+    "alley": 5,
+    "freshaire": 3,
+    "tra vinh": 2,
+    "lugaw republic": 2,
+    "mcdonalds sundae mcfloat": 3,
+    "chicken star": 6,
+    "planas pantry": 2,
+    "st camillus polyclinic": 2,
+    "gingersnaps": 2,
+    "rolandos farm to table restaurant": 2,
+    "cafe foliage": 2,
+    "bloom dash": 2,
+    "metrosunnies": 2,
+    "tribal": 3,
+    "royal indian curry house": 2,
+    "staple and perk cafe and bakery": 2,
+    "tokyo tempura": 2,
+    "turks shawarma": 2,
+    "five star": 9,
+    "elorde boxing gym": 3,
+    "yi fang": 3,
+    "nanyang": 9,
+    "tiger sugar": 7,
+    "mendokoro ramenba": 2,
+    "zara": 4,
+    "true chicken": 2,
+    "big oli": 2,
+    "reyes dental clinic": 3,
+    "studio salon": 3,
+    "nicoles lugawan": 2,
+    "ucc park cafe": 2,
+    "brothers burger express": 2,
+    "ukay ukay": 4,
+    "paluto": 2,
+    "house of lasagna": 4,
+    "pizza telefono": 4,
+    "lugawan sa tejeros": 3,
+    "r l dental clinic": 2,
+    "sweet ecstacy": 2,
+    "tapsi ni vivian at bulaluhan": 2,
+    "cafe adriatico": 3,
+    "bagwings": 2,
+    "j a d bicycle shop": 2,
+    "tong yang plus": 2,
+    "sebastians ice cream": 2,
+    "angels pharmacy": 2,
+    "zapote health center": 2,
+    "sharetea": 2,
+    "mylenes": 2,
+    "polland hopia factory": 2,
+    "amo hopia bakery": 3,
+    "polland": 2,
+    "ate ricas bacsilog": 5,
+    "meryls pizza": 2,
+    "milktea": 3,
+    "goto tendon": 2,
+    "plato rustico": 2,
+    "tatangs lechon": 2,
+    "pandesal": 2,
+    "casa elmira": 2,
+    "chachago": 9,
+    "kenny rogers": 6,
+    "pie kitchen": 2,
+    "town kitchen": 2,
+    "goca tea coffee": 3,
+    "pirates grill": 2,
+    "tapa supreme": 2,
+    "big als cookie jar": 2,
+    "mcy dental clinic": 2,
+    "doloras": 2,
+    "chinese beef noodles house": 2,
+    "forever": 4,
+    "mang boy lugawan": 2,
+    "ohtako takoyaki soldiers": 2,
+    "ohtako takoyaki": 2,
+    "beer factory": 2,
+    "zia dental clinic": 2,
+    "tea pop": 2,
+    "sicilian roast": 2,
+    "jts manukan grille": 9,
+    "friendlycare": 2,
+    "original goodies pares": 2,
+    "monster wings": 3,
+    "ideal vision center": 5,
+    "r m e salon": 2,
+    "bratz grilled burger": 2,
+    "toms crispy pata": 2,
+    "golden baboy": 2,
+    "generals lechon": 2,
+    "st francis generic drug": 4,
+    "bok korean fried chicken": 2,
+    "ka pares": 2,
+    "doloras pancit malabon": 2,
+    "sandugo": 2,
+    "don c": 23,
+    "biggys": 3,
+    "big brat burger": 2,
+    "chicken chingu": 3,
+    "rib shack": 2,
+    "elias wicked ales spirits": 2,
+    "feta": 2,
+    "striga bikes": 2,
+    "bang bang bangus": 2,
+    "chicks mo unli": 2,
+    "gang gang chicken": 3,
+    "manila clasico": 2,
+    "colettes": 2,
+    "cut": 2,
+    "boogie boogie ukay ukay": 2,
+    "svl dental clinic": 3,
+    "bike depot": 2,
+    "moment of tooth dental clinic": 2,
+    "nwow electric bicycle": 3,
+    "pound for pound fitness": 2,
+    "dear joe": 3,
+    "sundays": 2,
+    "crunch": 3,
+    "baa baa": 3,
+    "mos burger": 2,
+    "don benitos cassava cake pichi pichi": 6,
+    "lembest": 8,
+    "wei cha": 2,
+    "generix pharmacy": 2,
+    "nanos tsiken inasal": 2,
+    "checknoc": 2,
+    "supremo barber": 12,
+    "clinica dentista": 2,
+    "modern shanghai": 3,
+    "tastes from greens": 2,
+    "siogo": 3,
+    "ourblend coffee milk tea": 2,
+    "brmedz pharmacy": 2,
+    "cuevas": 3,
+    "kape siklo": 2,
+    "ihawan ni kuya speed": 2,
+    "rockos herb roasted chicken": 2,
+    "koomi": 6,
+    "laya coffee": 2,
+    "gfamily pharmacy": 2,
+    "valley bikes": 2,
+    "fatboys pizza pasta": 2,
+    "tsukemen": 2,
+    "alexa bike shop": 2,
+    "one": 2,
+    "lola felys canteen": 2,
+    "alphaline drugstore": 2,
+    "oppa k grill": 3,
+    "nespresso": 2,
+    "big brew": 15,
+    "pound": 3,
+    "ippudo": 5,
+    "paul": 3,
+    "dadas lechon": 2,
+    "trusted drugstore": 2,
+    "smile republic dental clinic": 2,
+    "prada": 2,
+    "dior": 2,
+    "lacoste": 7,
+    "santouka": 2,
+    "brunos": 4,
+    "mangan": 5,
+    "panda express": 12,
+    "heihei chicken burger": 2,
+    "universal dental clinic": 3,
+    "animal bite clinic": 3,
+    "sajang chicken": 4,
+    "gardini": 3,
+    "dolls beauty salon": 2,
+    "mr sigs": 2,
+    "i milktea": 3,
+    "wagyuniku": 2,
+    "nihon cafe": 2,
+    "yayoi": 5,
+    "calliope": 2,
+    "sumo niku": 6,
+    "kkopi": 5,
+    "brooklyns new york pizza": 2,
+    "brunch bureau": 2,
+    "maxicare primary care clinic": 3,
+    "raymond barber shop": 2,
+    "cebus best ricos lechon": 2,
+    "dgt one dental center": 2,
+    "doc ariels pharmacy": 2,
+    "kohi": 2,
+    "mylenes bakeshop": 2,
+    "dampa express": 5,
+    "uy dental clinic": 3,
+    "chinooks": 2,
+    "bershka": 3,
+    "kams roast": 2,
+    "astons specialities": 2,
+    "honolulu cafe": 3,
+    "beard papas": 3,
+    "samgyeopmasarap": 2,
+    "valuemed": 3,
+    "papa kape": 3,
+    "filipino restaurant": 2,
+    "chef babs": 2,
+    "tablo kitchen cafe": 2,
+    "lembest lechon": 2,
+    "sweet ecstasy": 3,
+    "grace park": 2,
+    "yummy tokyo": 2,
+    "brewed buddies": 2,
+    "inays bakeshop": 4,
+    "enteng cheesedesal": 2,
+    "masil": 2,
+    "mr ube": 2,
+    "potato giant": 6,
+    "ged bart": 2,
+    "quickly": 5,
+    "carics rice tops": 2,
+    "happy n healthy": 4,
+    "yaki yaki": 2,
+    "big breakfast club": 2,
+    "ezpresso": 2,
+    "okafe": 2,
+    "caffeena": 2,
+    "soy yummy": 3,
+    "bahn mi kitchen": 2,
+    "kyukyu ramen": 3,
+    "borro": 2,
+    "k egg": 3,
+    "peppers": 2,
+    "good ol coffee": 2,
+    "vatalia": 2,
+    "mango shake": 2,
+    "kambal inasal": 3,
+    "pizzulu": 4,
+    "g g fried chicken": 2,
+    "beanbox": 2,
+    "le sucre lab": 3,
+    "doppio": 2,
+    "pickup coffee": 44,
+    "chatramue": 2,
+    "alley by vikings": 3,
+    "fat cousins": 2,
+    "yoshi meat su": 3,
+    "pag asa eatery": 2,
+    "master bakat": 3,
+    "miss wa": 2,
+    "boy lugawan": 3,
+    "ace deo": 2,
+    "peri peri charcoal chicken": 4,
+    "ignacio dental clinic": 2,
+    "ramen wave": 2,
+    "barenaked": 2,
+    "tah mee": 2,
+    "watami grill sushi bar": 2,
+    "supersam": 3,
+    "amber golden chain of restaurants": 2,
+    "lugaw": 4,
+    "dentalscape": 2,
+    "cocopan": 7,
+    "modern shang": 3,
+    "sichu malatang": 2,
+    "earl of sandwich": 2,
+    "kashieca": 2,
+    "memo": 3,
+    "new era": 3,
+    "paris baguette": 3,
+    "yakiniku like": 2,
+    "calvin klein": 5,
+    "fred perry": 3,
+    "tommy hilfiger": 3,
+    "mossimo": 2,
+    "ever new": 4,
+    "bambu": 3,
+    "terranova": 3,
+    "surplus": 6,
+    "caramia": 3,
+    "plato wraps": 4,
+    "gorae hotdog": 2,
+    "kurimu": 2,
+    "bench body": 2,
+    "straightforward": 3,
+    "onesimus": 4,
+    "yogorino": 3,
+    "wing zone": 3,
+    "basil": 3,
+    "skin": 2,
+    "skinstation": 2,
+    "flawless": 2,
+    "george": 3,
+    "toni guy": 2,
+    "nail a holics": 2,
+    "mai wei fang": 2,
+    "sizzling plate": 2,
+    "contis bakeshop and restaurant": 3,
+    "prologue": 2,
+    "fiery style": 3,
+    "tuan tuan": 2,
+    "bbk": 2,
+    "wildflour restaurant": 2,
+    "d cream": 2,
+    "drip kofi": 2,
+    "kings bakeshop": 4,
+    "buttery": 2,
+    "peri peri charcoal chicken sauce bar": 2,
+    "tomo japanese dining": 2,
+    "t j salon": 2,
+    "bigbrew": 10,
+    "koi": 6,
+    "sha xia snack house": 2,
+    "persian avenue": 2,
+    "regatta": 5,
+    "gq barber shop": 2,
+    "surgilight": 2,
+    "face shop": 3,
+    "oxgn": 3,
+    "contis bakeshop restaurant": 3,
+    "miguel maria": 2,
+    "weapon r": 2,
+    "wow": 2,
+    "hoshino coffee": 2,
+    "mn la": 2,
+    "roshan gym": 2,
+    "bok chicken": 2,
+    "baga burger": 2,
+    "gudaca": 2,
+    "medquest pharmacy": 2,
+    "happykopi": 5,
+    "urban shades": 2,
+    "big brew cafe": 2,
+    "old school": 2,
+    "new world diagnostics": 3,
+    "what about coffee": 2,
+    "paiks coffee": 3,
+    "dampa sa cogeo": 2,
+    "korea garden": 2,
+    "medzone": 2,
+    "chickten wings": 2,
+    "azadore restaurant": 2,
+    "oh my chicken": 2,
+    "juan cafe": 6,
+    "kitchen city": 2,
+    "calle cafe": 2,
+    "sunnies studios": 2,
+    "alberto": 2,
+    "tajimaya": 2,
+    "avocadoria": 4,
+    "chooks": 3,
+    "john lemon": 3,
+    "macbeth": 4,
+    "ojo eyewear": 2,
+    "angus pares": 2,
+    "kamay kainan": 2,
+    "moto": 2,
+    "eggspert": 2,
+    "max mango": 3,
+    "arch shawarma": 2,
+    "farmassist": 2,
+    "candid coffee": 2,
+    "lan hot pot": 3,
+    "perry ellis": 2,
+    "hla": 5,
+    "bad bird": 2,
+    "blk": 6,
+    "perez optical": 2,
+    "lutong bicol": 2,
+    "andoks litson": 2,
+    "baa baa thai tea": 2,
+    "sushi nori": 2,
+    "tasa barbershop": 2,
+    "go coffee": 2,
+    "bang bang special crispy bangus": 2,
+    "bikers idea": 2,
+    "welltrust pharmacy": 3,
+    "brew corner": 2,
+    "salon international": 2,
+    "kabayan pares mami": 2,
+    "house of toasted siopao": 2,
+    "madrid polyclinic diagnostic center": 2,
+    "tutongs laksa": 2,
+    "paluto sizzling nga po": 3,
+    "baby q": 2,
+    "dr care": 3,
+    "kuya mikes pansit bato": 2,
+    "yogii": 2,
+    "kabigtings halo halo": 2,
+    "coffee gusto": 2,
+    "love coffee": 2,
+    "r lapids chicharon bbq": 2,
+    "fatboys": 2,
+    "nailcentrale": 2,
+    "kuya naths goto": 2,
+    "paraoan dental clinic": 2,
+    "frapatea": 3,
+    "calea beauty lounge": 2,
+    "fish2go": 3,
+    "ling nam fried siopao": 2,
+    "myranel bakery": 2,
+    "donut park": 2,
+    "janice canteen": 2,
+    "micoys burger": 2,
+    "sendangs bakehouse": 2,
+    "tapsi ni vivian": 2,
+    "tita dorys bakeshop": 2,
+    "tomo coffee": 4,
+    "cynnetha bakery": 2,
+    "calle cafe by don gabriel": 2,
+    "moressi": 2,
+    "el pollo loco": 2,
+    "muhlach": 2,
+    "buko juan": 2,
+    "purefoods tender juicy hotdog": 2,
+    "after tree dessert cafe": 2,
+    "little flour cafe": 2,
+    "matcha tokyo": 2,
+    "bb q chicken": 2,
+    "massimo dutti": 2,
+    "columbia": 2,
+    "rosalynda beauty salon and spa": 2,
+    "tung lok seafood": 2,
+    "tsokolateria": 2,
+    "house of sushi": 2,
+    "czaczacza cafe": 2,
+    "sari sari": 6,
+    "skoop": 2,
+    "jesi mendez salon": 2,
+    "cln": 2,
+    "dirty ice cream": 2,
+    "unibrandy": 2,
+    "umi matsu": 2,
+    "tomoro coffee": 3,
+    "daily habit": 2,
+    "mark and grace bakeshop": 4,
+    "founders donuts": 3,
+    "eo executive optical": 3,
+    "bubu": 2,
+    "a1 premium shabu shabu": 2,
+    "famous amos": 2,
+    "belo medical group": 2,
+    "butter": 2,
+    "ucc mentore": 2,
+    "captain calamares": 2,
+    "pick up coffee": 3,
+    "chaboba": 2,
+    "why chicken": 2,
+    "sunny scramble": 2,
+    "caffeinated": 2,
+    "sulit chicken": 2,
+    "p donuts": 2,
+    "mr brewsko": 2,
+    "bacsilog": 2,
+    "auro chocolate cafe": 2,
+    "boulangerie22": 2,
+    "persia wrap": 2,
+    "kurimi": 2,
+    "cotti coffee": 2,
+    "bigz burger": 2,
+    "tyche nails": 2,
+    "jay js": 2,
+    "hearty bread": 2,
+    "le katsu": 3,
+    "b1t1 takeaway coffee": 2,
+    "senor pollo": 2,
+    "daily": 2,
+    "neolivbrews": 2,
+    "big scoop ice cream": 2,
+    "dialysis center": 2,
+    "mazu": 2,
+    "tender loving cakes": 2,
+    "mcy dental": 2,
+    "cut creation salon": 2,
+    "dr llane dental clinic": 2,
+    "sajad fashion": 3,
+    "place": 2,
+    "bebang halo halo": 2,
+    "momoyo": 3,
+    "pancho cafe": 2,
+    "ecru": 2,
+    "mitsuyado izakaya": 2,
+    "scratch": 2,
+    "namwah cuisine": 2,
+    "but first coffee bfc": 2,
+    "daddys barbershop": 2,
+    "kanto pares": 3,
+    "hairdresser": 2,
+    "sumilang super health center": 2,
+    "delfin salonga health center": 2,
+    "moonwalk health center": 2,
+    "beanleaf": 2,
+    "klinika": 2,
+    "freedom bazaar": 2,
+    "funnside ningnangan": 2,
+    "shakeys pizza": 2,
+    "hello sugar": 2,
+    "lins bakery": 2,
+    "gym": 2,
+    "alvarez park cafe": 2,
+    "alfies chef secret": 2,
+    "taytay municipal tiangge": 2
+  },
+  "examples": {
+    "121": [
+      "121"
+    ],
+    "maxs restaurant": [
+      "Max's Restaurant"
+    ],
+    "starbucks": [
+      "Starbucks",
+      "Starbuck's Podium"
+    ],
+    "shakeys": [
+      "Shakey's",
+      "Shakeys"
+    ],
+    "mcdonalds": [
+      "McDonald's",
+      "Mcdonalds",
+      "McDonald's Congressional Caloocan"
+    ],
+    "mercury drug": [
+      "Mercury Drug",
+      "Mercury Drug Store"
+    ],
+    "chowking": [
+      "Chowking"
+    ],
+    "red ribbon": [
+      "Red Ribbon"
+    ],
+    "jollibee": [
+      "Jollibee"
+    ],
+    "pancake house": [
+      "Pancake House"
+    ],
+    "chihuahua": [
+      "Chihuahua"
+    ],
+    "chooks to go": [
+      "Chooks to Go",
+      "Chooks-to-go",
+      "Chooks to go"
+    ],
+    "coffee bean tea leaf": [
+      "Coffee Bean & Tea Leaf",
+      "The Coffee Bean & Tea Leaf"
+    ],
+    "bacolod chicken inasal": [
+      "Bacolod Chicken Inasal"
+    ],
+    "tropical hut": [
+      "Tropical Hut"
+    ],
+    "krispy kreme": [
+      "Krispy Kreme",
+      "Krispy Kreme Podium"
+    ],
+    "baliwag": [
+      "Baliwag"
+    ],
+    "tgi fridays": [
+      "TGI Fridays",
+      "TGI Friday's"
+    ],
+    "kaya": [
+      "Kaya"
+    ],
+    "greenery kitchen": [
+      "Greenery Kitchen"
+    ],
+    "dampa": [
+      "Dampa"
+    ],
+    "via mare": [
+      "Via Mare"
+    ],
+    "shinjuku": [
+      "Shinjuku"
+    ],
+    "kenny rogers roasters": [
+      "Kenny Rogers Roasters",
+      "Kenny Roger's Roasters"
+    ],
+    "ucc coffee cafe terrace": [
+      "UCC Coffee Café Terrace"
+    ],
+    "watami": [
+      "Watami"
+    ],
+    "brothers burger": [
+      "Brothers Burger",
+      "Brother's Burger",
+      "Brothers' Burger"
+    ],
+    "kfc": [
+      "KFC"
+    ],
+    "milas lechon": [
+      "Mila's Lechon"
+    ],
+    "pancit malabon": [
+      "Pancit Malabon"
+    ],
+    "soms noodle house": [
+      "Som's Noodle House"
+    ],
+    "dencios": [
+      "Dencio's"
+    ],
+    "watsons": [
+      "Watsons",
+      "Watson's"
+    ],
+    "fitness first": [
+      "Fitness First"
+    ],
+    "st marc cafe": [
+      "St. Marc Café",
+      "St. Marc Cafe"
+    ],
+    "big scoop": [
+      "Big Scoop"
+    ],
+    "pizza hut": [
+      "Pizza Hut"
+    ],
+    "mesa": [
+      "Mesa"
+    ],
+    "yellow cab pizza": [
+      "Yellow Cab Pizza",
+      "Yellow Cab Pizza Co."
+    ],
+    "choi garden": [
+      "Choi Garden"
+    ],
+    "new kamameshi sushi bar": [
+      "New Kamameshi Sushi Bar"
+    ],
+    "goldilocks": [
+      "Goldilocks"
+    ],
+    "pan de": [
+      "Pan de Manila",
+      "Pan De Manila"
+    ],
+    "wendys": [
+      "Wendy's"
+    ],
+    "yamato bakery cafe": [
+      "Yamato Bakery Cafe",
+      "Yamato Bakery Café"
+    ],
+    "buddys": [
+      "Buddy's"
+    ],
+    "dolors kakanin": [
+      "Dolor's Kakanin"
+    ],
+    "inasal": [
+      "Inasal"
+    ],
+    "luk foo cantonese kitchen": [
+      "Luk Foo Cantonese Kitchen"
+    ],
+    "brazil brazil": [
+      "Brazil Brazil",
+      "Brazil! Brazil!"
+    ],
+    "ryu ramen curry": [
+      "Ryu Ramen & Curry"
+    ],
+    "coffee project": [
+      "Coffee Project",
+      "The Coffee Project"
+    ],
+    "nike": [
+      "Nike"
+    ],
+    "rub ribs bbq": [
+      "Rub Ribs Bbq",
+      "Rub Ribs & BBQ",
+      "RUB Ribs & BBQ"
+    ],
+    "andoks": [
+      "Andok's",
+      "Andoks",
+      "Andok's Kiosk"
+    ],
+    "jorge bike shop": [
+      "Jorge Bike Shop"
+    ],
+    "toho antigua": [
+      "Toho Antigua"
+    ],
+    "gerrys": [
+      "Gerry's",
+      "Gerry’s"
+    ],
+    "anytime fitness": [
+      "Anytime Fitness",
+      "Anytime Fitness Maginhawa"
+    ],
+    "ma mon luk": [
+      "Ma Mon Luk"
+    ],
+    "seafood island": [
+      "Seafood Island"
+    ],
+    "south star drug": [
+      "South Star Drug"
+    ],
+    "burger king": [
+      "Burger King"
+    ],
+    "baliwag lechon": [
+      "Baliwag Lechon"
+    ],
+    "tokyo tokyo": [
+      "Tokyo Tokyo",
+      "Tokyo-tokyo"
+    ],
+    "swagat": [
+      "Swagat"
+    ],
+    "tropical hut hamburger": [
+      "Tropical Hut Hamburger"
+    ],
+    "contis": [
+      "Conti's",
+      "Contis"
+    ],
+    "melos steakhouse": [
+      "Melo's Steakhouse"
+    ],
+    "army navy": [
+      "Army Navy"
+    ],
+    "turks": [
+      "Turks"
+    ],
+    "cravings": [
+      "Craving's",
+      "Cravings"
+    ],
+    "tapa king": [
+      "Tapa King",
+      "Tapa King Divisoria"
+    ],
+    "seattles best coffee": [
+      "Seattle's Best Coffee"
+    ],
+    "davids salon": [
+      "David's Salon",
+      "David’s Salon",
+      "David's salon"
+    ],
+    "yellow cab": [
+      "Yellow Cab"
+    ],
+    "tgp": [
+      "TGP"
+    ],
+    "24 chicken": [
+      "24 Chicken"
+    ],
+    "yoshinoya": [
+      "Yoshinoya"
+    ],
+    "bonchon chicken": [
+      "Bonchon Chicken",
+      "BonChon Chicken"
+    ],
+    "bos coffee": [
+      "Bo's Coffee"
+    ],
+    "north park": [
+      "North Park"
+    ],
+    "figaro": [
+      "Figaro"
+    ],
+    "sisig society": [
+      "Sisig Society"
+    ],
+    "armynavy": [
+      "ArmyNavy"
+    ],
+    "sinangag express": [
+      "Sinangag Express"
+    ],
+    "amici": [
+      "Amici"
+    ],
+    "mang inasal": [
+      "Mang Inasal"
+    ],
+    "reyes haircutters": [
+      "Reyes Haircutters"
+    ],
+    "apartment 1b": [
+      "Apartment 1B"
+    ],
+    "bellinis": [
+      "Bellini's"
+    ],
+    "hap chan": [
+      "Hap Chan"
+    ],
+    "razons": [
+      "Razon's"
+    ],
+    "dunkin": [
+      "Dunkin",
+      "Dunkin'",
+      "Dunkin’"
+    ],
+    "sandwich guy": [
+      "The Sandwich Guy"
+    ],
+    "slimmers world": [
+      "Slimmers World"
+    ],
+    "new bombay": [
+      "New Bombay"
+    ],
+    "don henricos": [
+      "Don Henrico's"
+    ],
+    "burger machine": [
+      "Burger Machine"
+    ],
+    "tan tan men house": [
+      "Tan Tan Men House"
+    ],
+    "blackbeards seafood island": [
+      "Blackbeard's Seafood Island"
+    ],
+    "outback steakhouse": [
+      "Outback Steakhouse"
+    ],
+    "ramen nagi": [
+      "Ramen Nagi"
+    ],
+    "pho hoa": [
+      "Phở Hòa",
+      "Pho Hoa"
+    ],
+    "super bowl of china": [
+      "Super Bowl of China"
+    ],
+    "tsurumaru udon x tempura": [
+      "Tsurumaru Udon x Tempura"
+    ],
+    "popeyes": [
+      "Popeyes"
+    ],
+    "cuevas bakery": [
+      "Cuevas Bakery"
+    ],
+    "greenwich": [
+      "Greenwich"
+    ],
+    "abi drug": [
+      "Abi Drug"
+    ],
+    "trends salon": [
+      "Trends Salon"
+    ],
+    "smile elephant": [
+      "Smile Elephant"
+    ],
+    "museum cafe": [
+      "Museum Café",
+      "Museum Cafe"
+    ],
+    "gerrys grill": [
+      "Gerry's Grill",
+      "Gerrys Grill",
+      "Gerry's grill"
+    ],
+    "zus coffee": [
+      "ZUS Coffee",
+      "Zus Coffee",
+      "Zu’s Coffee"
+    ],
+    "kitaro": [
+      "Kitaro"
+    ],
+    "cafe mary grace": [
+      "Cafe Mary Grace",
+      "Café Mary Grace"
+    ],
+    "kopi roti": [
+      "Kopi Roti"
+    ],
+    "bacolod chicken house": [
+      "Bacolod Chicken House"
+    ],
+    "henlin": [
+      "Henlin",
+      "HenLin"
+    ],
+    "serye": [
+      "Sérye",
+      "Serye"
+    ],
+    "cabalen": [
+      "Cabalen"
+    ],
+    "generika": [
+      "Generika"
+    ],
+    "rose pharmacy": [
+      "Rose Pharmacy"
+    ],
+    "old swiss inn": [
+      "Old Swiss Inn"
+    ],
+    "cupcakes by sonja": [
+      "Cupcakes by Sonja"
+    ],
+    "doloras hauz of pancit malabon": [
+      "Dolora's Hauz of Pancit Malabon",
+      "Dolora's Hauz of Pancit Malabon (Makati Branch)",
+      "Dolora's Hauz of Pancit Malabon (Sucat Branch)"
+    ],
+    "subway": [
+      "Subway"
+    ],
+    "bread talk": [
+      "Bread Talk",
+      "Bread talk"
+    ],
+    "italiannis": [
+      "Italianni's"
+    ],
+    "teriyaki boy": [
+      "Teriyaki Boy"
+    ],
+    "bakahan at manukan": [
+      "Bakahan at Manukan"
+    ],
+    "rmc bakery": [
+      "RMC Bakery"
+    ],
+    "julies": [
+      "Julie's",
+      "Julie’s"
+    ],
+    "reyes haircutter": [
+      "Reyes Haircutter"
+    ],
+    "siomai house": [
+      "Siomai House"
+    ],
+    "boie drug": [
+      "BOIE Drug",
+      "Boie Drug"
+    ],
+    "agave mexican cantina": [
+      "Agave Mexican Cantina"
+    ],
+    "salon de": [
+      "Salon de Manila East",
+      "Salon De Manila"
+    ],
+    "southstar drug": [
+      "Southstar Drug"
+    ],
+    "fortune bakeshop": [
+      "Fortune Bakeshop"
+    ],
+    "jts manukan": [
+      "JT's Manukan"
+    ],
+    "bugsys bar bistro": [
+      "Bugsy's Bar & Bistro"
+    ],
+    "angels pizza": [
+      "Angel's Pizza",
+      "Angel’s Pizza"
+    ],
+    "but first coffee": [
+      "But First, Coffee",
+      "But First Coffee",
+      "But first coffee"
+    ],
+    "ya kun kaya toast": [
+      "Ya Kun Kaya Toast"
+    ],
+    "executive optical": [
+      "Executive Optical"
+    ],
+    "ha yuan": [
+      "Ha Yuan"
+    ],
+    "flaming wings": [
+      "Flaming Wings"
+    ],
+    "serenitea": [
+      "Serenitea"
+    ],
+    "panaderia pantoja": [
+      "Panaderia Pantoja"
+    ],
+    "reyes barbeque": [
+      "Reyes Barbeque"
+    ],
+    "cafe breton": [
+      "Café Breton",
+      "Cafe Breton"
+    ],
+    "coffee bean": [
+      "The Coffee Bean",
+      "The coffee bean",
+      "Coffee Bean"
+    ],
+    "saladstop": [
+      "SaladStop!",
+      "Saladstop",
+      "Saladstop!"
+    ],
+    "sunrise buckets": [
+      "Sunrise Buckets"
+    ],
+    "gotobox": [
+      "Gotobox",
+      "GotoBox"
+    ],
+    "khao khai thai chicken house": [
+      "Khao Khai Thai Chicken House"
+    ],
+    "tender bobs": [
+      "Tender Bob's"
+    ],
+    "jims": [
+      "Jim's"
+    ],
+    "san isidro health center": [
+      "San Isidro Health Center"
+    ],
+    "samgyupsalamat": [
+      "Samgyupsalamat",
+      "SamgyupSalamat",
+      "Samgyupsalamat Malate"
+    ],
+    "savory": [
+      "Savory"
+    ],
+    "f salon": [
+      "F Salon"
+    ],
+    "costa coffee": [
+      "Costa Coffee"
+    ],
+    "mango": [
+      "Mango"
+    ],
+    "uncle cheffy": [
+      "Uncle Cheffy"
+    ],
+    "dairy queen": [
+      "Dairy Queen"
+    ],
+    "tim hortons": [
+      "Tim Hortons"
+    ],
+    "whistlestop": [
+      "Whistlestop"
+    ],
+    "rekado atbp": [
+      "Rekado Atbp."
+    ],
+    "cosmopolitan salon": [
+      "Cosmopolitan Salon"
+    ],
+    "oyster boy": [
+      "Oyster Boy"
+    ],
+    "ucc coffee vienna cafe": [
+      "UCC Coffee Vienna Cafe"
+    ],
+    "mendokoro": [
+      "Mendokoro"
+    ],
+    "janco ukay ukay": [
+      "Janco Ukay-ukay"
+    ],
+    "pizza hut express": [
+      "Pizza Hut Express"
+    ],
+    "sarabia optical": [
+      "Sarabia Optical"
+    ],
+    "pancit ng taga": [
+      "Pancit ng Taga Malabon",
+      "Pancit ng taga Malabon"
+    ],
+    "plaza ibarra": [
+      "Plaza Ibarra"
+    ],
+    "generika drugstore": [
+      "Generika Drugstore"
+    ],
+    "farmacia ni dok": [
+      "Farmacia ni Dok",
+      "FARMACIA ni DOK"
+    ],
+    "bicycle world": [
+      "Bicycle World"
+    ],
+    "classic savory": [
+      "Classic Savory",
+      "The Classic Savory"
+    ],
+    "icebergs": [
+      "Icebergs",
+      "Iceberg's"
+    ],
+    "j co": [
+      "J.Co"
+    ],
+    "rufos famous tapa": [
+      "Rufo's Famous Tapa"
+    ],
+    "mixue": [
+      "Mixue"
+    ],
+    "pizzaderia": [
+      "Pizzaderia"
+    ],
+    "manam": [
+      "Manam",
+      "manam"
+    ],
+    "greyhound cafe": [
+      "Greyhound Café",
+      "Greyhound Cafe"
+    ],
+    "kowloon house": [
+      "Kowloon House"
+    ],
+    "banapple": [
+      "Banapple"
+    ],
+    "jacks loft": [
+      "Jack's Loft"
+    ],
+    "sky garden": [
+      "Sky Garden"
+    ],
+    "centralle medical": [
+      "Centralle Medical"
+    ],
+    "dells foodhall": [
+      "Dell's Foodhall"
+    ],
+    "lechon manok ni sr pedro": [
+      "Lechon Manok ni Sr. Pedro"
+    ],
+    "botika ng bayan": [
+      "Botika ng Bayan"
+    ],
+    "kims ramyun": [
+      "Kim's Ramyun"
+    ],
+    "aling banangs": [
+      "Aling Banang's"
+    ],
+    "nails glow": [
+      "Nails.Glow"
+    ],
+    "project pie": [
+      "Project Pie"
+    ],
+    "mann hann": [
+      "Mann Hann"
+    ],
+    "inengs special bbq": [
+      "Ineng's Special BBQ",
+      "Ineng’s Special BBQ"
+    ],
+    "causeway": [
+      "Causeway Timog",
+      "Causeway"
+    ],
+    "lido cocina tsina": [
+      "Lido Cocina Tsina"
+    ],
+    "ferinos bibingka": [
+      "Ferino's Bibingka"
+    ],
+    "uncle moes shawarma hub": [
+      "Uncle Moe's Shawarma Hub",
+      "Uncle Moe’s Shawarma Hub"
+    ],
+    "kudos": [
+      "Kudos 168",
+      "Kudos"
+    ],
+    "carlos pizza": [
+      "Carlo's Pizza"
+    ],
+    "behrouz": [
+      "Behrouz"
+    ],
+    "tok yu": [
+      "Tok-Yu"
+    ],
+    "bon chon": [
+      "Bon Chon",
+      "Bon chon"
+    ],
+    "binalot": [
+      "Binalot"
+    ],
+    "little quiapo": [
+      "Little Quiapo"
+    ],
+    "amber": [
+      "Amber"
+    ],
+    "cafe bonjour": [
+      "Cafe Bonjour"
+    ],
+    "ersao": [
+      "Ersao"
+    ],
+    "mang boks manok": [
+      "Mang Bok's Manok"
+    ],
+    "golds gym": [
+      "Gold's Gym"
+    ],
+    "nathaniels": [
+      "Nathaniel's"
+    ],
+    "coffee beanery": [
+      "The Coffee Beanery"
+    ],
+    "mr parks bread cake": [
+      "Mr. Park's Bread & Cake"
+    ],
+    "cowboy grill": [
+      "Cowboy Grill",
+      "cowboy grill"
+    ],
+    "ang lechon manok ni sr pedro": [
+      "Ang Lechon Manok ni Sr. Pedro"
+    ],
+    "dennys": [
+      "Denny's",
+      "Denny’s"
+    ],
+    "starbucks reserve": [
+      "Starbucks Reserve"
+    ],
+    "lets chow": [
+      "Let's Chow!",
+      "Let’s Chow"
+    ],
+    "jjs pares": [
+      "JJ's Pares"
+    ],
+    "sbarro": [
+      "Sbarro"
+    ],
+    "bizu patisserie": [
+      "Bizu Patisserie"
+    ],
+    "banana leaf": [
+      "Banana Leaf"
+    ],
+    "papa johns": [
+      "Papa John's",
+      "Papa Johns"
+    ],
+    "peri peri": [
+      "Peri-Peri",
+      "Peri-peri",
+      "Peri Peri"
+    ],
+    "cibo": [
+      "Cibo"
+    ],
+    "gloria jeans coffee": [
+      "Gloria Jean's Coffee",
+      "Gloria Jeans Coffee"
+    ],
+    "arya": [
+      "Arya"
+    ],
+    "santis delicatessen": [
+      "Säntis Delicatessen"
+    ],
+    "mama lous": [
+      "Mama Lou's"
+    ],
+    "brunos barbers": [
+      "Bruno's Barbers"
+    ],
+    "lydias lechon": [
+      "Lydia's Lechon"
+    ],
+    "nanbantei yakitori bar": [
+      "Nanbantei Yakitori Bar"
+    ],
+    "lido": [
+      "Lido"
+    ],
+    "goodah": [
+      "Goodah",
+      "GoodAh!!",
+      "GoodAh!"
+    ],
+    "cafe france": [
+      "Cafe France",
+      "Café France"
+    ],
+    "causeway seafood restaurant": [
+      "Causeway Seafood Restaurant",
+      "Causeway 2 Seafood Restaurant"
+    ],
+    "padis point": [
+      "Padi's Point"
+    ],
+    "a veneto": [
+      "Ä Veneto",
+      "A Veneto",
+      "ä Veneto"
+    ],
+    "pares mami house": [
+      "Pares Mami House",
+      "Pares & Mami House"
+    ],
+    "red ribbon bakeshop": [
+      "Red Ribbon Bakeshop"
+    ],
+    "french baker": [
+      "French Baker",
+      "The French Baker"
+    ],
+    "luk yuen": [
+      "Luk Yuen"
+    ],
+    "eng bee tin chinese deli": [
+      "Eng Bee Tin Chinese Deli"
+    ],
+    "eng bee tin": [
+      "Eng Bee Tin"
+    ],
+    "k2 pharmacy": [
+      "K2 Pharmacy"
+    ],
+    "cuevas bread": [
+      "Cuevas Bread"
+    ],
+    "greenjoy": [
+      "GreENJOY",
+      "Greenjoy"
+    ],
+    "gloria maris": [
+      "Gloria Maris"
+    ],
+    "atoys pork chop": [
+      "Atoy's Pork Chop"
+    ],
+    "shawarma snack center": [
+      "Shawarma Snack Center"
+    ],
+    "mister siomai": [
+      "Mister Siomai"
+    ],
+    "gap": [
+      "Gap"
+    ],
+    "hanamaruken ramen": [
+      "Hanamaruken Ramen"
+    ],
+    "bibingkinitan": [
+      "Bibingkinitan"
+    ],
+    "reyes barbecue": [
+      "Reyes Barbecue",
+      "Reyes' Barbecue"
+    ],
+    "cosmopolitan": [
+      "Cosmopolitan"
+    ],
+    "marithe francois girbaud": [
+      "Marithe Francois Girbaud"
+    ],
+    "aling lucys panciteria": [
+      "Aling Lucy's Panciteria"
+    ],
+    "bistro ravioli": [
+      "Bistro Ravioli"
+    ],
+    "tempura": [
+      "Tempura"
+    ],
+    "racks": [
+      "Rack's",
+      "Racks",
+      "The Racks"
+    ],
+    "cafe via mare": [
+      "Cafe Via Mare"
+    ],
+    "hokkaido ramen santouka": [
+      "Hokkaido Ramen Santouka"
+    ],
+    "index salon": [
+      "Index Salon"
+    ],
+    "8 cuts burger blends": [
+      "8 Cuts Burger Blends"
+    ],
+    "uniqlo": [
+      "Uniqlo"
+    ],
+    "brothers burgers": [
+      "Brother's Burgers",
+      "Brothers Burger's"
+    ],
+    "lots a pizza": [
+      "Lots-A-Pizza",
+      "Lot's-a-pizza"
+    ],
+    "potato corner": [
+      "Potato Corner",
+      "Potato Corner Branch"
+    ],
+    "bacolod chk n bbq house": [
+      "Bacolod Chk-n-BBQ House"
+    ],
+    "hungry juan": [
+      "Hungry Juan"
+    ],
+    "kar rhen": [
+      "Kar-Rhen"
+    ],
+    "best of luck": [
+      "Best of Luck"
+    ],
+    "atos cafe": [
+      "Ato's Cafe"
+    ],
+    "mary grace": [
+      "Mary Grace"
+    ],
+    "black scoop": [
+      "Black Scoop",
+      "Black scoop"
+    ],
+    "kimono ken": [
+      "Kimono Ken"
+    ],
+    "hbc": [
+      "HBC"
+    ],
+    "grill queen": [
+      "Grill Queen"
+    ],
+    "goto king": [
+      "Goto King"
+    ],
+    "secret fresh": [
+      "Secret Fresh"
+    ],
+    "charlies grind and grill": [
+      "Charlie's Grind and Grill"
+    ],
+    "chic boy": [
+      "Chic-Boy"
+    ],
+    "yang chow": [
+      "Yang Chow"
+    ],
+    "country chicken": [
+      "Country Chicken"
+    ],
+    "bench": [
+      "Bench",
+      "Bench."
+    ],
+    "beckys kitchen": [
+      "Becky's Kitchen"
+    ],
+    "i love milktea": [
+      "I Love Milktea",
+      "I love Milktea",
+      "I LOVE MILKTEA"
+    ],
+    "lord stows bakery": [
+      "Lord Stow's Bakery"
+    ],
+    "pepetons": [
+      "Pepeton's",
+      "Pepetons"
+    ],
+    "yakimix": [
+      "Yakimix"
+    ],
+    "lugawan ni bro": [
+      "Lugawan ni Bro"
+    ],
+    "botica ng bayan": [
+      "Botica ng Bayan"
+    ],
+    "rue bourbon": [
+      "Rue Bourbon"
+    ],
+    "kuse": [
+      "Kuse",
+      "Kusê"
+    ],
+    "generics pharmacy": [
+      "The Generics Pharmacy",
+      "The generics pharmacy"
+    ],
+    "nitz restaurant": [
+      "Nitz Restaurant"
+    ],
+    "big guys pizza": [
+      "Big Guys Pizza",
+      "Big Guy's Pizza",
+      "Big Guys! Pizza"
+    ],
+    "purple oven": [
+      "purple oven",
+      "Purple Oven"
+    ],
+    "sen lek thai noodles": [
+      "Sen Lek Thai Noodles"
+    ],
+    "abe": [
+      "Abé",
+      "Abe"
+    ],
+    "pinkberry": [
+      "Pinkberry"
+    ],
+    "marugame udon": [
+      "Marugame Udon"
+    ],
+    "dominos": [
+      "Domino's"
+    ],
+    "rapa generics pharmacy": [
+      "Rapa' Generics Pharmacy"
+    ],
+    "sizzlin pepper steak": [
+      "The Sizzlin' Pepper Steak",
+      "Sizzlin' Pepper Steak"
+    ],
+    "mom tinas": [
+      "Mom & Tina's"
+    ],
+    "persia grill": [
+      "Persia Grill"
+    ],
+    "ilocos empanada": [
+      "Ilocos Empanada"
+    ],
+    "my thai": [
+      "My Thai"
+    ],
+    "tong yang": [
+      "Tong Yang"
+    ],
+    "chatime": [
+      "Chatime"
+    ],
+    "giligans": [
+      "Giligan's",
+      "Giligan’s"
+    ],
+    "vikings": [
+      "Vikings"
+    ],
+    "lunars bakery": [
+      "Lunar's Bakery"
+    ],
+    "chilis": [
+      "Chili's"
+    ],
+    "dulcinea": [
+      "Dulcinea"
+    ],
+    "burger ni bro": [
+      "Burger Ni Bro"
+    ],
+    "validosa": [
+      "Validosa"
+    ],
+    "chocolat": [
+      "Chocolat"
+    ],
+    "waffle time": [
+      "Waffle Time"
+    ],
+    "davids tea house": [
+      "David's Tea House",
+      "Davids Tea House",
+      "David’s Tea House"
+    ],
+    "shi lin": [
+      "Shi Lin",
+      "Shi Lin Binondo"
+    ],
+    "beauty parlor": [
+      "Beauty Parlor"
+    ],
+    "tokyo bubble tea": [
+      "Tokyo Bubble Tea"
+    ],
+    "chucks deli": [
+      "Chuck's Deli"
+    ],
+    "kettle": [
+      "Kettle"
+    ],
+    "frankies": [
+      "Frankie's",
+      "Frankies"
+    ],
+    "adobo connection": [
+      "Adobo Connection"
+    ],
+    "chopstop": [
+      "Chopstop"
+    ],
+    "luk foo": [
+      "Luk Foo"
+    ],
+    "katherines cafe": [
+      "Katherine's Cafe",
+      "Katherine’s Café"
+    ],
+    "nanbantei of tokyo": [
+      "Nanbantei of Tokyo"
+    ],
+    "bon appetea": [
+      "Bon Appetea"
+    ],
+    "boardwalk": [
+      "Boardwalk"
+    ],
+    "sr pedro": [
+      "Sr. Pedro"
+    ],
+    "almon marina": [
+      "Almon Marina"
+    ],
+    "soi": [
+      "Soi"
+    ],
+    "jims recipe": [
+      "Jim's Recipe",
+      "Jim’s Recipe"
+    ],
+    "mongolian quick stop": [
+      "Mongolian Quick Stop"
+    ],
+    "mexicali": [
+      "Mexicali"
+    ],
+    "maxs": [
+      "Max's"
+    ],
+    "king sisig": [
+      "King Sisig"
+    ],
+    "razons of guagua": [
+      "Razon's of Guagua",
+      "Razons of Guagua"
+    ],
+    "tito chef": [
+      "Tito Chef"
+    ],
+    "burgoo": [
+      "Burgoo"
+    ],
+    "barbershop": [
+      "Barbershop"
+    ],
+    "va bene pasta deli": [
+      "Va Bene Pasta Deli"
+    ],
+    "going straight salon": [
+      "Going Straight Salon"
+    ],
+    "zubuchon": [
+      "Zubuchon"
+    ],
+    "perfect pint": [
+      "The Perfect Pint",
+      "Perfect Pint"
+    ],
+    "buffet": [
+      "Buffet 101",
+      "buffet 101"
+    ],
+    "manoy cucuz panciteria": [
+      "Manoy & Cucuz Panciteria"
+    ],
+    "wow hair salon": [
+      "Wow Hair Salon",
+      "WOW! Hair Salon",
+      "Wow! Hair Salon"
+    ],
+    "julies bakeshop": [
+      "Julie's Bakeshop"
+    ],
+    "j donuts coffee": [
+      "J.CO Donuts & Coffee",
+      "J. Co Donuts & Coffee"
+    ],
+    "black box coffee": [
+      "The Black Box Coffee"
+    ],
+    "cafe mediterranean": [
+      "The Cafe Mediterranean",
+      "Café Mediterranean"
+    ],
+    "ramboys": [
+      "Ramboy's"
+    ],
+    "baliwag lechon manok": [
+      "Baliwag Lechon Manok"
+    ],
+    "lola nenas": [
+      "Lola Nena's",
+      "Lola Nenas"
+    ],
+    "dental clinic": [
+      "Dental Clinic",
+      "DENTAL CLINIC"
+    ],
+    "minute burger": [
+      "Minute Burger"
+    ],
+    "tess eatery": [
+      "Tess Eatery"
+    ],
+    "burger": [
+      "Burger"
+    ],
+    "delicious": [
+      "Delicious"
+    ],
+    "abesamis optical": [
+      "Abesamis Optical"
+    ],
+    "tianlala": [
+      "Tianlala"
+    ],
+    "dunkin donuts": [
+      "Dunkin Donuts",
+      "Dunkin' Donuts"
+    ],
+    "maricopa restaurant": [
+      "Maricopa Restaurant"
+    ],
+    "bijin nabe": [
+      "Bijin Nabe"
+    ],
+    "romulo cafe": [
+      "Romulo Cafe",
+      "Romulo Café"
+    ],
+    "manangs chicken": [
+      "Manang's Chicken"
+    ],
+    "d original pares": [
+      "D' Original Pares"
+    ],
+    "hong kong noodle dimsum house": [
+      "Hong Kong Noodle & Dimsum House"
+    ],
+    "amis restaurant": [
+      "Amis Restaurant"
+    ],
+    "angels burger": [
+      "Angel's Burger"
+    ],
+    "savory restaurant": [
+      "Savory Restaurant"
+    ],
+    "just thai": [
+      "Just Thai"
+    ],
+    "tealive": [
+      "Tealive"
+    ],
+    "moonleaf tea shop": [
+      "Moonleaf Tea Shop"
+    ],
+    "ling nam": [
+      "Ling Nam"
+    ],
+    "dimsum treats": [
+      "Dimsum Treats"
+    ],
+    "cotton on": [
+      "Cotton On",
+      "cotton on",
+      "Cotton:On"
+    ],
+    "lola idangs": [
+      "Lola Idang's",
+      "Lola Idangs"
+    ],
+    "j cuppacakes": [
+      "J Cuppacakes",
+      "J. Cuppacakes"
+    ],
+    "tous les jours": [
+      "Tous les Jours",
+      "Tous Les Jours"
+    ],
+    "ooma": [
+      "Ooma",
+      "ooma"
+    ],
+    "mango tree": [
+      "Mango Tree"
+    ],
+    "poco deli": [
+      "Poco Deli",
+      "Poco deli"
+    ],
+    "buffalo wild wings": [
+      "Buffalo Wild Wings"
+    ],
+    "tapsilog avenue": [
+      "Tapsilog Avenue"
+    ],
+    "megason diagnostic clinic": [
+      "Megason Diagnostic Clinic"
+    ],
+    "big better burgers": [
+      "Big Better Burgers"
+    ],
+    "romantic baboy": [
+      "Romantic baboy",
+      "Romantic Baboy"
+    ],
+    "exit": [
+      "Exit",
+      "EXIT"
+    ],
+    "barn": [
+      "The Barn"
+    ],
+    "ginos brick oven pizza": [
+      "Gino's Brick Oven Pizza"
+    ],
+    "mamou": [
+      "Mamou"
+    ],
+    "cold stone creamery": [
+      "Cold Stone Creamery"
+    ],
+    "zagu": [
+      "Zagu",
+      "ZAGU"
+    ],
+    "hawker chan": [
+      "Hawker Chan"
+    ],
+    "rai rai ken": [
+      "Rai Rai Ken"
+    ],
+    "old spaghetti house": [
+      "The Old Spaghetti House",
+      "Old Spaghetti House"
+    ],
+    "kuya korea": [
+      "Kuya Korea"
+    ],
+    "sarahs": [
+      "Sarah's"
+    ],
+    "wild flour": [
+      "Wild Flour"
+    ],
+    "yabu": [
+      "Yabu"
+    ],
+    "lorenzos way": [
+      "Lorenzo's Way"
+    ],
+    "earth kitchen": [
+      "Earth Kitchen"
+    ],
+    "single origin": [
+      "Single Origin"
+    ],
+    "d plaza": [
+      "D Plaza"
+    ],
+    "bardolci": [
+      "Bardolci"
+    ],
+    "rodics diner": [
+      "Rodic's Diner"
+    ],
+    "sentro": [
+      "Sentro 1771"
+    ],
+    "cafe tribu": [
+      "café triBU",
+      "Cafe Tribu"
+    ],
+    "sr pedro lechon manok": [
+      "Sr. Pedro Lechon Manok"
+    ],
+    "ginza bairin": [
+      "Ginza Bairin"
+    ],
+    "happy lemon": [
+      "Happy Lemon"
+    ],
+    "dental care clinic": [
+      "Dental Care Clinic"
+    ],
+    "zarks burgers": [
+      "Zark's Burgers"
+    ],
+    "hap chan restaurant": [
+      "Hap Chan Restaurant"
+    ],
+    "silantro": [
+      "Silantro"
+    ],
+    "din tai fung": [
+      "Din Tai Fung"
+    ],
+    "pepper lunch": [
+      "Pepper Lunch"
+    ],
+    "dohtonbori": [
+      "Dohtonbori"
+    ],
+    "shake shack": [
+      "Shake Shack"
+    ],
+    "maximus pizza": [
+      "Maximus Pizza"
+    ],
+    "healing galing": [
+      "Healing Galing"
+    ],
+    "crazy katsu": [
+      "Crazy Katsu"
+    ],
+    "cake2go": [
+      "Cake2Go",
+      "Cake2go"
+    ],
+    "bakers fair": [
+      "Bakers' Fair",
+      "Baker's Fair"
+    ],
+    "white hat": [
+      "The White Hat"
+    ],
+    "barber shop": [
+      "Barber Shop",
+      "The Barber Shop",
+      "Barber shop"
+    ],
+    "las veras restaurant": [
+      "Las Veras Restaurant"
+    ],
+    "sisig": [
+      "Sisig"
+    ],
+    "lotsa pizza": [
+      "Lots'a Pizza",
+      "Lotsa Pizza"
+    ],
+    "nailandia": [
+      "Nailandia"
+    ],
+    "musashi tei": [
+      "Musashi-Tei",
+      "Musashi Tei"
+    ],
+    "infinitea": [
+      "InfiniTea",
+      "Infinitea"
+    ],
+    "frazzled cook": [
+      "The Frazzled Cook"
+    ],
+    "mad marks": [
+      "Mad Mark's",
+      "Mad Mark’s"
+    ],
+    "milkcow": [
+      "Milkcow"
+    ],
+    "riozen": [
+      "Riozen"
+    ],
+    "ba nois": [
+      "Ba Noi's",
+      "Bà Nội's"
+    ],
+    "alba": [
+      "Alba"
+    ],
+    "balkan": [
+      "Balkan"
+    ],
+    "fancy crepes": [
+      "Fancy Crepes"
+    ],
+    "lugang cafe": [
+      "Lugang Café",
+      "Lugang Cafe"
+    ],
+    "famous belgian waffles": [
+      "Famous Belgian Waffles"
+    ],
+    "zarks burger": [
+      "Zark's Burger"
+    ],
+    "lay bare waxing salon": [
+      "Lay Bare Waxing Salon"
+    ],
+    "generics": [
+      "The Generics"
+    ],
+    "tipsy pig gastropub": [
+      "Tipsy Pig Gastropub"
+    ],
+    "hanako": [
+      "Hanako"
+    ],
+    "kanzen sushi roll": [
+      "Kanzen Sushi Roll"
+    ],
+    "lemuria": [
+      "Lemuria"
+    ],
+    "casa armas": [
+      "Casa Armas"
+    ],
+    "moonleaf": [
+      "Moonleaf",
+      "moonleaf"
+    ],
+    "b t mexican kitchen": [
+      "B&T Mexican Kitchen"
+    ],
+    "fresh": [
+      "Fresh"
+    ],
+    "maru korean restaurant": [
+      "Maru Korean Restaurant"
+    ],
+    "pares house": [
+      "Pares House"
+    ],
+    "sisig hooray": [
+      "Sisig Hooray",
+      "Sisig Hooray!"
+    ],
+    "fish go": [
+      "Fish 2 Go"
+    ],
+    "yardstick coffee": [
+      "Yardstick Coffee"
+    ],
+    "paulinas cycle center": [
+      "Paulina's Cycle Center"
+    ],
+    "maisen": [
+      "Maisen"
+    ],
+    "pavilion canteen": [
+      "Pavilion 1 Canteen",
+      "Pavilion 3 Canteen"
+    ],
+    "don c lechon manok": [
+      "Don C Lechon Manok",
+      "Don C Lechon manok"
+    ],
+    "hot star": [
+      "Hot Star",
+      "Hot-Star"
+    ],
+    "dakasi": [
+      "Dakasi"
+    ],
+    "bingsu": [
+      "The Bingsu",
+      "Bingsu"
+    ],
+    "taste of joy": [
+      "Taste of Joy"
+    ],
+    "misto": [
+      "Misto"
+    ],
+    "tsujiri": [
+      "Tsujiri"
+    ],
+    "tobys estate": [
+      "Toby's Estate"
+    ],
+    "tides": [
+      "Tides"
+    ],
+    "las flores": [
+      "Las Flores"
+    ],
+    "kainan sa banda rito": [
+      "Kainan sa Banda Rito"
+    ],
+    "dexters pizza": [
+      "Dexter's Pizza"
+    ],
+    "brownies unlimited": [
+      "Brownies Unlimited"
+    ],
+    "davids cut": [
+      "David's Cut"
+    ],
+    "janco surplus": [
+      "Janco Surplus"
+    ],
+    "fleur de lis": [
+      "Fleur de lis",
+      "Fleur de Lis"
+    ],
+    "botika ng barangay": [
+      "Botika ng Barangay",
+      "Botika Ng Barangay"
+    ],
+    "beach house": [
+      "Beach House",
+      "Beach house"
+    ],
+    "dental edge": [
+      "The Dental Edge",
+      "Dental Edge"
+    ],
+    "mary pauline salon": [
+      "Mary Pauline Salon",
+      "mary pauline salon"
+    ],
+    "cha tuk chak": [
+      "Cha Tuk Chak"
+    ],
+    "mr liempo": [
+      "Mr. Liempo"
+    ],
+    "mapalad bakery": [
+      "Mapalad Bakery"
+    ],
+    "terrys": [
+      "Terry's"
+    ],
+    "dr lui dental clinic": [
+      "Dr. Lui Dental Clinic"
+    ],
+    "mitsuyado sei men": [
+      "Mitsuyado Sei-men",
+      "Mitsuyado sei-men"
+    ],
+    "ucc clockwork": [
+      "UCC Clockwork"
+    ],
+    "inasal chicken bacolod": [
+      "Inasal Chicken Bacolod"
+    ],
+    "my thai kitchen": [
+      "My Thai Kitchen"
+    ],
+    "refinery": [
+      "Refinery"
+    ],
+    "crisostomo": [
+      "Crisostomo"
+    ],
+    "acebedo optical": [
+      "Acebedo Optical"
+    ],
+    "hen lin": [
+      "Hen-Lin",
+      "Hen Lin",
+      "Hen LIn"
+    ],
+    "jamaican": [
+      "Jamaican"
+    ],
+    "jag": [
+      "Jag"
+    ],
+    "kambal pandesal": [
+      "Kambal Pandesal",
+      "Kambal pandesal"
+    ],
+    "old navy": [
+      "Old Navy"
+    ],
+    "puma": [
+      "Puma"
+    ],
+    "eye society": [
+      "Eye Society"
+    ],
+    "shrimp bucket": [
+      "Shrimp Bucket"
+    ],
+    "gringo": [
+      "Gringo"
+    ],
+    "coffee shop": [
+      "Coffee Shop",
+      "The Coffee Shop"
+    ],
+    "chemistea milk tea cafe": [
+      "Chemistea Milk Tea + Cafe"
+    ],
+    "mary grace cafe": [
+      "Mary Grace Cafe"
+    ],
+    "sibyullee": [
+      "Sibyullee"
+    ],
+    "wildflour": [
+      "Wildflour"
+    ],
+    "kuya js": [
+      "Kuya J's"
+    ],
+    "guess": [
+      "Guess"
+    ],
+    "llaollao": [
+      "Llaollao"
+    ],
+    "anixs house of kare kare": [
+      "Anix's House of Kare-Kare",
+      "Anix's House of Kare Kare"
+    ],
+    "afters": [
+      "Afters"
+    ],
+    "dongalos best tapsilog": [
+      "Dongalo's Best Tapsilog"
+    ],
+    "kuya j": [
+      "Kuya J",
+      "Kuya-J"
+    ],
+    "lay bare": [
+      "Lay Bare"
+    ],
+    "barcino": [
+      "Barcino"
+    ],
+    "wholesome table": [
+      "The Wholesome Table"
+    ],
+    "ninak": [
+      "Ninak"
+    ],
+    "black scoop cafe": [
+      "Black Scoop Cafe",
+      "Black Scoop Café"
+    ],
+    "khas food house": [
+      "Khas Food House"
+    ],
+    "daddys toasted siopao": [
+      "Daddy's Toasted Siopao",
+      "Daddys Toasted siopao"
+    ],
+    "takoyadon": [
+      "Takoyadon"
+    ],
+    "lemon square bakery treats": [
+      "Lemon Square Bakery Treats",
+      "Lemon Square - Bakery Treats"
+    ],
+    "burp": [
+      "Burp"
+    ],
+    "crazy wings": [
+      "Crazy Wings"
+    ],
+    "crabaholic": [
+      "Crabaholic"
+    ],
+    "kanto freestyle breakfast": [
+      "Kanto Freestyle Breakfast"
+    ],
+    "elorde fight factory": [
+      "Elorde Fight Factory"
+    ],
+    "farinas ilocos empanada": [
+      "Farinas Ilocos Empanada",
+      "Fariñas Ilocos Empanada"
+    ],
+    "aristocrat": [
+      "Aristocrat",
+      "The Aristocrat"
+    ],
+    "ucc cafe terrace": [
+      "UCC Café Terrace"
+    ],
+    "matgalne": [
+      "Matgalne"
+    ],
+    "octoboy": [
+      "Octoboy"
+    ],
+    "bulalo world": [
+      "Bulalo World"
+    ],
+    "st louis": [
+      "St. Louis"
+    ],
+    "tipness gym": [
+      "Tipness Gym"
+    ],
+    "xo heritage bistro": [
+      "XO 46 Heritage Bistro"
+    ],
+    "goto believe": [
+      "Goto Believe!",
+      "Goto Believe"
+    ],
+    "cupcakes by gremlins": [
+      "Cupcakes by Gremlins"
+    ],
+    "reds": [
+      "Red's"
+    ],
+    "genesis hot pandesal": [
+      "Genesis Hot Pandesal"
+    ],
+    "comets eatery": [
+      "Comets Eatery",
+      "Comet's Eatery"
+    ],
+    "ice cream": [
+      "Ice Cream Store",
+      "Ice Cream"
+    ],
+    "madbrews": [
+      "Madbrews"
+    ],
+    "dcream": [
+      "DCream",
+      "D'Cream"
+    ],
+    "yvan navy": [
+      "Yvan Navy",
+      "yvan navy"
+    ],
+    "frappeetea": [
+      "Frappeetea"
+    ],
+    "wicked waffle": [
+      "The Wicked Waffle",
+      "Wicked Waffle"
+    ],
+    "its caffeine": [
+      "It's Caffeine"
+    ],
+    "rice in a box": [
+      "Rice in a Box",
+      "Rice In A Box",
+      "Rice In a Box"
+    ],
+    "petra pepita": [
+      "Petra & Pepita"
+    ],
+    "merced": [
+      "Merced"
+    ],
+    "index": [
+      "Index",
+      "index"
+    ],
+    "love desserts": [
+      "Love Desserts",
+      "Love Desserts, Inc."
+    ],
+    "simply bread": [
+      "Simply Bread"
+    ],
+    "mister kabab": [
+      "Mister Kabab"
+    ],
+    "pixies sinugba": [
+      "Pixie's Sinugba"
+    ],
+    "santinos": [
+      "Santino's"
+    ],
+    "master siomai": [
+      "Master siomai",
+      "Master Siomai"
+    ],
+    "cafe nenzo": [
+      "Cafe Nenzo"
+    ],
+    "fix bench salon": [
+      "Fix Bench Salon",
+      "Fix Bench/Salon"
+    ],
+    "penshoppe": [
+      "Penshoppe"
+    ],
+    "levis": [
+      "Levi's"
+    ],
+    "hong kong noodles": [
+      "Hong Kong Noodles"
+    ],
+    "yowell": [
+      "YoWell"
+    ],
+    "cinnabon": [
+      "Cinnabon"
+    ],
+    "coco ichibanya": [
+      "CoCo Ichibanya"
+    ],
+    "jipan": [
+      "Jipan"
+    ],
+    "sarabia": [
+      "Sarabia"
+    ],
+    "meshwe": [
+      "Meshwe"
+    ],
+    "true blends": [
+      "True Blends"
+    ],
+    "shokudo": [
+      "Shokudo"
+    ],
+    "burger matsing": [
+      "Burger Matsing"
+    ],
+    "dentacare": [
+      "Dentacare"
+    ],
+    "3n bakery": [
+      "3N Bakery"
+    ],
+    "nonos": [
+      "Nono's",
+      "Nono’s"
+    ],
+    "tim ho wan": [
+      "Tim Ho Wan"
+    ],
+    "ramen kuroda": [
+      "Ramen Kuroda"
+    ],
+    "bicols best toasted siopao": [
+      "Bicol's Best Toasted Siopao"
+    ],
+    "aristocrat restaurant": [
+      "Aristocrat Restaurant",
+      "The Aristocrat Restaurant"
+    ],
+    "mandarin sky": [
+      "Mandarin Sky"
+    ],
+    "zarks": [
+      "Zark's",
+      "Zarks"
+    ],
+    "snack shack": [
+      "Snack Shack",
+      "The Snack Shack"
+    ],
+    "caffe bene": [
+      "Caffé Bene",
+      "Caffe Bene"
+    ],
+    "12 10": [
+      "12/10"
+    ],
+    "ikkoryu fukuoka ramen": [
+      "Ikkoryu Fukuoka Ramen"
+    ],
+    "martabak cafe": [
+      "Martabak Cafe"
+    ],
+    "kenshin": [
+      "Kenshin"
+    ],
+    "turtles ktv": [
+      "Turtles KTV"
+    ],
+    "genki sushi": [
+      "Genki Sushi"
+    ],
+    "tenya": [
+      "Tenya"
+    ],
+    "kumpares asian pares": [
+      "Kumpares Asian Pares"
+    ],
+    "fireside": [
+      "Fireside"
+    ],
+    "go salads": [
+      "Go Salads!",
+      "Go Salads"
+    ],
+    "queen j": [
+      "Queen J"
+    ],
+    "s r new york style pizza": [
+      "S&R New York Style Pizza"
+    ],
+    "prime care": [
+      "Prime Care"
+    ],
+    "lets face it": [
+      "Let's Face It"
+    ],
+    "dermstrata": [
+      "Dermstrata"
+    ],
+    "specialized": [
+      "Specialized"
+    ],
+    "smilemakers dental clinic": [
+      "Smilemakers Dental Clinic",
+      "SmileMakers Dental Clinic"
+    ],
+    "salazar bakery": [
+      "Salazar Bakery"
+    ],
+    "lobby": [
+      "The Lobby",
+      "Lobby 385"
+    ],
+    "don benitos": [
+      "Don Benito's",
+      "Don Benitos"
+    ],
+    "medline dialysis center": [
+      "Medline Dialysis Center"
+    ],
+    "qubiertos": [
+      "Qubiertos"
+    ],
+    "bonchon": [
+      "BonChon",
+      "Bonchon"
+    ],
+    "buddys pancit lucban": [
+      "Buddy's Pancit Lucban"
+    ],
+    "gong cha": [
+      "Gong Cha"
+    ],
+    "seattles best": [
+      "Seattle's Best"
+    ],
+    "mongkok": [
+      "Mongkok"
+    ],
+    "cre8 salon": [
+      "Cre8 Salon"
+    ],
+    "calda pizza": [
+      "Calda Pizza"
+    ],
+    "tori box": [
+      "Tori Box",
+      "TORI BOX"
+    ],
+    "h m": [
+      "H&M"
+    ],
+    "red panda": [
+      "Red Panda"
+    ],
+    "freds revolucion": [
+      "Fred's Revolucion"
+    ],
+    "cuevas bakeshop": [
+      "Cuevas Bakeshop",
+      "Cueva's Bakeshop"
+    ],
+    "tagpuan": [
+      "Tagpuan"
+    ],
+    "michaela": [
+      "Michaela"
+    ],
+    "mang boks": [
+      "Mang Boks",
+      "Mang Bok's"
+    ],
+    "dadas litson": [
+      "Dadas Litson",
+      "Dada's Litson"
+    ],
+    "jamba juice": [
+      "Jamba Juice"
+    ],
+    "amo yamie crib": [
+      "Amo Yamie Crib"
+    ],
+    "wasabi sushi bar": [
+      "Wasabi Sushi Bar"
+    ],
+    "soy bean": [
+      "Soy & Bean"
+    ],
+    "fely js kitchen": [
+      "Fely J's Kitchen"
+    ],
+    "batangas lomi": [
+      "Batangas Lomi"
+    ],
+    "fruitas": [
+      "Fruitas"
+    ],
+    "jamaican patty": [
+      "Jamaican Patty"
+    ],
+    "skin station": [
+      "Skin Station"
+    ],
+    "medical city": [
+      "The Medical City",
+      "The Medical City-Trinoma"
+    ],
+    "nwow": [
+      "NWow",
+      "Nwow"
+    ],
+    "suzhou dimsum": [
+      "Suzhou Dimsum"
+    ],
+    "starrs famous shakes": [
+      "Starr's Famous Shakes"
+    ],
+    "5 loaves fish": [
+      "5 Loaves & 2 Fish",
+      "5&2 (5 Loaves 2 Fish)"
+    ],
+    "crab n crew": [
+      "Crab N' Crew",
+      "Crab 'n Crew"
+    ],
+    "fila": [
+      "Fila"
+    ],
+    "people are people": [
+      "People Are People",
+      "People are People"
+    ],
+    "hokkaido ramen bangaichi": [
+      "Hokkaido Ramen Bangaichi"
+    ],
+    "hugot cafe": [
+      "Hugot Cafe"
+    ],
+    "pepper lunch express": [
+      "Pepper Lunch Express"
+    ],
+    "green pastures": [
+      "Green Pastures"
+    ],
+    "bon pho roll": [
+      "Bôn Pho & Roll",
+      "Bôn Phó & Roll",
+      "Bon Pho & Roll"
+    ],
+    "callows burger": [
+      "Callows Burger"
+    ],
+    "su zhou": [
+      "Su Zhou"
+    ],
+    "icecreamhouse": [
+      "IceCreamHouse"
+    ],
+    "king chef": [
+      "King Chef"
+    ],
+    "dannys sinugba": [
+      "Danny's Sinugba"
+    ],
+    "balai pandesal": [
+      "Balai Pandesal"
+    ],
+    "pares sa naia avenue": [
+      "Pares sa NAIA Avenue"
+    ],
+    "salad stop": [
+      "Salad Stop!",
+      "Salad Stop"
+    ],
+    "paotsin": [
+      "Paotsin"
+    ],
+    "sarsa": [
+      "Sarsá"
+    ],
+    "la creperie": [
+      "La Creperie"
+    ],
+    "fuzz buzz beauty parlour": [
+      "Fuzz & Buzz Beauty Parlour"
+    ],
+    "epic salon": [
+      "Epic Salon"
+    ],
+    "kanto freestyle": [
+      "Kanto Freestyle"
+    ],
+    "generics drugstore": [
+      "Generics Drugstore"
+    ],
+    "oakley": [
+      "Oakley"
+    ],
+    "natasha": [
+      "Natasha"
+    ],
+    "watsons pharmacy": [
+      "Watsons Pharmacy",
+      "Watson's Pharmacy"
+    ],
+    "pan de cielo": [
+      "Pan de Cielo"
+    ],
+    "plains prints": [
+      "Plains & Prints"
+    ],
+    "boulangerie": [
+      "Boulangerie 22"
+    ],
+    "ideal vision": [
+      "Ideal Vision",
+      "Ideal vision"
+    ],
+    "healthway": [
+      "Healthway"
+    ],
+    "kerimoto": [
+      "Kerimoto"
+    ],
+    "hortaleza": [
+      "Hortaleza"
+    ],
+    "mr kimbob": [
+      "Mr Kimbob",
+      "Mr. Kimbob"
+    ],
+    "vision express": [
+      "Vision Express"
+    ],
+    "animal bite center": [
+      "Animal Bite Center"
+    ],
+    "solid looks optical clinic": [
+      "Solid Looks Optical Clinic 1",
+      "Solid looks Optical Clinic 2"
+    ],
+    "aling banang": [
+      "Aling Banang"
+    ],
+    "ikinari steak": [
+      "Ikinari Steak"
+    ],
+    "kanin club": [
+      "Kanin Club"
+    ],
+    "planet grapes": [
+      "Planet Grapes"
+    ],
+    "omakase": [
+      "Omakase",
+      "Omakase , marikina"
+    ],
+    "brotzeit": [
+      "Brotzeit"
+    ],
+    "sugarhouse": [
+      "Sugarhouse"
+    ],
+    "bikers cafe": [
+      "Bikers Cafe"
+    ],
+    "new bistro deli": [
+      "New Bistro Deli"
+    ],
+    "texas roadhouse": [
+      "Texas Roadhouse"
+    ],
+    "little india": [
+      "Little India"
+    ],
+    "bagets": [
+      "Bagets"
+    ],
+    "ohana dentistry": [
+      "Ohana Dentistry"
+    ],
+    "mrs fields": [
+      "Mrs. Fields"
+    ],
+    "music plaza": [
+      "Music 21 Plaza",
+      "Music 11 Plaza"
+    ],
+    "s3b fashion collection": [
+      "S3B Fashion Collection"
+    ],
+    "cellos doughnuts": [
+      "cello's Doughnuts",
+      "Cello's Doughnuts"
+    ],
+    "hong kong noodles dimsum house": [
+      "Hong Kong Noodles & Dimsum House"
+    ],
+    "farmacia liza": [
+      "Farmacia Liza"
+    ],
+    "gamot publiko": [
+      "Gamot Publiko"
+    ],
+    "dominos pizza": [
+      "Domino's Pizza"
+    ],
+    "everything but cheese": [
+      "Everything but cheese",
+      "Everything but Cheese",
+      "Everything But Cheese"
+    ],
+    "grind": [
+      "Grind",
+      "Grind & Co."
+    ],
+    "wow salon": [
+      "Wow! Salon",
+      "WOW! Salon"
+    ],
+    "pao bicycle shop": [
+      "Pao Bicycle Shop"
+    ],
+    "northern coffee experience": [
+      "The Northern Coffee Experience"
+    ],
+    "beyond flavors": [
+      "Beyond The Flavors",
+      "Beyond the Flavors"
+    ],
+    "sincerity cafe restaurant": [
+      "Sincerity Cafe & Restaurant",
+      "Sincerity Café & Restaurant"
+    ],
+    "kumori": [
+      "Kumori"
+    ],
+    "eat fresh": [
+      "Eat Fresh"
+    ],
+    "crepeman cafe": [
+      "Crepeman Café",
+      "Crepeman Cafe"
+    ],
+    "zure rx drug": [
+      "Zure Rx Drug",
+      "Zure RX Drug"
+    ],
+    "takashi": [
+      "Takashi"
+    ],
+    "plantation": [
+      "The Plantation"
+    ],
+    "thai mango": [
+      "Thai Mango"
+    ],
+    "congo grille": [
+      "Congo Grille"
+    ],
+    "choobi choobi": [
+      "Choobi-Choobi Southmall",
+      "Choobi Choobi"
+    ],
+    "tasty dumplings": [
+      "Tasty Dumplings"
+    ],
+    "masuki": [
+      "Masuki"
+    ],
+    "pares": [
+      "Pares",
+      "Pares 96"
+    ],
+    "park n go": [
+      "Park n' Go"
+    ],
+    "tita paring suman latik": [
+      "Tita Paring Suman Latik"
+    ],
+    "ultimate liempo haus": [
+      "Ultimate Liempo Haus"
+    ],
+    "thrift shop": [
+      "Thrift Shop"
+    ],
+    "mister donut": [
+      "Mister Donut"
+    ],
+    "takara tires": [
+      "Takara Tires"
+    ],
+    "muhlach ensaymada": [
+      "Muhlach Ensaymada"
+    ],
+    "kamiseta": [
+      "Kamiseta"
+    ],
+    "pantoja": [
+      "Pantoja"
+    ],
+    "bulalohan sa": [
+      "Bulalohan sa España",
+      "Bulalohan sa Fairview"
+    ],
+    "fika": [
+      "Fika",
+      "FIKA"
+    ],
+    "dayrits": [
+      "Dayrit's",
+      "Dayrits"
+    ],
+    "gubat": [
+      "Gubat",
+      "Gubat QC"
+    ],
+    "tori ichi": [
+      "Tori Ichi"
+    ],
+    "shanghai saloon": [
+      "Shanghai Saloon"
+    ],
+    "lepicerie gourmande": [
+      "L'Epicerie Gourmande"
+    ],
+    "siomai king": [
+      "Siomai King"
+    ],
+    "gilligans": [
+      "Gilligan's",
+      "Gilligan’s"
+    ],
+    "balayan ni kuyang": [
+      "Balayan ni Kuyang"
+    ],
+    "tea gumps": [
+      "Tea Gumps"
+    ],
+    "ramos bakeshop": [
+      "Ramos Bakeshop"
+    ],
+    "sacred heart of jesus pharmacy": [
+      "Sacred Heart of Jesus Pharmacy"
+    ],
+    "ga2 pharmacy": [
+      "GA2 Pharmacy",
+      "GA² Pharmacy"
+    ],
+    "chimmy": [
+      "Chimmy"
+    ],
+    "ngipinista klinika": [
+      "Ngipinista Klinika"
+    ],
+    "nuat thai": [
+      "Nuat Thai"
+    ],
+    "maki haus": [
+      "Maki Haus"
+    ],
+    "best friends": [
+      "Best Friend's",
+      "Best Friends"
+    ],
+    "ukay ukay paradise": [
+      "Ukay-ukay Paradise",
+      "Ukay-Ukay Paradise"
+    ],
+    "tapsilogan": [
+      "Tapsilogan"
+    ],
+    "gordos crispy pata": [
+      "Gordo's Crispy Pata",
+      "Gordo’s Crispy Pata"
+    ],
+    "hair cut": [
+      "Hair Cut"
+    ],
+    "tlc flower shop": [
+      "TLC Flower Shop"
+    ],
+    "nikkei": [
+      "Nikkei"
+    ],
+    "treehouse": [
+      "Treehouse"
+    ],
+    "nail spa": [
+      "Nail Spa"
+    ],
+    "coco fresh tea juice": [
+      "CoCo Fresh Tea & Juice"
+    ],
+    "macao imperial tea": [
+      "Macao Imperial Tea",
+      "Macao Imperial Tea - Banawe",
+      "Macao Imperial Tea Philippines"
+    ],
+    "team sir george salon": [
+      "Team Sir George Salon"
+    ],
+    "ryan bikes": [
+      "Ryan Bikes"
+    ],
+    "banh mi kitchen": [
+      "Bánh Mì Kitchen",
+      "Banh Mi Kitchen"
+    ],
+    "bbq bob": [
+      "BBQ Bob"
+    ],
+    "charles keith": [
+      "Charles & Keith"
+    ],
+    "giordano": [
+      "Giordano"
+    ],
+    "arrow": [
+      "Arrow"
+    ],
+    "breadtalk": [
+      "BreadTalk",
+      "Breadtalk"
+    ],
+    "surplus shop": [
+      "Surplus Shop"
+    ],
+    "bioessence": [
+      "Bioessence"
+    ],
+    "oppa chicken": [
+      "Oppa Chicken",
+      "Oppa! Chicken"
+    ],
+    "lugawan": [
+      "Lugawan"
+    ],
+    "chef von": [
+      "Chef Von"
+    ],
+    "panay tinapay": [
+      "Panay Tinapay"
+    ],
+    "360 salon": [
+      "360 Salon"
+    ],
+    "carmens best": [
+      "Carmen’s Best",
+      "Carmen's Best"
+    ],
+    "captains burger": [
+      "Captain's Burger"
+    ],
+    "bubba lab": [
+      "Bubba Lab"
+    ],
+    "hassan kabab and steaks": [
+      "Hassan Kabab and Steaks"
+    ],
+    "ace deo optical": [
+      "ACE-DEO Optical",
+      "Ace-Deo Optical"
+    ],
+    "crosta": [
+      "Crosta"
+    ],
+    "st martin polyclinic": [
+      "St. Martin Polyclinic. Inc",
+      "St. Martin Polyclinic, Inc."
+    ],
+    "f salon legarda": [
+      "F Salon Legarda"
+    ],
+    "watson": [
+      "Watson"
+    ],
+    "mandarin chinese drug center": [
+      "Mandarin Chinese Drug Center"
+    ],
+    "mama lous italian kitchen": [
+      "Mama Lou's Italian Kitchen"
+    ],
+    "mccafe": [
+      "McCafé"
+    ],
+    "mang tinapay": [
+      "Mang Tinapay"
+    ],
+    "randys donuts": [
+      "Randy's Donuts"
+    ],
+    "burgatory": [
+      "Burgatory",
+      "The Burgatory Commonwealth"
+    ],
+    "goto bob": [
+      "Goto Bob 2",
+      "Goto Bob"
+    ],
+    "taco bell": [
+      "Taco Bell"
+    ],
+    "owndays": [
+      "Owndays",
+      "OWNDAYS"
+    ],
+    "highlands coffee": [
+      "Highlands Coffee"
+    ],
+    "speedo": [
+      "Speedo"
+    ],
+    "michael kors": [
+      "Michael Kors"
+    ],
+    "lartizan": [
+      "Lartizan"
+    ],
+    "little flour": [
+      "Little Flour"
+    ],
+    "farron cafe": [
+      "Farron Cafe"
+    ],
+    "farmery": [
+      "Farmery"
+    ],
+    "zapp donuts and drinks": [
+      "Zapp Donuts and Drinks"
+    ],
+    "anytime veal burger": [
+      "Anytime Veal Burger"
+    ],
+    "auntie annes": [
+      "Auntie Anne's"
+    ],
+    "taters": [
+      "Taters",
+      "Tater's"
+    ],
+    "happy haus donuts": [
+      "Happy Haus Donuts",
+      "happy haus Donuts"
+    ],
+    "marlyns steakhouse": [
+      "Marlyn’s Steakhouse",
+      "Marlyn's Steakhouse"
+    ],
+    "takoyaki": [
+      "Takoyaki",
+      "Takoyaki stall"
+    ],
+    "avon": [
+      "Avon"
+    ],
+    "belgian waffles": [
+      "Belgian Waffles"
+    ],
+    "victorias secret": [
+      "Victoria's Secret"
+    ],
+    "family doc": [
+      "Family Doc"
+    ],
+    "markys prime bakeshop": [
+      "Marky's prime bakeshop",
+      "Marky's Prime Bakeshop Corporation."
+    ],
+    "uncle moes": [
+      "Uncle Moe's"
+    ],
+    "fish": [
+      "Fish & Co."
+    ],
+    "andys lomi bulalo": [
+      "andy’s lomi & bulalo",
+      "Andy's Lomi & Bulalo"
+    ],
+    "carmen eatery": [
+      "Carmen Eatery"
+    ],
+    "pares retiro": [
+      "Pares Retiro"
+    ],
+    "retro smile dental": [
+      "Retro Smile Dental Corp."
+    ],
+    "shawarma shack": [
+      "The Shawarma Shack",
+      "Shawarma Shack",
+      "Shawarma shack"
+    ],
+    "glm bakery": [
+      "GLM Bakery"
+    ],
+    "shawarma kabab": [
+      "Shawarma Kabab"
+    ],
+    "dolors kakanin and pansit malabon": [
+      "Dolor's Kakanin and Pansit Malabon"
+    ],
+    "royaltea": [
+      "Royaltea",
+      "royaltea"
+    ],
+    "js squared seafoods restaurant": [
+      "J's Squared Seafoods Restaurant"
+    ],
+    "oriental palace": [
+      "Oriental Palace"
+    ],
+    "king of wings": [
+      "King of Wings"
+    ],
+    "good munch": [
+      "Good Munch",
+      "Good munch"
+    ],
+    "i lab chicken": [
+      "i lab chicken"
+    ],
+    "kuyas": [
+      "Kuya’s"
+    ],
+    "manila creamery": [
+      "Manila Creamery"
+    ],
+    "cosmic": [
+      "Cosmic"
+    ],
+    "prezmar pharmacy": [
+      "Prezmar Pharmacy"
+    ],
+    "botejyu": [
+      "Botejyu"
+    ],
+    "human": [
+      "Human"
+    ],
+    "bayo": [
+      "Bayo"
+    ],
+    "dermclinic": [
+      "Dermclinic",
+      "dermclinic"
+    ],
+    "brow lounge": [
+      "Brow Lounge"
+    ],
+    "posh nails": [
+      "Posh Nails"
+    ],
+    "oxygen": [
+      "Oxygen"
+    ],
+    "forme": [
+      "Forme"
+    ],
+    "dermcare": [
+      "Dermcare"
+    ],
+    "albeth bakehouse": [
+      "Albeth Bakehouse"
+    ],
+    "coffee spot": [
+      "Coffee Spot"
+    ],
+    "burger garage": [
+      "Burger Garage"
+    ],
+    "bike shop": [
+      "The Bike Shop",
+      "Bike shop"
+    ],
+    "cuts tots": [
+      "Cuts 4 Tots"
+    ],
+    "piandre": [
+      "Piandre",
+      "Piandré"
+    ],
+    "overdoughs": [
+      "Overdoughs"
+    ],
+    "kds barbers": [
+      "KD's Barbers"
+    ],
+    "bag o shrimps": [
+      "Bag o' Shrimps",
+      "Bag O' Shrimps"
+    ],
+    "giving cafe": [
+      "The Giving Café"
+    ],
+    "tapaddiction": [
+      "TAPAddiction"
+    ],
+    "paps barbershop": [
+      "Pap's Barbershop",
+      "Paps Barbershop"
+    ],
+    "hard rock cafe": [
+      "Hard Rock Cafe"
+    ],
+    "chick n juicy": [
+      "Chick 'n Juicy"
+    ],
+    "locavore": [
+      "Locavore"
+    ],
+    "wink laser studio": [
+      "Wink Laser Studio"
+    ],
+    "medical city clinic": [
+      "The Medical City Clinic"
+    ],
+    "sambokojin": [
+      "Sambokojin"
+    ],
+    "turtles family ktv": [
+      "Turtles Family KTV"
+    ],
+    "rightway pharmacy": [
+      "Rightway Pharmacy"
+    ],
+    "realmed pharmacy": [
+      "Realmed Pharmacy",
+      "The Realmed Pharmacy"
+    ],
+    "soms thai food": [
+      "SOMs Thai food",
+      "Soms Thai food"
+    ],
+    "salinio": [
+      "Salinio"
+    ],
+    "savemore pharmacy": [
+      "Savemore Pharmacy"
+    ],
+    "health center": [
+      "Health Center"
+    ],
+    "single origin osteria": [
+      "Single Origin Osteria"
+    ],
+    "orange bucket": [
+      "The Orange Bucket"
+    ],
+    "quick relief pharmacy": [
+      "Quick Relief Pharmacy"
+    ],
+    "alley": [
+      "The Alley"
+    ],
+    "freshaire": [
+      "Freshaire",
+      "freshaire"
+    ],
+    "tra vinh": [
+      "Tra Vinh"
+    ],
+    "lugaw republic": [
+      "Lugaw Republic"
+    ],
+    "mcdonalds sundae mcfloat": [
+      "McDonald's Sundae & McFloat"
+    ],
+    "chicken star": [
+      "Chicken Star"
+    ],
+    "planas pantry": [
+      "Plana's Pantry",
+      "Planas Pantry"
+    ],
+    "st camillus polyclinic": [
+      "St. Camillus Polyclinic",
+      "St. Camillus Polyclinic Antipolo"
+    ],
+    "gingersnaps": [
+      "Gingersnaps"
+    ],
+    "rolandos farm to table restaurant": [
+      "Rolando's Farm to Table Restaurant",
+      "Rolando's farm to table restaurant"
+    ],
+    "cafe foliage": [
+      "Cafe Foliage"
+    ],
+    "bloom dash": [
+      "Bloom & Dash"
+    ],
+    "metrosunnies": [
+      "Metrosunnies"
+    ],
+    "tribal": [
+      "Tribal"
+    ],
+    "royal indian curry house": [
+      "Royal Indian Curry House"
+    ],
+    "staple and perk cafe and bakery": [
+      "Staple and Perk Cafe and Bakery"
+    ],
+    "tokyo tempura": [
+      "Tokyo Tempura"
+    ],
+    "turks shawarma": [
+      "Turks Shawarma"
+    ],
+    "five star": [
+      "Five Star"
+    ],
+    "elorde boxing gym": [
+      "Elorde Boxing Gym"
+    ],
+    "yi fang": [
+      "Yi Fang"
+    ],
+    "nanyang": [
+      "Nanyang"
+    ],
+    "tiger sugar": [
+      "Tiger Sugar"
+    ],
+    "mendokoro ramenba": [
+      "Mendokoro Ramenba"
+    ],
+    "zara": [
+      "Zara"
+    ],
+    "true chicken": [
+      "True Chicken"
+    ],
+    "big oli": [
+      "Big oli",
+      "Big Oli"
+    ],
+    "reyes dental clinic": [
+      "Reyes Dental Clinic"
+    ],
+    "studio salon": [
+      "Studio 179 salon",
+      "Studio 179 Salon"
+    ],
+    "nicoles lugawan": [
+      "Nicole's Lugawan Caloocan Branch",
+      "Nicole's Lugawan"
+    ],
+    "ucc park cafe": [
+      "UCC Park Café"
+    ],
+    "brothers burger express": [
+      "Brothers Burger Express"
+    ],
+    "ukay ukay": [
+      "Ukay-ukay",
+      "Ukay-Ukay",
+      "Ukay Ukay"
+    ],
+    "paluto": [
+      "Paluto"
+    ],
+    "house of lasagna": [
+      "House of Lasagna"
+    ],
+    "pizza telefono": [
+      "Pizza Telefono"
+    ],
+    "lugawan sa tejeros": [
+      "Lugawan sa Tejeros",
+      "Lugawan Sa Tejeros"
+    ],
+    "r l dental clinic": [
+      "R&L Dental Clinic",
+      "R & L Dental Clinic"
+    ],
+    "sweet ecstacy": [
+      "Sweet Ecstacy"
+    ],
+    "tapsi ni vivian at bulaluhan": [
+      "Tapsi ni Vivian at Bulaluhan"
+    ],
+    "cafe adriatico": [
+      "Cafe Adriatico"
+    ],
+    "bagwings": [
+      "Bagwings"
+    ],
+    "j a d bicycle shop": [
+      "J.A.D. Bicycle Shop"
+    ],
+    "tong yang plus": [
+      "Tong Yang Plus"
+    ],
+    "sebastians ice cream": [
+      "Sebastian's Ice Cream"
+    ],
+    "angels pharmacy": [
+      "Angel's Pharmacy"
+    ],
+    "zapote health center": [
+      "Zapote Health Center"
+    ],
+    "sharetea": [
+      "Sharetea"
+    ],
+    "mylenes": [
+      "Mylene's"
+    ],
+    "polland hopia factory": [
+      "Polland Hopia Factory"
+    ],
+    "amo hopia bakery": [
+      "Amo Hopia & Bakery"
+    ],
+    "polland": [
+      "Polland"
+    ],
+    "ate ricas bacsilog": [
+      "Ate Rica's Bacsilog"
+    ],
+    "meryls pizza": [
+      "Meryl's Pizza"
+    ],
+    "milktea": [
+      "Milktea"
+    ],
+    "goto tendon": [
+      "Goto Tendon"
+    ],
+    "plato rustico": [
+      "Plato Rustico"
+    ],
+    "tatangs lechon": [
+      "Tatangs Lechon",
+      "Tatang's Lechon"
+    ],
+    "pandesal": [
+      "Pandesal",
+      "Pandesal store"
+    ],
+    "casa elmira": [
+      "Casa Elmira"
+    ],
+    "chachago": [
+      "Chachago"
+    ],
+    "kenny rogers": [
+      "Kenny Rogers",
+      "Kenny Roger's"
+    ],
+    "pie kitchen": [
+      "Pie Kitchen",
+      "The Pie Kitchen"
+    ],
+    "town kitchen": [
+      "Town Kitchen"
+    ],
+    "goca tea coffee": [
+      "Goca Tea & Coffee"
+    ],
+    "pirates grill": [
+      "Pirates Grill",
+      "Pirate's Grill"
+    ],
+    "tapa supreme": [
+      "Tapa Supreme"
+    ],
+    "big als cookie jar": [
+      "Big Al's Cookie Jar"
+    ],
+    "mcy dental clinic": [
+      "MCY Dental Clinic"
+    ],
+    "doloras": [
+      "Dolora's"
+    ],
+    "chinese beef noodles house": [
+      "Chinese Beef Noodles House"
+    ],
+    "forever": [
+      "Forever 21"
+    ],
+    "mang boy lugawan": [
+      "Mang Boy Lugawan"
+    ],
+    "ohtako takoyaki soldiers": [
+      "Ohtako Takoyaki Soldiers"
+    ],
+    "ohtako takoyaki": [
+      "Ohtako Takoyaki"
+    ],
+    "beer factory": [
+      "The Beer Factory"
+    ],
+    "zia dental clinic": [
+      "Zia Dental Clinic"
+    ],
+    "tea pop": [
+      "Tea-Pop",
+      "Tea Pop"
+    ],
+    "sicilian roast": [
+      "Sicilian Roast"
+    ],
+    "jts manukan grille": [
+      "JT's Manukan Grille",
+      "JT’s manukan grille",
+      "JT’s Manukan Grille"
+    ],
+    "friendlycare": [
+      "FriendlyCare"
+    ],
+    "original goodies pares": [
+      "Original Goodies Pares"
+    ],
+    "monster wings": [
+      "Monster Wings"
+    ],
+    "ideal vision center": [
+      "Ideal Vision Center"
+    ],
+    "r m e salon": [
+      "R.M.E. Salon"
+    ],
+    "bratz grilled burger": [
+      "Bratz Grilled Burger"
+    ],
+    "toms crispy pata": [
+      "Tom's Crispy Pata"
+    ],
+    "golden baboy": [
+      "Golden Baboy"
+    ],
+    "generals lechon": [
+      "General's Lechon"
+    ],
+    "st francis generic drug": [
+      "St Francis Generic Drug",
+      "St. Francis Generic Drug"
+    ],
+    "bok korean fried chicken": [
+      "Bok Korean Fried Chicken",
+      "BOK Korean Fried Chicken"
+    ],
+    "ka pares": [
+      "Ka-pares",
+      "Ka Pares 88"
+    ],
+    "doloras pancit malabon": [
+      "Dolora's Pancit Malabon"
+    ],
+    "sandugo": [
+      "Sandugo"
+    ],
+    "don c": [
+      "Don. C",
+      "Don C",
+      "Don C."
+    ],
+    "biggys": [
+      "Biggys",
+      "Biggy's"
+    ],
+    "big brat burger": [
+      "Big Brat Burger"
+    ],
+    "chicken chingu": [
+      "Chicken Chingu"
+    ],
+    "rib shack": [
+      "The Rib Shack",
+      "Rib Shack"
+    ],
+    "elias wicked ales spirits": [
+      "Elias Wicked Ales & Spirits"
+    ],
+    "feta": [
+      "Feta"
+    ],
+    "striga bikes": [
+      "Striga Bikes"
+    ],
+    "bang bang bangus": [
+      "Bang Bang Bangus",
+      "Bang Bang Bangus - Cubao"
+    ],
+    "chicks mo unli": [
+      "Chicks Mo Unli"
+    ],
+    "gang gang chicken": [
+      "Gang Gang Chicken"
+    ],
+    "manila clasico": [
+      "Manila Clasico"
+    ],
+    "colettes": [
+      "Colette's"
+    ],
+    "cut": [
+      "Cut España",
+      "CUT"
+    ],
+    "boogie boogie ukay ukay": [
+      "Boogie-Boogie Ukay-Ukay",
+      "The Boogie-boogie Ukay-ukay"
+    ],
+    "svl dental clinic": [
+      "SVL Dental Clinic"
+    ],
+    "bike depot": [
+      "Bike Depot"
+    ],
+    "moment of tooth dental clinic": [
+      "Moment of Tooth Dental Clinic"
+    ],
+    "nwow electric bicycle": [
+      "NWow Electric Bicycle",
+      "NWOW Electric Bicycle"
+    ],
+    "pound for pound fitness": [
+      "Pound for Pound Fitness"
+    ],
+    "dear joe": [
+      "Dear Joe"
+    ],
+    "sundays": [
+      "Sundays"
+    ],
+    "crunch": [
+      "The Crunch",
+      "Crunch"
+    ],
+    "baa baa": [
+      "Baa Baa"
+    ],
+    "mos burger": [
+      "Mos Burger",
+      "MOS Burger"
+    ],
+    "don benitos cassava cake pichi pichi": [
+      "Don Benito's Cassava Cake & Pichi-Pichi",
+      "Don Benito's Cassava Cake & Pichi-pichi"
+    ],
+    "lembest": [
+      "Lembest"
+    ],
+    "wei cha": [
+      "Wei Cha"
+    ],
+    "generix pharmacy": [
+      "Generix Pharmacy"
+    ],
+    "nanos tsiken inasal": [
+      "Nano's Tsiken Inasal"
+    ],
+    "checknoc": [
+      "Checknoc"
+    ],
+    "supremo barber": [
+      "Supremo Barber",
+      "SUPREMO BARBER"
+    ],
+    "clinica dentista": [
+      "Clinica Dentista"
+    ],
+    "modern shanghai": [
+      "Modern Shanghai"
+    ],
+    "tastes from greens": [
+      "Tastes from the Greens",
+      "Tastes from the Greens-Malabon"
+    ],
+    "siogo": [
+      "Siogo"
+    ],
+    "ourblend coffee milk tea": [
+      "OurBlend Coffee & Milk Tea",
+      "Ourblend Coffee & Milk Tea"
+    ],
+    "brmedz pharmacy": [
+      "BRMedz Pharmacy"
+    ],
+    "cuevas": [
+      "Cuevas"
+    ],
+    "kape siklo": [
+      "Kape Siklo"
+    ],
+    "ihawan ni kuya speed": [
+      "Ihawan ni Kuya Speed"
+    ],
+    "rockos herb roasted chicken": [
+      "Rocko's Herb-Roasted Chicken",
+      "Rocko's Herb Roasted Chicken"
+    ],
+    "koomi": [
+      "Koomi"
+    ],
+    "laya coffee": [
+      "Laya Coffee"
+    ],
+    "gfamily pharmacy": [
+      "Gfamily Pharmacy",
+      "GFamily Pharmacy"
+    ],
+    "valley bikes": [
+      "Valley Bikes"
+    ],
+    "fatboys pizza pasta": [
+      "Fatboy's Pizza Pasta"
+    ],
+    "tsukemen": [
+      "Tsukemen"
+    ],
+    "alexa bike shop": [
+      "Alexa Bike Shop"
+    ],
+    "one": [
+      "One-5",
+      "The One"
+    ],
+    "lola felys canteen": [
+      "Lola Fely's Canteen"
+    ],
+    "alphaline drugstore": [
+      "Alphaline Drugstore"
+    ],
+    "oppa k grill": [
+      "Oppa K-Grill"
+    ],
+    "nespresso": [
+      "Nespresso"
+    ],
+    "big brew": [
+      "Big Brew",
+      "big brew",
+      "Big Brew Malabon"
+    ],
+    "pound": [
+      "Pound"
+    ],
+    "ippudo": [
+      "Ippudo"
+    ],
+    "paul": [
+      "Paul"
+    ],
+    "dadas lechon": [
+      "Dada's Lechon"
+    ],
+    "trusted drugstore": [
+      "Trusted Drugstore"
+    ],
+    "smile republic dental clinic": [
+      "Smile Republic Dental Clinic"
+    ],
+    "prada": [
+      "Prada"
+    ],
+    "dior": [
+      "Dior"
+    ],
+    "lacoste": [
+      "Lacoste"
+    ],
+    "santouka": [
+      "Santouka"
+    ],
+    "brunos": [
+      "Bruno's"
+    ],
+    "mangan": [
+      "Mangan"
+    ],
+    "panda express": [
+      "Panda Express"
+    ],
+    "heihei chicken burger": [
+      "Heihei Chicken Burger"
+    ],
+    "universal dental clinic": [
+      "Universal Dental Clinic"
+    ],
+    "animal bite clinic": [
+      "Animal Bite Clinic"
+    ],
+    "sajang chicken": [
+      "Sajang Chicken"
+    ],
+    "gardini": [
+      "Gardini"
+    ],
+    "dolls beauty salon": [
+      "Dolls Beauty Salon"
+    ],
+    "mr sigs": [
+      "Mr. Sigs"
+    ],
+    "i milktea": [
+      "I ❤ Milktea",
+      "I ♥️ Milktea",
+      "I❤️Milktea"
+    ],
+    "wagyuniku": [
+      "Wagyuniku"
+    ],
+    "nihon cafe": [
+      "Nihon Café",
+      "Nihon Cafe"
+    ],
+    "yayoi": [
+      "Yayoi"
+    ],
+    "calliope": [
+      "Calliope"
+    ],
+    "sumo niku": [
+      "Sumo Niku"
+    ],
+    "kkopi": [
+      "KKOPI",
+      "Kkopi",
+      "Kköpi"
+    ],
+    "brooklyns new york pizza": [
+      "Brooklyn’s New York Pizza"
+    ],
+    "brunch bureau": [
+      "Brunch Bureau"
+    ],
+    "maxicare primary care clinic": [
+      "Maxicare Primary Care Clinic"
+    ],
+    "raymond barber shop": [
+      "Raymond Barber Shop"
+    ],
+    "cebus best ricos lechon": [
+      "Cebu's Best Rico's Lechon"
+    ],
+    "dgt one dental center": [
+      "DGT One Dental Center"
+    ],
+    "doc ariels pharmacy": [
+      "Doc Ariel's Pharmacy"
+    ],
+    "kohi": [
+      "Kohi",
+      "Kohi - Maginhawa"
+    ],
+    "mylenes bakeshop": [
+      "Mylene's Bakeshop"
+    ],
+    "dampa express": [
+      "Dampa Express"
+    ],
+    "uy dental clinic": [
+      "Uy Dental Clinic"
+    ],
+    "chinooks": [
+      "Chinooks"
+    ],
+    "bershka": [
+      "Bershka"
+    ],
+    "kams roast": [
+      "Kam's Roast"
+    ],
+    "astons specialities": [
+      "Astons Specialities"
+    ],
+    "honolulu cafe": [
+      "Honolulu Cafe",
+      "Honolulu Café 檀島香港茶餐廳"
+    ],
+    "beard papas": [
+      "Beard Papa's"
+    ],
+    "samgyeopmasarap": [
+      "Samgyeopmasarap"
+    ],
+    "valuemed": [
+      "ValueMed"
+    ],
+    "papa kape": [
+      "Papa Kape"
+    ],
+    "filipino restaurant": [
+      "Filipino Restaurant"
+    ],
+    "chef babs": [
+      "Chef Babs"
+    ],
+    "tablo kitchen cafe": [
+      "Tablō Kitchen × Cafe"
+    ],
+    "lembest lechon": [
+      "Lembest Lechon"
+    ],
+    "sweet ecstasy": [
+      "Sweet Ecstasy"
+    ],
+    "grace park": [
+      "Grace Park"
+    ],
+    "yummy tokyo": [
+      "Yummy Tokyo"
+    ],
+    "brewed buddies": [
+      "The Brewed Buddies"
+    ],
+    "inays bakeshop": [
+      "Inay's Bakeshop"
+    ],
+    "enteng cheesedesal": [
+      "Enteng Cheesedesal"
+    ],
+    "masil": [
+      "Masil"
+    ],
+    "mr ube": [
+      "Mr. Ube"
+    ],
+    "potato giant": [
+      "Potato Giant"
+    ],
+    "ged bart": [
+      "Ged & Bart"
+    ],
+    "quickly": [
+      "Quickly"
+    ],
+    "carics rice tops": [
+      "Caric’s Rice Tops",
+      "Carics Rice Tops"
+    ],
+    "happy n healthy": [
+      "Happy N' Healthy",
+      "Happy N' Healthy - QC"
+    ],
+    "yaki yaki": [
+      "Yaki Yaki"
+    ],
+    "big breakfast club": [
+      "Big Breakfast Club"
+    ],
+    "ezpresso": [
+      "Ezpresso"
+    ],
+    "okafe": [
+      "O’Kafe",
+      "O'Kafe"
+    ],
+    "caffeena": [
+      "Caffeena"
+    ],
+    "soy yummy": [
+      "Soy Yummy"
+    ],
+    "bahn mi kitchen": [
+      "Bahn Mi Kitchen",
+      "Báhn Mi Kitchen"
+    ],
+    "kyukyu ramen": [
+      "Kyukyu Ramen",
+      "Kyukyu Ramen 99"
+    ],
+    "borro": [
+      "Borro"
+    ],
+    "k egg": [
+      "K-Egg"
+    ],
+    "peppers": [
+      "Peppers"
+    ],
+    "good ol coffee": [
+      "Good Ol' Coffee",
+      "Good 'ol Coffee"
+    ],
+    "vatalia": [
+      "Vatalia"
+    ],
+    "mango shake": [
+      "Mango Shake"
+    ],
+    "kambal inasal": [
+      "Kambal Inasal"
+    ],
+    "pizzulu": [
+      "Pizzulu"
+    ],
+    "g g fried chicken": [
+      "G&G Fried Chicken"
+    ],
+    "beanbox": [
+      "Beanbox Commonwealth",
+      "BeanBox"
+    ],
+    "le sucre lab": [
+      "Le Sucre lab",
+      "Le Sucre Lab"
+    ],
+    "doppio": [
+      "Doppio"
+    ],
+    "pickup coffee": [
+      "Pickup Coffee"
+    ],
+    "chatramue": [
+      "ChaTraMue"
+    ],
+    "alley by vikings": [
+      "The Alley by Vikings"
+    ],
+    "fat cousins": [
+      "Fat Cousins'"
+    ],
+    "yoshi meat su": [
+      "Yoshi-Meat-Su",
+      "Yoshi-meat-su"
+    ],
+    "pag asa eatery": [
+      "Pag-asa Eatery"
+    ],
+    "master bakat": [
+      "Master Baka't"
+    ],
+    "miss wa": [
+      "Miss Wa"
+    ],
+    "boy lugawan": [
+      "Boy Lugawan"
+    ],
+    "ace deo": [
+      "Ace-Deo"
+    ],
+    "peri peri charcoal chicken": [
+      "Peri-Peri Charcoal Chicken",
+      "Peri Peri Charcoal Chicken"
+    ],
+    "ignacio dental clinic": [
+      "Ignacio Dental Clinic"
+    ],
+    "ramen wave": [
+      "Ramen Wave"
+    ],
+    "barenaked": [
+      "Barenaked"
+    ],
+    "tah mee": [
+      "tah-mee",
+      "Tah Mee"
+    ],
+    "watami grill sushi bar": [
+      "Watami Grill & Sushi Bar"
+    ],
+    "supersam": [
+      "Supersam"
+    ],
+    "amber golden chain of restaurants": [
+      "Amber Golden Chain of Restaurants"
+    ],
+    "lugaw": [
+      "Lugaw Pilipinas"
+    ],
+    "dentalscape": [
+      "Dentalscape"
+    ],
+    "cocopan": [
+      "Cocopan",
+      "COCOPAN"
+    ],
+    "modern shang": [
+      "Modern Shang"
+    ],
+    "sichu malatang": [
+      "Sichu Malatang"
+    ],
+    "earl of sandwich": [
+      "Earl of Sandwich"
+    ],
+    "kashieca": [
+      "Kashieca"
+    ],
+    "memo": [
+      "Memo"
+    ],
+    "new era": [
+      "New Era"
+    ],
+    "paris baguette": [
+      "Paris Baguette"
+    ],
+    "yakiniku like": [
+      "Yakiniku Like",
+      "Yakiniku Like!"
+    ],
+    "calvin klein": [
+      "Calvin Klein"
+    ],
+    "fred perry": [
+      "Fred Perry"
+    ],
+    "tommy hilfiger": [
+      "Tommy Hilfiger"
+    ],
+    "mossimo": [
+      "Mossimo"
+    ],
+    "ever new": [
+      "Ever New"
+    ],
+    "bambu": [
+      "Bambu",
+      "Bambū"
+    ],
+    "terranova": [
+      "Terranova"
+    ],
+    "surplus": [
+      "Surplus"
+    ],
+    "caramia": [
+      "Caramia"
+    ],
+    "plato wraps": [
+      "Plato Wraps"
+    ],
+    "gorae hotdog": [
+      "Gorae Hotdog"
+    ],
+    "kurimu": [
+      "Kurimu"
+    ],
+    "bench body": [
+      "Bench Body",
+      "Bench/Body"
+    ],
+    "straightforward": [
+      "Straightforward"
+    ],
+    "onesimus": [
+      "Onesimus"
+    ],
+    "yogorino": [
+      "Yogorino"
+    ],
+    "wing zone": [
+      "Wing Zone"
+    ],
+    "basil": [
+      "Basil"
+    ],
+    "skin": [
+      "Skin 101"
+    ],
+    "skinstation": [
+      "SkinStation"
+    ],
+    "flawless": [
+      "Flawless"
+    ],
+    "george": [
+      "George"
+    ],
+    "toni guy": [
+      "Toni & Guy"
+    ],
+    "nail a holics": [
+      "Nail a Holics"
+    ],
+    "mai wei fang": [
+      "Mai Wei Fang"
+    ],
+    "sizzling plate": [
+      "Sizzling Plate"
+    ],
+    "contis bakeshop and restaurant": [
+      "Conti's Bakeshop and Restaurant"
+    ],
+    "prologue": [
+      "Prologue"
+    ],
+    "fiery style": [
+      "Fiery Style"
+    ],
+    "tuan tuan": [
+      "Tuan Tuan"
+    ],
+    "bbk": [
+      "BBK"
+    ],
+    "wildflour restaurant": [
+      "Wildflour Restaurant"
+    ],
+    "d cream": [
+      "D’ Cream",
+      "D' Cream"
+    ],
+    "drip kofi": [
+      "Drip Kofi"
+    ],
+    "kings bakeshop": [
+      "King's Bakeshop"
+    ],
+    "buttery": [
+      "Buttery & Co",
+      "Buttery & Co."
+    ],
+    "peri peri charcoal chicken sauce bar": [
+      "Peri Peri Charcoal Chicken & Sauce Bar",
+      "Peri-Peri Charcoal Chicken & Sauce Bar"
+    ],
+    "tomo japanese dining": [
+      "Tomo Japanese Dining"
+    ],
+    "t j salon": [
+      "T&J Salon"
+    ],
+    "bigbrew": [
+      "BigBrew",
+      "Bigbrew"
+    ],
+    "koi": [
+      "KOI Thé",
+      "Koi The"
+    ],
+    "sha xia snack house": [
+      "Sha-Xia Snack House"
+    ],
+    "persian avenue": [
+      "Persian Avenue"
+    ],
+    "regatta": [
+      "Regatta"
+    ],
+    "gq barber shop": [
+      "GQ Barber Shop"
+    ],
+    "surgilight": [
+      "Surgilight"
+    ],
+    "face shop": [
+      "The Face Shop"
+    ],
+    "oxgn": [
+      "Oxgn"
+    ],
+    "contis bakeshop restaurant": [
+      "Conti's Bakeshop & Restaurant"
+    ],
+    "miguel maria": [
+      "Miguel & Maria"
+    ],
+    "weapon r": [
+      "Weapon R"
+    ],
+    "wow": [
+      "WOW!",
+      "Wow"
+    ],
+    "hoshino coffee": [
+      "Hoshino Coffee"
+    ],
+    "mn la": [
+      "MN + LA",
+      "MN+LA"
+    ],
+    "roshan gym": [
+      "Roshan Gym"
+    ],
+    "bok chicken": [
+      "Bok Chicken"
+    ],
+    "baga burger": [
+      "Baga Burger"
+    ],
+    "gudaca": [
+      "Gudaca"
+    ],
+    "medquest pharmacy": [
+      "Medquest Pharmacy"
+    ],
+    "happykopi": [
+      "HappyKopi",
+      "happykopi",
+      "Happykopi"
+    ],
+    "urban shades": [
+      "Urban Shades"
+    ],
+    "big brew cafe": [
+      "Big Brew Cafe"
+    ],
+    "old school": [
+      "Old School"
+    ],
+    "new world diagnostics": [
+      "New World Diagnostics"
+    ],
+    "what about coffee": [
+      "What About Coffee?"
+    ],
+    "paiks coffee": [
+      "Paik's Coffee"
+    ],
+    "dampa sa cogeo": [
+      "Dampa sa Cogeo",
+      "Dampa Sa Cogeo"
+    ],
+    "korea garden": [
+      "Korea Garden"
+    ],
+    "medzone": [
+      "Medzone"
+    ],
+    "chickten wings": [
+      "Chickten Wings",
+      "Chickten wings"
+    ],
+    "azadore restaurant": [
+      "Azadore Restaurant"
+    ],
+    "oh my chicken": [
+      "Oh My Chicken",
+      "Oh My Chicken!"
+    ],
+    "juan cafe": [
+      "Juan Café",
+      "Juan Cafe"
+    ],
+    "kitchen city": [
+      "The Kitchen City",
+      "Kitchen city"
+    ],
+    "calle cafe": [
+      "CALLE CAFE",
+      "Calle Cafe"
+    ],
+    "sunnies studios": [
+      "Sunnies Studios"
+    ],
+    "alberto": [
+      "Alberto"
+    ],
+    "tajimaya": [
+      "Tajimaya"
+    ],
+    "avocadoria": [
+      "Avocadoria.ph",
+      "Avocadoria"
+    ],
+    "chooks": [
+      "Chooks!",
+      "Chooks"
+    ],
+    "john lemon": [
+      "John Lemon"
+    ],
+    "macbeth": [
+      "Macbeth"
+    ],
+    "ojo eyewear": [
+      "Ojo Eyewear"
+    ],
+    "angus pares": [
+      "Angus Pares"
+    ],
+    "kamay kainan": [
+      "Kamay Kainan"
+    ],
+    "moto": [
+      "Moto"
+    ],
+    "eggspert": [
+      "Eggspert"
+    ],
+    "max mango": [
+      "Max Mango"
+    ],
+    "arch shawarma": [
+      "Arch Shawarma"
+    ],
+    "farmassist": [
+      "The Farmassist"
+    ],
+    "candid coffee": [
+      "Candid Coffee"
+    ],
+    "lan hot pot": [
+      "Lan Hot Pot",
+      "LAN Hot Pot"
+    ],
+    "perry ellis": [
+      "Perry Ellis"
+    ],
+    "hla": [
+      "HLA"
+    ],
+    "bad bird": [
+      "Bad Bird"
+    ],
+    "blk": [
+      "BLK 513"
+    ],
+    "perez optical": [
+      "Perez Optical"
+    ],
+    "lutong bicol": [
+      "Lutong Bicol"
+    ],
+    "andoks litson": [
+      "Andok's Litson"
+    ],
+    "baa baa thai tea": [
+      "Baa Baa Thai Tea"
+    ],
+    "sushi nori": [
+      "Sushi Nori"
+    ],
+    "tasa barbershop": [
+      "Tasa Barbershop"
+    ],
+    "go coffee": [
+      "Go Coffee",
+      "GO COFFEE"
+    ],
+    "bang bang special crispy bangus": [
+      "Bang Bang Special Crispy Bangus"
+    ],
+    "bikers idea": [
+      "Bikers Idea"
+    ],
+    "welltrust pharmacy": [
+      "Welltrust Pharmacy"
+    ],
+    "brew corner": [
+      "Brew Corner"
+    ],
+    "salon international": [
+      "Salon International 360",
+      "Salon 360 International"
+    ],
+    "kabayan pares mami": [
+      "Kabayan Pares Mami"
+    ],
+    "house of toasted siopao": [
+      "House of Toasted Siopao"
+    ],
+    "madrid polyclinic diagnostic center": [
+      "Madrid Polyclinic & Diagnostic Center Inc."
+    ],
+    "tutongs laksa": [
+      "Tutong's Laksa"
+    ],
+    "paluto sizzling nga po": [
+      "Paluto ...Sizzling Nga Po!",
+      "Paluto... Sizzling Nga Po!",
+      "Paluto ...sizzling nga po!"
+    ],
+    "baby q": [
+      "Baby-Q",
+      "Baby Q"
+    ],
+    "dr care": [
+      "Dr. Care"
+    ],
+    "kuya mikes pansit bato": [
+      "Kuya Mike's Pansit Bato"
+    ],
+    "yogii": [
+      "Yogii"
+    ],
+    "kabigtings halo halo": [
+      "Kabigting's Halo-Halo"
+    ],
+    "coffee gusto": [
+      "Coffee Gusto"
+    ],
+    "love coffee": [
+      "Love, Coffee"
+    ],
+    "r lapids chicharon bbq": [
+      "R. Lapid's Chicharon & BBQ"
+    ],
+    "fatboys": [
+      "Fatboys"
+    ],
+    "nailcentrale": [
+      "NailCentrale"
+    ],
+    "kuya naths goto": [
+      "Kuya Nath's Goto"
+    ],
+    "paraoan dental clinic": [
+      "Paraoan Dental Clinic"
+    ],
+    "frapatea": [
+      "Frapatea"
+    ],
+    "calea beauty lounge": [
+      "Calea Beauty Lounge"
+    ],
+    "fish2go": [
+      "Fish2Go",
+      "fish2go"
+    ],
+    "ling nam fried siopao": [
+      "Ling Nam Fried Siopao"
+    ],
+    "myranel bakery": [
+      "Myranel Bakery"
+    ],
+    "donut park": [
+      "Donut Park"
+    ],
+    "janice canteen": [
+      "Janice Canteen"
+    ],
+    "micoys burger": [
+      "Micoy's Burger"
+    ],
+    "sendangs bakehouse": [
+      "Sendang's Bakehouse"
+    ],
+    "tapsi ni vivian": [
+      "Tapsi ni Vivian"
+    ],
+    "tita dorys bakeshop": [
+      "Tita Dory's Bakeshop"
+    ],
+    "tomo coffee": [
+      "Tomo Coffee",
+      "tomo coffee",
+      "Tomo coffee"
+    ],
+    "cynnetha bakery": [
+      "Cynnetha Bakery"
+    ],
+    "calle cafe by don gabriel": [
+      "Calle Cafe by Don Gabriel",
+      "Calle Cafe by don gabriel"
+    ],
+    "moressi": [
+      "Moressi"
+    ],
+    "el pollo loco": [
+      "El Pollo Loco"
+    ],
+    "muhlach": [
+      "Muhlach"
+    ],
+    "buko juan": [
+      "Buko Juan"
+    ],
+    "purefoods tender juicy hotdog": [
+      "Purefoods Tender Juicy Hotdog"
+    ],
+    "after tree dessert cafe": [
+      "After Tree Dessert Cafe"
+    ],
+    "little flour cafe": [
+      "Little Flour Cafe",
+      "Little Flour Café"
+    ],
+    "matcha tokyo": [
+      "The Matcha Tokyo"
+    ],
+    "bb q chicken": [
+      "bb.q Chicken"
+    ],
+    "massimo dutti": [
+      "Massimo Dutti"
+    ],
+    "columbia": [
+      "Columbia"
+    ],
+    "rosalynda beauty salon and spa": [
+      "Rosalynda Beauty Salon and Spa"
+    ],
+    "tung lok seafood": [
+      "Tung Lok Seafood"
+    ],
+    "tsokolateria": [
+      "Tsokolateria"
+    ],
+    "house of sushi": [
+      "House of Sushi",
+      "House Of Sushi"
+    ],
+    "czaczacza cafe": [
+      "Czaczacza Cafe"
+    ],
+    "sari sari": [
+      "Sari-Sari Store"
+    ],
+    "skoop": [
+      "Skoop"
+    ],
+    "jesi mendez salon": [
+      "Jesi Mendez Salon"
+    ],
+    "cln": [
+      "CLN"
+    ],
+    "dirty ice cream": [
+      "Dirty Ice Cream"
+    ],
+    "unibrandy": [
+      "UniBrandy"
+    ],
+    "umi matsu": [
+      "Umi Matsu"
+    ],
+    "tomoro coffee": [
+      "Tomoro Coffee",
+      "TOMORO Coffee"
+    ],
+    "daily habit": [
+      "Daily Habit"
+    ],
+    "mark and grace bakeshop": [
+      "Mark and Grace Bakeshop"
+    ],
+    "founders donuts": [
+      "Founders Donuts"
+    ],
+    "eo executive optical": [
+      "EO Executive Optical"
+    ],
+    "bubu": [
+      "Bubu",
+      "Bubu & Co."
+    ],
+    "a1 premium shabu shabu": [
+      "A1 Premium Shabu Shabu",
+      "A1 Premium Shabu-Shabu"
+    ],
+    "famous amos": [
+      "Famous Amos"
+    ],
+    "belo medical group": [
+      "Belo Medical Group"
+    ],
+    "butter": [
+      "Butter"
+    ],
+    "ucc mentore": [
+      "UCC Mentore"
+    ],
+    "captain calamares": [
+      "Captain Calamares"
+    ],
+    "pick up coffee": [
+      "Pick Up Coffee",
+      "Pick-Up Coffee",
+      "Pick-up Coffee"
+    ],
+    "chaboba": [
+      "Chaboba"
+    ],
+    "why chicken": [
+      "Why? CHICKEN",
+      "Why Chicken"
+    ],
+    "sunny scramble": [
+      "sunny & scramble",
+      "Sunny & Scramble"
+    ],
+    "caffeinated": [
+      "Caffeinated"
+    ],
+    "sulit chicken": [
+      "Sulit Chicken"
+    ],
+    "p donuts": [
+      "P. Donuts"
+    ],
+    "mr brewsko": [
+      "Mr.Brewsko",
+      "Mr. Brewsko"
+    ],
+    "bacsilog": [
+      "Bacsilog"
+    ],
+    "auro chocolate cafe": [
+      "Auro Chocolate Cafe",
+      "Auro Chocolate Café"
+    ],
+    "boulangerie22": [
+      "Boulangerie22"
+    ],
+    "persia wrap": [
+      "Persia Wrap"
+    ],
+    "kurimi": [
+      "Kurimi"
+    ],
+    "cotti coffee": [
+      "Cotti Coffee"
+    ],
+    "bigz burger": [
+      "Bigz Burger"
+    ],
+    "tyche nails": [
+      "Tyche Nails"
+    ],
+    "jay js": [
+      "Jay-J's",
+      "Jay-J’s"
+    ],
+    "hearty bread": [
+      "Hearty Bread"
+    ],
+    "le katsu": [
+      "Le Katsu"
+    ],
+    "b1t1 takeaway coffee": [
+      "B1T1 Takeaway Coffee"
+    ],
+    "senor pollo": [
+      "Señor Pollo"
+    ],
+    "daily": [
+      "Daily"
+    ],
+    "neolivbrews": [
+      "neolivbrews",
+      "Neolivbrews"
+    ],
+    "big scoop ice cream": [
+      "Big Scoop Ice Cream"
+    ],
+    "dialysis center": [
+      "Dialysis Center"
+    ],
+    "mazu": [
+      "Mazu"
+    ],
+    "tender loving cakes": [
+      "Tender Loving Cakes"
+    ],
+    "mcy dental": [
+      "MCY Dental"
+    ],
+    "cut creation salon": [
+      "Cut Creation Salon"
+    ],
+    "dr llane dental clinic": [
+      "Dr. Llane Dental Clinic"
+    ],
+    "sajad fashion": [
+      "Sajad Fashion"
+    ],
+    "place": [
+      "The Place",
+      "Place 24"
+    ],
+    "bebang halo halo": [
+      "Bebang - Halo Halo Store",
+      "Bebang Halo-halo"
+    ],
+    "momoyo": [
+      "Momoyo"
+    ],
+    "pancho cafe": [
+      "Pancho Cafe"
+    ],
+    "ecru": [
+      "Ecru"
+    ],
+    "mitsuyado izakaya": [
+      "Mitsuyado Izakaya"
+    ],
+    "scratch": [
+      "Scratch"
+    ],
+    "namwah cuisine": [
+      "Namwah Cuisine"
+    ],
+    "but first coffee bfc": [
+      "But First, Coffee (BFC)"
+    ],
+    "daddys barbershop": [
+      "Daddy's Barbershop"
+    ],
+    "kanto pares": [
+      "Kanto Pares"
+    ],
+    "hairdresser": [
+      "Hairdresser"
+    ],
+    "sumilang super health center": [
+      "Sumilang Super Health Center"
+    ],
+    "delfin salonga health center": [
+      "Delfin Salonga Health Center"
+    ],
+    "moonwalk health center": [
+      "Moonwalk Health Center"
+    ],
+    "beanleaf": [
+      "Beanleaf Katipunan",
+      "Beanleaf"
+    ],
+    "klinika": [
+      "Klinika Pasig",
+      "Klinika Novaliches"
+    ],
+    "freedom bazaar": [
+      "Freedom Bazaar"
+    ],
+    "funnside ningnangan": [
+      "Funnside Ningnangan"
+    ],
+    "shakeys pizza": [
+      "Shakey's Pizza"
+    ],
+    "hello sugar": [
+      "Hello Sugar"
+    ],
+    "lins bakery": [
+      "Lin's Bakery"
+    ],
+    "gym": [
+      "Gym"
+    ],
+    "alvarez park cafe": [
+      "Alvarez Park Cafe"
+    ],
+    "alfies chef secret": [
+      "Alfie's Chef Secret"
+    ],
+    "taytay municipal tiangge": [
+      "Taytay Municipal Tiangge"
+    ]
+  }
+}

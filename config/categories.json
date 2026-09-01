@@ -1,0 +1,41 @@
+{
+  "_note": "phase 1 = F&B (matches the existing 7-demo portfolio, so Tier 1 social proof lands). phase 2 = services, enable once the loop is proven. weight = how much a website helps this business type; visual/destination businesses score highest.",
+  "categories": {
+    "amenity=restaurant":   { "label": "Restaurant",   "phase": 1, "weight": 10 },
+    "amenity=cafe":         { "label": "Cafe",         "phase": 1, "weight": 10 },
+    "amenity=bakery":       { "label": "Bakery",       "phase": 1, "weight": 9 },
+    "shop=bakery":          { "label": "Bakery",       "phase": 1, "weight": 9 },
+    "shop=pastry":          { "label": "Pastry shop",  "phase": 1, "weight": 9 },
+    "shop=coffee":          { "label": "Coffee shop",  "phase": 1, "weight": 9 },
+    "amenity=bar":          { "label": "Bar",          "phase": 1, "weight": 9 },
+    "amenity=pub":          { "label": "Pub",          "phase": 1, "weight": 8 },
+    "amenity=ice_cream":    { "label": "Ice cream",    "phase": 1, "weight": 8 },
+    "amenity=fast_food":    { "label": "Fast food",    "phase": 1, "weight": 6 },
+
+    "shop=beauty":          { "label": "Beauty salon", "phase": 2, "weight": 9 },
+    "shop=hairdresser":     { "label": "Salon",        "phase": 2, "weight": 8 },
+    "leisure=fitness_centre": { "label": "Gym",        "phase": 2, "weight": 8 },
+    "shop=clothes":         { "label": "Clothing",     "phase": 2, "weight": 8 },
+    "shop=florist":         { "label": "Florist",      "phase": 2, "weight": 8 },
+    "shop=pet_grooming":    { "label": "Pet grooming", "phase": 2, "weight": 8 },
+    "amenity=dentist":      { "label": "Dental",       "phase": 2, "weight": 7 },
+    "shop=optician":        { "label": "Optical",      "phase": 2, "weight": 6 },
+    "shop=bicycle":         { "label": "Bike shop",    "phase": 2, "weight": 6 },
+    "amenity=clinic":       { "label": "Clinic",       "phase": 2, "weight": 5 },
+    "amenity=pharmacy":     { "label": "Pharmacy",     "phase": 2, "weight": 3 }
+  },
+  "sme": {
+    "chainCutoff": 5,
+    "multiBranchBonusMin": 2,
+    "multiBranchBonusMax": 4,
+    "floor": {
+      "minReviewCount": 30,
+      "minPhotoCount": 6,
+      "minIgFollowers": 300
+    },
+    "ceiling": {
+      "maxReviewCount": 3000,
+      "maxIgFollowers": 50000
+    }
+  }
+}
