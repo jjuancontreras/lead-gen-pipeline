@@ -12,6 +12,29 @@
  *     three reachable during development, so we try in order.
  */
 
+import dns from 'node:dns';
+import { Agent, setGlobalDispatcher } from 'undici';
+
+/*
+ * Network setup, required on this machine.
+ *
+ * Overpass hosts publish both A and AAAA records. This box has no working
+ * IPv6 route, so every AAAA attempt fails ENETUNREACH, and Node's default
+ * 10-second connect timeout then expires before the IPv4 attempt completes
+ * against a loaded Overpass instance - surfacing as a bare "fetch failed"
+ * across all four mirrors while curl -4 succeeds in ~11s.
+ *
+ * Pin to IPv4 and give the connect a realistic budget.
+ */
+dns.setDefaultResultOrder('ipv4first');
+setGlobalDispatcher(
+  new Agent({
+    connect: { timeout: 60_000, family: 4 },
+    headersTimeout: 300_000,
+    bodyTimeout: 300_000,
+  }),
+);
+
 const MIRRORS = [
   'https://overpass-api.de/api/interpreter',
   'https://overpass.kumi.systems/api/interpreter',

@@ -62,14 +62,40 @@ async function isConsentWall(page: Page): Promise<boolean> {
   return (await page.$('form[action*="consent"]')) !== null;
 }
 
-/** Token-overlap similarity, 0..1. Used to confirm a feed hit is our business. */
+/**
+ * Name similarity, 0..1, used to confirm a feed hit is really our business.
+ *
+ * Token overlap alone is not enough: "Danny-Licious" tokenizes to
+ * ["danny","licious"] while "Dannylicious BBQ" gives ["dannylicious","bbq"],
+ * sharing nothing and scoring 0 despite being the same place. So we also
+ * compare the space-stripped forms and take the better of the two.
+ */
 export function nameSimilarity(a: string, b: string): number {
-  const ta = new Set(basicClean(a).split(' ').filter((w) => w.length > 2));
-  const tb = new Set(basicClean(b).split(' ').filter((w) => w.length > 2));
-  if (ta.size === 0 || tb.size === 0) return 0;
-  let hits = 0;
-  for (const t of ta) if (tb.has(t)) hits++;
-  return hits / Math.min(ta.size, tb.size);
+  const ca = basicClean(a);
+  const cb = basicClean(b);
+  if (!ca || !cb) return 0;
+
+  const ta = new Set(ca.split(' ').filter((w) => w.length > 2));
+  const tb = new Set(cb.split(' ').filter((w) => w.length > 2));
+  let overlap = 0;
+  if (ta.size && tb.size) {
+    let hits = 0;
+    for (const t of ta) if (tb.has(t)) hits++;
+    overlap = hits / Math.min(ta.size, tb.size);
+  }
+
+  // Concatenated comparison catches hyphenation and spacing differences.
+  const ja = ca.replace(/ /g, '');
+  const jb = cb.replace(/ /g, '');
+  let joined = 0;
+  if (ja && jb) {
+    if (ja === jb) joined = 1;
+    else if (ja.startsWith(jb) || jb.startsWith(ja)) {
+      joined = Math.min(ja.length, jb.length) / Math.max(ja.length, jb.length);
+    }
+  }
+
+  return Math.max(overlap, joined);
 }
 
 /** Read the detail fields off an open place panel. */

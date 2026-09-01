@@ -140,7 +140,8 @@ if (ingest) {
   if (!areaKey) { console.error('Usage: npm run worklist -- --area <name> [--limit 60]'); process.exit(1); }
   const all = await store.all();
   const pool = all
-    .filter((l) => l.area === areaKey && (l.status === 'sourced' || l.status === 'shortlisted'))
+    .filter((l) => l.area === areaKey &&
+      (l.status === 'sourced' || l.status === 'shortlisted' || l.status === 'needs_manual'))
     .sort((a, b) => Number(b.osm_score) - Number(a.osm_score))
     .slice(0, limit);
 

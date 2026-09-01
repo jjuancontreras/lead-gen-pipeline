@@ -4,7 +4,7 @@
  */
 
 export const STATUSES = [
-  'sourced', 'shortlisted', 'verified', 'tier1_sent', 'replied',
+  'sourced', 'shortlisted', 'needs_manual', 'verified', 'tier1_sent', 'replied',
   'demo_built', 'demo_sent', 'meeting',
   'won', 'lost', 'nurture', 'disqualified',
 ] as const;
