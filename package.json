@@ -15,7 +15,8 @@
     "worklist": "tsx bin/worklist.ts",
     "new-demo": "tsx bin/new-demo.ts",
     "draft": "tsx bin/draft-outreach.ts",
-    "record": "tsx bin/record.ts"
+    "record": "tsx bin/record.ts",
+    "publish": "tsx bin/publish.ts"
   },
   "devDependencies": {
     "@types/node": "^22",
