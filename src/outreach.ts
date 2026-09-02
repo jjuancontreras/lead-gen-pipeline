@@ -111,6 +111,42 @@ export function interpolate(text: string, ctx: Readonly<Record<string, string>>)
   return out;
 }
 
+/**
+ * Plural noun phrase for a category label, for use mid-sentence.
+ *
+ * The templates previously appended a bare "s", which is wrong for most of
+ * the real labels in categories.json: several are adjectives ("Dental",
+ * "Optical"), mass nouns ("Clothing", "Fast food") or gerunds ("Pet
+ * grooming"), so no suffix rule can fix them. Those get an explicit noun.
+ * Everything else follows normal English rules. A blank category produced
+ * the memorable "businesss".
+ *
+ * This lives here rather than in categories.json because it is presentation,
+ * and because the scoring code reads those labels for other purposes.
+ */
+const CATEGORY_PLURAL: Record<string, string> = {
+  'fast food': 'fast food places',
+  'clothing': 'clothing shops',
+  'dental': 'dental clinics',
+  'optical': 'optical shops',
+  'pet grooming': 'pet groomers',
+  'ice cream': 'ice cream shops',
+  'beauty salon': 'beauty salons',
+  'bike shop': 'bike shops',
+  'coffee shop': 'coffee shops',
+  'pastry shop': 'pastry shops',
+};
+
+export function pluralizeCategory(label: string): string {
+  const key = label.trim().toLowerCase();
+  if (!key) return 'small businesses';
+  const explicit = CATEGORY_PLURAL[key];
+  if (explicit) return explicit;
+  if (/[^aeiou]y$/.test(key)) return key.slice(0, -1) + 'ies';
+  if (/(s|x|z|ch|sh)$/.test(key)) return key + 'es';
+  return key + 's';
+}
+
 /** Every value a template may reference, lowest precedence first. */
 function buildContext(lead: Lead, extra: Record<string, string>): Record<string, string> {
   const areas = loadAreas().areas;
@@ -120,6 +156,8 @@ function buildContext(lead: Lead, extra: Record<string, string>): Record<string,
     area_label: areas[lead.area]?.label ?? lead.area ?? '',
     // Generic, never invented: "business" is true of every lead in the store.
     category_phrase: category || 'business',
+    // Already plural and grammatical - templates must NOT append an "s".
+    category_plural: pluralizeCategory(lead.category ?? ''),
     page_kind: PAGE_KIND_LABEL[lead.website_kind] ?? '',
     today: new Date().toISOString().slice(0, 10),
     ...SENDER,

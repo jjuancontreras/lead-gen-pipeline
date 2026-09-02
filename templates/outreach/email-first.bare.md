@@ -4,7 +4,7 @@ Hi {{name}} team,
 
 I'm {{sender_name}}, a {{sender_year}} {{sender_course}} student at {{sender_school}}. Building websites for small businesses around Metro Manila is what I do in my free time.
 
-I was going through {{category_phrase}}s around {{area_label}} and could not find a website for {{name}} anywhere. That is the whole reason I am writing: when someone hears about you and goes looking, there is nothing there for them to find.
+I was going through {{category_plural}} around {{area_label}} and could not find a website for {{name}} anywhere. That is the whole reason I am writing: when someone hears about you and goes looking, there is nothing there for them to find.
 
 So here is my offer: let me build you one first, for free, before you decide anything. I use the photos and branding you already have, put together a real working site, and send you the link. If you like it, we talk. If you don't, you keep it and I stop bothering you. No invoice either way.
 
