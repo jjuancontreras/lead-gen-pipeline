@@ -1,12 +1,22 @@
 {
   "_attribution": "Business roster data (c) OpenStreetMap contributors, ODbL 1.0 - https://www.openstreetmap.org/copyright",
   "_bboxOrder": "Overpass order: [south, west, north, east]",
-  "chainIndexBbox": [14.40, 120.94, 14.78, 121.14],
+  "chainIndexBbox": [
+    14.4,
+    120.94,
+    14.78,
+    121.14
+  ],
   "chainIndexLabel": "Metro Manila",
   "areas": {
     "katipunan": {
       "label": "Katipunan, Quezon City",
-      "bbox": [14.615, 121.055, 14.665, 121.085]
+      "bbox": [
+        14.615,
+        121.055,
+        14.665,
+        121.085
+      ]
     }
   }
 }

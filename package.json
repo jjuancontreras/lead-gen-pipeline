@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "verify": "tsx bin/verify-leads.ts",
     "worklist": "tsx bin/worklist.ts",
-    "new-demo": "tsx bin/new-demo.ts"
+    "new-demo": "tsx bin/new-demo.ts",
+    "draft": "tsx bin/draft-outreach.ts"
   },
   "devDependencies": {
     "@types/node": "^22",
@@ -21,6 +22,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "googleapis": "^178.0.0",
     "playwright": "^1.62.1",
     "undici": "^8.10.1"
   }

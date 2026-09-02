@@ -5,3 +5,4 @@
 import './source.ts';
 import './verify.ts';
 import './scaffold.ts';
+import './outreach.ts';

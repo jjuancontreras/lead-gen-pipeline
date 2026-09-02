@@ -1,0 +1,83 @@
+#!/usr/bin/env tsx
+/**
+ * Draft outreach for an area. NOTHING IS SENT.
+ *
+ *   npm run draft -- --area katipunan [--template email-first]
+ *                    [--limit 20] [--tier B] [--dry-run]
+ *
+ * Email becomes a Gmail draft when GMAIL_TOKEN_PATH is set, and a file in
+ * data/drafts/ when it is not. Instagram, Messenger and TikTok always become
+ * files - you paste those by hand, every time.
+ *
+ * Thin wrapper over src/stages/outreach.ts.
+ */
+import { loadAreas } from '../src/config.ts';
+import { availableTemplates } from '../src/outreach.ts';
+import { draftOutreach, DEFAULT_OUTREACH_LIMIT } from '../src/stages/outreach.ts';
+import type { Tier } from '../src/lead.ts';
+
+const args = process.argv.slice(2);
+const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
+const areaKey = val('--area');
+const areas = loadAreas();
+
+const usage = `
+Usage: npm run draft -- --area <name> [--template <name>] [--limit 20] [--tier B] [--dry-run]
+
+  areas:      ${Object.keys(areas.areas).join(', ')}
+  templates:  ${availableTemplates().join(', ')}
+              (omit --template to pick first contact by channel)
+`;
+
+if (!areaKey || !areas.areas[areaKey]) {
+  console.error(usage);
+  process.exit(1);
+}
+
+const template = val('--template');
+if (template && !availableTemplates().includes(template)) {
+  console.error(`\nUnknown template "${template}".${usage}`);
+  process.exit(1);
+}
+
+const dryRun = args.includes('--dry-run');
+// B is the volume tier: A-tier gets a demo built before anyone contacts them.
+const tiers = (val('--tier') ?? 'B').split(',').map((t) => t.trim().toUpperCase()) as Tier[];
+const label = areas.areas[areaKey]!.label;
+const gmailReady = Boolean(process.env.GMAIL_TOKEN_PATH);
+
+console.log(`\nDrafting outreach for ${label}${dryRun ? '  [DRY RUN]' : ''}`);
+console.log(`  tier ${tiers.join('/')}   template ${template ?? 'auto (by channel)'}`);
+console.log(gmailReady
+  ? '  email -> Gmail drafts (GMAIL_TOKEN_PATH is set)'
+  : '  email -> data/drafts/ files (no GMAIL_TOKEN_PATH yet)');
+console.log();
+
+const r = await draftOutreach({
+  area: areaKey,
+  limit: Number(val('--limit')) || DEFAULT_OUTREACH_LIMIT,
+  template, tiers, dryRun,
+  log: (m) => console.log('  ' + m),
+});
+
+if (r.attempted === 0) {
+  console.error(template
+    ? `\nNobody is due for "${template}" in ${label}.\n`
+    : `\nNo uncontacted tier-${tiers.join('/')} leads in ${label}. Run verify first.\n`);
+  process.exit(1);
+}
+
+console.log(`\n  drafted ${r.drafted}/${r.attempted}`);
+if (r.gmailDrafts) console.log(`  gmail drafts: ${r.gmailDrafts}  (in Gmail, unsent)`);
+if (r.files.length) console.log(`  files:        ${r.files.length} in data/drafts/`);
+if (!r.gmailReady) {
+  console.log('\n  ! GMAIL_TOKEN_PATH is not set, so email went to files too.');
+  console.log('    Point it at an OAuth token JSON to get real Gmail drafts.');
+}
+if (r.skipped.length) {
+  console.log(`\n  ${r.skipped.length} skipped:`);
+  for (const { lead, reason } of r.skipped.slice(0, 10)) {
+    console.log(`    ${lead.name.slice(0, 34).padEnd(35)} ${reason}`);
+  }
+}
+console.log('\n  NOTHING WAS SENT. Read each draft, then send it yourself.\n');
