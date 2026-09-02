@@ -13,7 +13,7 @@
  */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { spawn } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT, configPath, loadAreas } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
@@ -107,11 +107,18 @@ const server = createServer(async (req, res) => {
       const send = (event: string, data: string) =>
         res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 
-      // Argument list is fixed here and the area is validated above, so no
-      // user string ever reaches a shell. spawn without a shell, too.
-      const args = ['tsx', 'bin/campaign.ts', '--area', area];
+      // Spawn node directly against tsx's CLI entry rather than going through
+      // `npx`. On Windows npx is npx.cmd, which spawn() cannot resolve without
+      // a shell - it fails with ENOENT and the campaign never starts. Using
+      // process.execPath keeps this shell-free (so the area string can never
+      // reach a shell) and works on every platform.
+      const tsxCli = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
+      if (!existsSync(tsxCli)) {
+        return json(res, 500, { error: 'tsx not installed - run npm install' });
+      }
+      const args = [tsxCli, 'bin/campaign.ts', '--area', area];
       if (url.searchParams.get('dryRun') === '1') args.push('--dry-run');
-      const child = spawn('npx', args, { cwd: ROOT, shell: false });
+      const child = spawn(process.execPath, args, { cwd: ROOT, shell: false });
 
       const pipe = (buf: Buffer) => {
         for (const line of buf.toString('utf8').split('\n')) {
