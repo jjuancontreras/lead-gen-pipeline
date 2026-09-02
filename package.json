@@ -17,7 +17,9 @@
     "draft": "tsx bin/draft-outreach.ts",
     "record": "tsx bin/record.ts",
     "publish": "tsx bin/publish.ts",
-    "mockup": "tsx bin/mockup.ts"
+    "mockup": "tsx bin/mockup.ts",
+    "harvest": "tsx bin/harvest-assets.ts",
+    "palette": "python bin/sample-palette.py"
   },
   "devDependencies": {
     "@types/node": "^22",
@@ -27,6 +29,7 @@
   "dependencies": {
     "googleapis": "^178.0.0",
     "playwright": "^1.62.1",
+    "sharp": "^0.34.5",
     "undici": "^8.10.1"
   }
 }
