@@ -14,7 +14,8 @@
     "verify": "tsx bin/verify-leads.ts",
     "worklist": "tsx bin/worklist.ts",
     "new-demo": "tsx bin/new-demo.ts",
-    "draft": "tsx bin/draft-outreach.ts"
+    "draft": "tsx bin/draft-outreach.ts",
+    "record": "tsx bin/record.ts"
   },
   "devDependencies": {
     "@types/node": "^22",

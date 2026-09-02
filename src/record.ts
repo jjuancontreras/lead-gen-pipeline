@@ -690,6 +690,15 @@ async function recordTake(
   // Recording starts with the context, so the clock starts here too.
   const startedAt = Date.now();
   const page = await ctx.newPage();
+
+  // tsx compiles with esbuild's keepNames, which wraps functions in a `__name`
+  // helper. Playwright serializes evaluate() callbacks as source text, so that
+  // helper travels to the page where it does not exist and every evaluate call
+  // dies with "__name is not defined". Define it as a no-op before page
+  // scripts run.
+  await page.addInitScript(() => {
+    (globalThis as unknown as { __name?: unknown }).__name ??= <T,>(fn: T): T => fn;
+  });
   const video = page.video();
 
   let plan: WalkPlan = { stops: [], estimatedMs: 0, stretched: false };
@@ -702,7 +711,13 @@ async function recordTake(
 
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
-    await page.waitForSelector('main, body > *', { timeout: 20_000 });
+    // Next.js dev injects hidden overlay containers as the first children of
+    // <body>, so a bare `body > *` resolves to a permanently-hidden <div hidden>
+    // and the visibility wait never satisfies. Wait for real content instead.
+    await page.waitForSelector('main:not([hidden]), body > *:not([hidden]):not(script):not(style)', {
+      state: 'visible',
+      timeout: 20_000,
+    });
     await page.evaluate(async () => { await document.fonts.ready; });
     await page.waitForTimeout(200);
 

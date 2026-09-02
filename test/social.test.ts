@@ -286,3 +286,170 @@ test('contactPatch never writes an empty value over anything', () => {
   assert.deepEqual(contactPatch({}, { facebook: '' }), {});
   assert.deepEqual(contactPatch({ email: '   ' }, { email: 'hello@kuro.ph' }), { email: 'hello@kuro.ph' });
 });
+
+// ============================================================================
+// The enrich stage's pure half. It lives here because every rule below is a
+// rule about which extracted contact is safe to WRITE - the same question the
+// rest of this file asks, one layer up.
+// ============================================================================
+
+import {
+  planSources, needsEnrichment, looksLikeThisBusiness, trustedHandles,
+  mergeFound, missingChannels, detectWall, coverageSummary, emptyGains,
+  IDENTITY_MIN, MIN_PACE_MS, type EnrichReport,
+} from '../src/stages/enrich.ts';
+import { emptyLead, type Lead } from '../src/lead.ts';
+
+const mk = (over: Partial<Lead> = {}): Lead => ({
+  ...emptyLead(), lead_id: 'node/1', name: 'Kuro Cafe', area: 'katipunan',
+  status: 'verified', ...over,
+});
+
+// ---- who the stage picks up ------------------------------------------------
+
+test('enrich takes verified leads in this area that have no email', () => {
+  assert.equal(needsEnrichment(mk(), 'katipunan'), true);
+  assert.equal(needsEnrichment(mk({ email: 'hi@kuro.ph' }), 'katipunan'), false,
+    'an email is the thing we came for - having one means there is nothing to do');
+  assert.equal(needsEnrichment(mk({ status: 'sourced' }), 'katipunan'), false);
+  assert.equal(needsEnrichment(mk({ status: 'won' }), 'katipunan'), false);
+  assert.equal(needsEnrichment(mk(), 'maginhawa'), false, 'another area is another run');
+  assert.equal(needsEnrichment(mk({ email: '   ' }), 'katipunan'), true, 'whitespace is not an email');
+});
+
+// ---- source order ----------------------------------------------------------
+
+test('the business own social page is visited before any search', () => {
+  const sources = planSources(mk({ website_url: 'https://www.facebook.com/kurocafeqc' }), 'Katipunan, QC');
+  assert.equal(sources.length, 2);
+  assert.equal(sources[0]!.kind, 'own');
+  assert.equal(sources[0]!.url, 'https://www.facebook.com/kurocafeqc');
+  assert.equal(sources[1]!.kind, 'search');
+});
+
+test('a standalone site is not an own-source - the extractor is for socials', () => {
+  // A real website already means this lead is not a prospect; it is also not
+  // where this stage looks, so only the search remains.
+  const sources = planSources(mk({ website_url: 'https://kurocafe.ph' }), 'Katipunan, QC');
+  assert.equal(sources.length, 1);
+  assert.equal(sources[0]!.kind, 'search');
+});
+
+test('a lead with no web presence at all still gets searched', () => {
+  const sources = planSources(mk(), 'Katipunan, QC');
+  assert.deepEqual(sources.map((s) => s.kind), ['search']);
+});
+
+test('the search query quotes the name and carries the area', () => {
+  const url = planSources(mk(), 'Katipunan, QC')[0]!.url;
+  const q = decodeURIComponent(url.slice(url.indexOf('?q=') + 3));
+  assert.equal(q, '"Kuro Cafe" Katipunan, QC instagram');
+});
+
+test('a protocol-less website_url is still loadable', () => {
+  const sources = planSources(mk({ website_url: 'facebook.com/kurocafeqc' }), 'Katipunan, QC');
+  assert.equal(sources[0]!.url, 'https://facebook.com/kurocafeqc');
+});
+
+// ---- trusting a shared page ------------------------------------------------
+
+test('CRITICAL: a search page handle must look like this business', () => {
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'instagram', '@kurocafe'), true);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'instagram', '@kuro.cafe'), true);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'instagram', '@kuro_cafe'), true);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'facebook', 'kurocafeqc'), true);
+  // The handles of every OTHER business the results page happened to list.
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'instagram', '@starbucksph'), false);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'facebook', 'jollibeephilippines'), false);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'instagram', '@foodpanda.ph'), false);
+});
+
+test('an address identifies the business by its local part or its domain', () => {
+  // Both halves of how Philippine SMEs actually do email.
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'email', 'kurocafe@gmail.com'), true);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'email', 'hello@kurocafe.ph'), true);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'email', 'hello@kurocafe.com.ph'), true,
+    'a public suffix is not the business name');
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'email', 'press@zomato.com'), false);
+  assert.equal(looksLikeThisBusiness('Kuro Cafe', 'email', 'hello@gmail.com'), false);
+});
+
+test('trustedHandles drops everything that failed the identity check', () => {
+  const kept = trustedHandles('Kuro Cafe', {
+    instagram: '@kurocafe', facebook: 'jollibeephilippines', email: 'hello@kurocafe.ph',
+  });
+  assert.deepEqual(kept, { email: 'hello@kurocafe.ph', instagram: '@kurocafe' });
+});
+
+test('the identity threshold is a real threshold, not zero', () => {
+  assert.ok(IDENTITY_MIN > 0 && IDENTITY_MIN <= 1);
+  assert.ok(MIN_PACE_MS >= 8000, 'social platforms punish bursts');
+});
+
+// ---- merging across sources ------------------------------------------------
+
+test('the earlier source wins every field it filled', () => {
+  const merged = mergeFound({ instagram: '@fromtheirpage' }, { instagram: '@fromsearch', facebook: 'kurocafeqc' });
+  assert.deepEqual(merged, { instagram: '@fromtheirpage', facebook: 'kurocafeqc' });
+});
+
+test('merging never introduces an empty value', () => {
+  assert.deepEqual(mergeFound({}, { instagram: '' }), {});
+  assert.deepEqual(mergeFound({ email: 'a@kuro.ph' }, {}), { email: 'a@kuro.ph' });
+});
+
+test('missingChannels counts what is on the lead as well as what was found', () => {
+  const lead = mk({ facebook: 'kurocafeqc' });
+  assert.deepEqual(missingChannels(lead, {}), ['email', 'instagram', 'tiktok']);
+  assert.deepEqual(missingChannels(lead, { email: 'a@kuro.ph', instagram: '@k', tiktok: '@k' }), []);
+});
+
+// ---- walls -----------------------------------------------------------------
+
+test('CRITICAL: login and consent walls are detected, not extracted from', () => {
+  assert.equal(detectWall('https://www.instagram.com/accounts/login/?next=%2Fkurocafe%2F', ''), 'login');
+  assert.equal(detectWall('https://www.facebook.com/login.php?next=x', ''), 'login');
+  assert.equal(detectWall('https://consent.google.com/m?continue=x', ''), 'consent');
+  assert.equal(detectWall('https://www.google.com/sorry/index?q=x', ''), 'consent');
+  assert.equal(detectWall('https://www.instagram.com/kurocafe/', 'Log in to see photos and videos from friends'), 'login');
+  assert.equal(detectWall('https://www.facebook.com/kurocafeqc', 'See more of Kuro Cafe on Facebook\nLog In'), 'login');
+  assert.equal(detectWall('https://www.instagram.com/kurocafe/', "You're temporarily blocked"), 'blocked');
+  assert.equal(detectWall('https://www.facebook.com/kurocafeqc', "This content isn't available right now"), 'blocked');
+});
+
+test('an ordinary page is not a wall', () => {
+  const text = 'Kuro Cafe\nKatipunan, Quezon City\nOpen 8am-10pm\nEmail hello@kurocafe.ph';
+  assert.equal(detectWall('https://www.facebook.com/kurocafeqc', text), null);
+  assert.equal(detectWall('https://html.duckduckgo.com/html/?q=x', 'Results for Kuro Cafe'), null);
+});
+
+test('a footer sign-in link on a readable page is not a wall', () => {
+  // Only the top of the page counts: otherwise every page with a footer
+  // "Log in to continue" link would be handed off as blocked.
+  const body = 'Kuro Cafe\n' + 'Our story. '.repeat(300) + '\nLog in to continue';
+  assert.equal(detectWall('https://www.facebook.com/kurocafeqc', body), null);
+});
+
+// ---- the summary the brief prints ------------------------------------------
+
+test('the summary reports coverage gained per channel', () => {
+  const report: EnrichReport = {
+    attempted: 5, enriched: 3, gained: { ...emptyGains(), email: 2, instagram: 3 },
+    fetches: 7, budgetExhausted: false, walled: 1, handoff: [],
+  };
+  const s = coverageSummary(report);
+  assert.match(s, /3\/5/);
+  assert.match(s, /email \+2/);
+  assert.match(s, /instagram \+3/);
+  assert.match(s, /facebook \+0/);
+  assert.match(s, /tiktok \+0/);
+  assert.match(s, /1 walled/);
+});
+
+test('the summary says so when the fetch cap stopped the run', () => {
+  const report: EnrichReport = {
+    attempted: 2, enriched: 0, gained: emptyGains(),
+    fetches: 60, budgetExhausted: true, walled: 0, handoff: [],
+  };
+  assert.match(coverageSummary(report), /fetch cap/);
+});
