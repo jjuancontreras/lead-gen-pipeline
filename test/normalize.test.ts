@@ -52,12 +52,41 @@ test('never strips a name down to nothing', () => {
 });
 
 test('generic names are not countable as chains', () => {
-  for (const g of ['cafe', 'bakery', 'restaurant', 'carinderia', 'sari sari store']) {
+  for (const g of ['cafe', 'bakery', 'restaurant', 'carinderia', 'sari sari']) {
     assert.equal(isCountableName(g), false, `"${g}" should not be countable`);
   }
   assert.equal(isCountableName('ab'), false);
   assert.equal(isCountableName('jollibee'), true);
   assert.equal(isCountableName('doloras hauz of pancit malabon'), true);
+});
+
+test('normalizeName("Sari-Sari Store") produces the key GENERIC_NAMES actually holds', () => {
+  // Regression for a dead denylist-style entry: "store" is a BRANCH_TOKEN
+  // and is stripped before GENERIC_NAMES is ever consulted, so an entry of
+  // "sari sari store" could never match. The set must hold "sari sari".
+  assert.equal(normalizeName('Sari-Sari Store'), 'sari sari');
+  assert.equal(isCountableName(normalizeName('Sari-Sari Store')), false);
+});
+
+test('generic trade names stay uncountable even at phase-2 chain volume', () => {
+  // 21 "Dental Clinic"s, 20 "Barber Shop"/"Barbershop"s and 6 "Sari-Sari
+  // Store"s share a name in the real corpus without being related - phase 2
+  // must not merge them into a fake chain and reject them all.
+  for (const name of ['Dental Clinic', 'DENTAL CLINIC', 'Barber Shop', 'The Barber Shop', 'Barbershop', 'Sari-Sari Store']) {
+    assert.equal(isCountableName(normalizeName(name)), false, `"${name}" should not be countable`);
+  }
+});
+
+test('REGRESSION: PROTECTED_BIGRAMS saves the first word too, not just the second (QA MEDIUM #9)', () => {
+  // The bigram was only ever checked against the PRECEDING word, so it
+  // could rescue the second word of the pair but not the first - when the
+  // first word was itself a location token, it was stripped before the
+  // bigram check for the second word ever ran.
+  assert.equal(normalizeName('Kusina Manila Bay'), 'kusina manila bay');
+  assert.equal(normalizeName('The Roadhouse Manila Bay'), 'roadhouse manila bay');
+  assert.equal(normalizeName('Kusina Quezon City'), 'kusina quezon city');
+  assert.equal(normalizeName('Aesthetic Science Quezon City'), 'aesthetic science quezon city');
+  assert.equal(normalizeName('Kusina Binondo Style'), 'kusina binondo style');
 });
 
 test('basicClean strips accents and separators', () => {

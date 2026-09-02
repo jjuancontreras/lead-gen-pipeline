@@ -1,12 +1,12 @@
 {
   "_note": "A presence on any of these is NOT a standalone website. Businesses whose only 'website' matches one of these are the highest-value prospects, not disqualified ones.",
   "kinds": {
-    "facebook":     ["facebook.com", "fb.com", "fb.me", "m.facebook.com", "web.facebook.com"],
+    "facebook":     ["facebook.com", "fb.com", "fb.me", "m.facebook.com", "web.facebook.com", "m.me", "messenger.com", "fb.watch"],
     "instagram":    ["instagram.com", "instagr.am", "ig.me"],
     "tiktok":       ["tiktok.com", "vt.tiktok.com"],
     "linktree":     ["linktr.ee", "beacons.ai", "bio.link", "linkin.bio", "lnk.bio", "carrd.co", "taplink.cc", "solo.to", "msha.ke"],
-    "delivery_app": ["grab.com", "food.grab.com", "foodpanda.ph", "foodpanda.com", "shopee.ph", "lazada.com.ph", "booky.ph", "zomato.com", "pickaroo.com", "metromart.com"],
-    "marketplace":  ["google.com", "goo.gl", "maps.app.goo.gl", "business.site", "sites.google.com", "wa.me", "api.whatsapp.com", "shopify.com", "youtube.com", "twitter.com", "x.com"]
+    "delivery_app": ["grab.com", "food.grab.com", "foodpanda.ph", "foodpanda.com", "shopee.ph", "shopee.com.ph", "lazada.com.ph", "booky.ph", "zomato.com", "pickaroo.com", "metromart.com"],
+    "marketplace":  ["google.com", "goo.gl", "maps.app.goo.gl", "g.page", "g.co", "business.site", "sites.google.com", "wa.me", "api.whatsapp.com", "shopify.com", "youtube.com", "twitter.com", "x.com", "linkedin.com"]
   },
   "freeHostSuffixes": [
     ".wixsite.com", ".weebly.com", ".blogspot.com", ".wordpress.com",

@@ -75,8 +75,19 @@ describe('chain index', { skip: index ? false : 'run `npm run chain-index` first
 describe('ceiling rules independent of the index', () => {
   test('brand and wikidata tags drop a business', () => {
     assert.equal(keep('Some Local Place', { brand: 'Acme' }).reason, 'brand-tag');
-    assert.equal(keep('Some Local Place', { operator: 'Acme Corp' }).reason, 'brand-tag');
+    assert.equal(keep('Some Local Place', { 'brand:wikidata': 'Q1' }).reason, 'brand-tag');
     assert.equal(keep('Some Local Place', { wikidata: 'Q123' }).reason, 'wikidata-tag');
+  });
+
+  test('operator alone does NOT drop a business - it is a proprietor, not a brand signal', () => {
+    // Regression for HIGH #2: in OSM `operator` routinely holds the sole
+    // proprietor, owning family or catering supplier of a single site.
+    // "Ivy's Bakery" operator="Ivy's Bakery" is a self-reference; measured
+    // over the real corpus, treating operator as a chain signal rejected
+    // 200 genuine independents.
+    assert.equal(keep('Ivy\'s Bakery', { operator: "Ivy's Bakery" }).keep, true);
+    assert.equal(keep('Dental Options', { operator: 'Jec Mendoza, DMD' }).keep, true);
+    assert.equal(keep('Some Local Place', { operator: 'Acme Corp' }).keep, true);
   });
 
   test('denylist matches both long and short chain names', () => {
@@ -91,6 +102,26 @@ describe('ceiling rules independent of the index', () => {
   test('denylist does not over-match genuine independents', () => {
     for (const name of ['Kohi', 'Gubat', "Fred's Revolucion", 'The Porch']) {
       assert.equal(keep(name).keep, true, `${name} was wrongly denylisted`);
+    }
+  });
+
+  test('REGRESSION: denylist prefix rules no longer drop unrelated independents (QA HIGH #3)', () => {
+    for (const name of [
+      'Old Manila', // reverse rule matched "old spaghetti house" via the stub "old"
+      'Vikings Bicycle Parts & Accessories', // forward rule matched "vikings"
+      'Coffee bean of the north', // forward rule matched "coffee bean"
+      'Coffee', 'Family', 'Pancake', 'Army', 'Dads', 'Sambo', 'Rai', 'Chic', // bare stub words
+    ]) {
+      assert.equal(keep(name).keep, true, `${name} was wrongly denylisted`);
+    }
+  });
+
+  test('denylist still catches the long/short chain-name variants it exists for', () => {
+    for (const name of [
+      "Seattle's Best", "Seattle's Best Coffee", 'Vikings', 'Old Spaghetti House',
+      'Army Navy Burger', 'Savemore Pharmacy', 'YakiMix Prime', // real-name extensions
+    ]) {
+      assert.equal(keep(name).keep, false, `${name} should still be caught by the denylist`);
     }
   });
 

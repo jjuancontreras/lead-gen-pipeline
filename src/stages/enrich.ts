@@ -44,11 +44,14 @@ const UA =
 const BLOCK_IMAGES = '**/*.{png,jpg,jpeg,webp,gif,svg,woff,woff2,mp4}';
 
 /**
- * The no-JavaScript DuckDuckGo endpoint. Google's search results are behind
- * the same consent interstitial the Maps fetcher refuses to click through, so
- * searching there would wall on the first request of every run.
+ * Bing, and not for want of trying the alternatives. Google's results sit
+ * behind the same consent interstitial the Maps fetcher refuses to click
+ * through; DuckDuckGo (both the html and lite endpoints), Mojeek and
+ * Startpage all serve a bot challenge to a headless browser, and solving a
+ * CAPTCHA is not something this pipeline does. Bing answers a plain
+ * logged-out request, which is the whole requirement.
  */
-const SEARCH_ENDPOINT = 'https://html.duckduckgo.com/html/?q=';
+const SEARCH_ENDPOINT = 'https://www.bing.com/search?q=';
 
 /**
  * Social platforms punish bursts far harder than Maps does, and this stage
@@ -192,6 +195,15 @@ const WALL_TEXT: readonly (readonly [RegExp, Wall])[] = [
   [/unusual activity from your/i, 'blocked'],
   [/this (?:content|page) isn(?:'|’)t available/i, 'blocked'],
   [/(?:sorry, )?something went wrong.{0,40}we(?:'|’)re working on it/i, 'blocked'],
+  // Search-engine bot challenges. Observed live on the DuckDuckGo html and
+  // lite endpoints, Mojeek and Startpage. Solving one is out of the question,
+  // so the only honest reading is "this page refused us" - otherwise the
+  // challenge text gets scraped and reported as "nothing found", which is a
+  // lie about a page nobody looked at.
+  [/(?:bots use duckduckgo too|made by a human|complete the following challenge)/i, 'blocked'],
+  [/(?:appears to be )?sending automated queries/i, 'blocked'],
+  [/unusual traffic from your computer network/i, 'blocked'],
+  [/verifying your request/i, 'blocked'],
 ];
 
 /** Is this page refusing to show us the business, rather than showing it? */
@@ -303,7 +315,12 @@ export async function enrichLeads(opts: EnrichOptions): Promise<EnrichReport> {
     attempted: pool.length, enriched: 0, gained: emptyGains(),
     fetches: 0, budgetExhausted: false, walled: 0, handoff: [],
   };
-  if (pool.length === 0 || opts.maxFetches <= 0) return report;
+  if (pool.length === 0) return report;
+  if (opts.maxFetches <= 0) {
+    report.budgetExhausted = true;
+    report.attempted = 0;
+    return report;
+  }
 
   const browser = await launch(!opts.headed);
   try {

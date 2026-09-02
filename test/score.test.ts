@@ -84,3 +84,63 @@ test('no web presence at all still qualifies, just lower than social-only', () =
   assert.notEqual(nothing.status, 'disqualified');
   assert.ok(social.score > nothing.score, 'social-only should outrank no presence');
 });
+
+test('REGRESSION: a delivery-app or Google-listing lead scores like a social-only lead (QA MEDIUM #5)', () => {
+  // Previously: delivery_app/marketplace kinds fell into the `else` branch
+  // (+12, "no web presence at all") instead of the high-intent branch
+  // (+30) - an 18-point, roughly one-tier penalty, with a note that is
+  // factually false for a business with an active GrabFood or Maps page.
+  const social = stage2(lead({ website_url: 'https://www.facebook.com/x' }), config);
+  for (const url of ['https://food.grab.com/x', 'https://business.site/x', 'https://g.page/x']) {
+    const r = stage2(lead({ website_url: url }), config);
+    assert.equal(r.score, social.score, `${url} should score the same as a social-only lead`);
+    assert.ok(
+      !r.reasons.some((s) => /no web presence at all/.test(s)),
+      `${url} must not claim "no web presence at all": ${r.reasons.join('; ')}`,
+    );
+  }
+});
+
+test('REGRESSION: an unparseable review_count does not silently bypass the ceiling (QA MEDIUM #7)', () => {
+  // Number("NaN") / Number("1.2K") / Number("45 reviews") are all NaN and
+  // used to fall through to `null`, indistinguishable from "not scraped
+  // yet" - which skipped BOTH the floor and the ceiling check.
+  for (const bad of ['NaN', '1.2K', '45 reviews', '0x10', '1e3', '-5']) {
+    const r = stage2(lead({ website_url: 'facebook.com/x', review_count: bad }), config);
+    assert.notEqual(r.status, 'verified', `"${bad}" review_count must not pass through as valid: got ${r.status}`);
+    assert.equal(r.status, 'nurture', `"${bad}" should be parked for manual re-verification`);
+  }
+});
+
+test('REGRESSION: an unparseable numeric field parks the lead rather than silently passing', () => {
+  for (const over of [{ ig_followers: '1.2K' }, { photo_count: 'many' }]) {
+    const r = stage2(lead({ website_url: 'facebook.com/x', ...over }), config);
+    assert.equal(r.status, 'nurture', JSON.stringify(over));
+  }
+});
+
+test('a genuinely un-scraped numeric field (empty string) still just skips the gate', () => {
+  // Distinct from the malformed case above: absence is not garbage.
+  const r = stage2(lead({ website_url: 'facebook.com/x', rating: '', review_count: '', ig_followers: '', photo_count: '' }), config);
+  assert.notEqual(r.status, 'disqualified');
+});
+
+test('all-nulls social-only lead: unverified, but never disqualified', () => {
+  // Pins the exact intended outcome for finding #7's "flagship prospect"
+  // case: a Facebook-only lead Maps returned no rating/reviews/photos for
+  // yet is genuinely unverified (score 27, nurture) - correctly parked for
+  // re-verification, not treated as if it had failed a check. What this
+  // guards against regressing is the OTHER half of finding #7: it must
+  // never come out `disqualified`.
+  const r = stage2(
+    lead({
+      website_url: 'facebook.com/x',
+      rating: '', review_count: '', ig_followers: '', photo_count: '',
+      email: '', phone: '', instagram: '', facebook: '',
+    }),
+    config,
+  );
+  assert.notEqual(r.status, 'disqualified');
+  assert.equal(r.status, 'nurture');
+  assert.equal(r.score, 27, `got score ${r.score}: ${r.reasons.join('; ')}`);
+});

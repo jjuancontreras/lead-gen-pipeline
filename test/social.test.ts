@@ -417,10 +417,28 @@ test('CRITICAL: login and consent walls are detected, not extracted from', () =>
   assert.equal(detectWall('https://www.facebook.com/kurocafeqc', "This content isn't available right now"), 'blocked');
 });
 
+test('CRITICAL: a search-engine bot challenge is a block, not an empty result', () => {
+  // All four were served live to a headless browser while this stage was
+  // being built. Reading them as "nothing found" would quietly report that a
+  // business has no contacts when nobody ever saw its results page.
+  const challenges = [
+    'Unfortunately, bots use DuckDuckGo too.\nPlease complete the following challenge',
+    'Sorry your network appears to be sending automated queries',
+    'Verifying your request...\nCalculating...',
+    'Our systems have detected unusual traffic from your computer network',
+  ];
+  for (const c of challenges) {
+    assert.equal(detectWall('https://example.test/search?q=x', c), 'blocked', c.slice(0, 30));
+  }
+});
+
 test('an ordinary page is not a wall', () => {
   const text = 'Kuro Cafe\nKatipunan, Quezon City\nOpen 8am-10pm\nEmail hello@kurocafe.ph';
   assert.equal(detectWall('https://www.facebook.com/kurocafeqc', text), null);
-  assert.equal(detectWall('https://html.duckduckgo.com/html/?q=x', 'Results for Kuro Cafe'), null);
+  assert.equal(
+    detectWall('https://www.bing.com/search?q=x', 'About 2,060 results\nInstagram\nhttps://www.instagram.com > kurocafe'),
+    null,
+  );
 });
 
 test('a footer sign-in link on a readable page is not a wall', () => {

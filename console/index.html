@@ -44,6 +44,8 @@
 @media (prefers-reduced-motion: reduce){ :root{--dur:0s} }
 
 *{box-sizing:border-box}
+/* class-level `display` beats the UA rule for [hidden]; make hidden win. */
+[hidden]{display:none !important}
 html,body{height:100%}
 body{
   margin:0;
@@ -578,19 +580,28 @@ function bestContact(l) {
 }
 
 /**
- * Never trust a stored string to be a safe href. Absolute values are allowed
- * only when they are literally http(s); anything else is rebuilt as a path
- * segment on the known social host, so `javascript:` and friends cannot land
- * in an href.
+ * Never trust a stored string to be a safe href. These fields are scraped, so:
+ *   - an absolute value is only linked when it is http(s) AND on the social
+ *     host we expect, which keeps the console from becoming a one-click
+ *     launcher for whatever domain ended up in the record;
+ *   - anything else is treated as a handle and encoded into a path segment,
+ *     so `javascript:` and friends can never land in an href.
+ * Returning null means the caller renders the raw value as plain text.
  */
 function socialUrl(host, value) {
   const v = String(value || '').trim();
-  if (/^https?:\/\//i.test(v)) return v;
+  if (!v) return null;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(v)) {
+    let u;
+    try { u = new URL(v); } catch { return null; }
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+    const hn = u.hostname.toLowerCase().replace(/^www\./, '');
+    return (hn === host || hn.endsWith('.' + host)) ? u.href : null;
+  }
   const handle = v.replace(/^@/, '').replace(/^\/+/, '').split(/[?#\s]/)[0];
   if (!handle) return null;
   return 'https://' + host + '/' + encodeURIComponent(handle);
 }
-const safeHttp = (v) => (/^https?:\/\//i.test(String(v || '').trim()) ? String(v).trim() : null);
 
 /* ---- filtering + sorting ------------------------------------------------ */
 
@@ -1268,7 +1279,11 @@ function openOps() {
   if (!sheet.hidden) return;
   lastFocus = document.activeElement;
   sheet.hidden = false; back.hidden = false;
-  requestAnimationFrame(() => { sheet.classList.add('on'); back.classList.add('on'); });
+  // Force a reflow so the transition starts from the off-screen state. A
+  // requestAnimationFrame here would be throttled in a background tab and the
+  // panel would never slide in at all.
+  void sheet.offsetWidth;
+  sheet.classList.add('on'); back.classList.add('on');
   sheet.setAttribute('aria-hidden', 'false');
   // Leaflet cannot measure a hidden container.
   setTimeout(() => { map.invalidateSize(); el('closeops').focus(); }, 60);

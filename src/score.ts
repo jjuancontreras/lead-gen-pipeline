@@ -6,7 +6,7 @@
  */
 import type { CategoriesConfig } from './config.ts';
 import type { Lead, Tier, Status } from './lead.ts';
-import { classifyWebsite, isHighIntent } from './website.ts';
+import { classifyWebsite } from './website.ts';
 
 export interface Stage2Result {
   tier: Tier;
@@ -15,10 +15,36 @@ export interface Stage2Result {
   reasons: string[];
 }
 
-const num = (v: string): number | null => {
-  const n = Number(String(v).replace(/[, ]/g, ''));
-  return Number.isFinite(n) && String(v).trim() !== '' ? n : null;
-};
+interface ParsedNum {
+  value: number | null;
+  /** Present but not a number the scraper could actually have produced -
+   *  as opposed to genuinely absent (empty string, not scraped yet). */
+  malformed: boolean;
+}
+
+/**
+ * Parse a scraped numeric field strictly.
+ *
+ * `Number()` alone conflates two very different situations into the same
+ * `null`: a field that hasn't been scraped yet (empty string - the floor
+ * and ceiling gates should skip it, per the "parked, never deleted"
+ * design below) and a field that WAS scraped but came back garbage
+ * (`"NaN"`, `"1.2K"`, `"45 reviews"` - the gates must not silently treat
+ * that the same as "unknown", or a 10,000-review chain with a mangled
+ * scrape sails past the ceiling). `malformed` lets the caller tell them
+ * apart. `Number()` is also looser than the scraper's actual output
+ * (`fetcher.ts` only ever emits `[\d,]+`): it accepts hex (`"0x10"`),
+ * exponents (`"1e3"`) and negative numbers, none of which Google emits,
+ * so those are rejected here too rather than silently parsed.
+ */
+function parseNum(v: string, opts: { decimal?: boolean } = {}): ParsedNum {
+  const trimmed = String(v ?? '').trim();
+  if (trimmed === '') return { value: null, malformed: false };
+  const cleaned = trimmed.replace(/,/g, '');
+  const pattern = opts.decimal ? /^\d+(\.\d+)?$/ : /^\d+$/;
+  if (!pattern.test(cleaned)) return { value: null, malformed: true };
+  return { value: Number(cleaned), malformed: false };
+}
 
 export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
   const reasons: string[] = [];
@@ -38,8 +64,10 @@ export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
   }
 
   // ---- ceiling: too big ------------------------------------------------
-  const reviews = num(lead.review_count);
-  const followers = num(lead.ig_followers);
+  const reviewsP = parseNum(lead.review_count);
+  const followersP = parseNum(lead.ig_followers);
+  const reviews = reviewsP.value;
+  const followers = followersP.value;
   if (reviews !== null && reviews > ceiling.maxReviewCount) {
     reasons.push(`${reviews} reviews - past the SME ceiling`);
     return { tier: '', status: 'disqualified', score: 0, reasons };
@@ -51,15 +79,25 @@ export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
 
   // ---- floor: too small to pay or to need one --------------------------
   // Parked, never deleted: 12 reviews today may be 60 in six months.
+  // A malformed (not merely absent) numeric field parks the lead the same
+  // way: we cannot confirm it clears the floor OR the ceiling, so it must
+  // not silently pass either gate - see parseNum's `malformed`.
   const belowFloor: string[] = [];
-  if (reviews !== null && reviews < floor.minReviewCount) {
+  if (reviewsP.malformed) {
+    belowFloor.push(`review_count "${lead.review_count}" did not parse - can't confirm SME band`);
+  } else if (reviews !== null && reviews < floor.minReviewCount) {
     belowFloor.push(`${reviews} reviews < ${floor.minReviewCount}`);
   }
-  if (followers !== null && followers < floor.minIgFollowers) {
+  if (followersP.malformed) {
+    belowFloor.push(`ig_followers "${lead.ig_followers}" did not parse - can't confirm SME band`);
+  } else if (followers !== null && followers < floor.minIgFollowers) {
     belowFloor.push(`${followers} followers < ${floor.minIgFollowers}`);
   }
-  const photos = num(lead.photo_count);
-  if (photos !== null && photos < floor.minPhotoCount) {
+  const photosP = parseNum(lead.photo_count);
+  const photos = photosP.value;
+  if (photosP.malformed) {
+    belowFloor.push(`photo_count "${lead.photo_count}" did not parse - can't confirm SME band`);
+  } else if (photos !== null && photos < floor.minPhotoCount) {
     belowFloor.push(`${photos} usable photos < ${floor.minPhotoCount}`);
   }
   if (belowFloor.length > 0) {
@@ -70,9 +108,16 @@ export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
   // ---- scoring ---------------------------------------------------------
   let score = 0;
 
-  if (isHighIntent(verdict.kind)) {
-    // The strongest signal available: they invest in being findable online
-    // and have nowhere to send anyone.
+  if (verdict.kind !== 'none') {
+    // Any listed presence counts the same, whether it's a social page
+    // (isHighIntent's original scope) or a delivery-app / Google-listing
+    // page: they invest in being findable online and have nowhere to send
+    // anyone. Checking `kind !== 'none'` here (rather than website.ts's
+    // isHighIntent, which we don't own) is what fixes the delivery_app /
+    // marketplace case scoring +12 with the false "no web presence at all"
+    // note - every kind classifyWebsite can return at this point (verdict
+    // isStandalone already returned false above) is exactly that class of
+    // presence.
     score += 30;
     reasons.push(`only presence is ${verdict.kind} - nowhere to send customers`);
   } else {
@@ -80,13 +125,13 @@ export function stage2(lead: Lead, config: CategoriesConfig): Stage2Result {
     reasons.push('no web presence at all');
   }
 
-  const branches = num(lead.chain_locations) ?? 1;
+  const branches = parseNum(lead.chain_locations).value ?? 1;
   if (branches >= config.sme.multiBranchBonusMin && branches <= config.sme.multiBranchBonusMax) {
     score += 12;
     reasons.push(`${branches} branches - growing, has budget`);
   }
 
-  const rating = num(lead.rating);
+  const rating = parseNum(lead.rating, { decimal: true }).value;
   if (rating !== null && rating >= 4.0) { score += 10; reasons.push(`${rating} rating`); }
 
   if (reviews !== null && reviews >= 100) { score += 8; reasons.push(`${reviews} reviews`); }

@@ -61,8 +61,13 @@ const BRANCH_TOKENS = new Set([
 const GENERIC_NAMES = new Set([
   'bakery', 'cafe', 'coffee', 'restaurant', 'canteen', 'carinderia',
   'eatery', 'bar', 'grill', 'store', 'shop', 'salon', 'clinic', 'pharmacy',
-  'bakeshop', 'panaderia', 'sari sari store', 'food', 'foodcourt',
+  'bakeshop', 'panaderia', 'sari sari', 'food', 'foodcourt',
   'food court', 'cafeteria', 'kitchen', 'diner', 'catering',
+  // Trade-signed independents whose whole name is just their trade -
+  // phase-2 categories where this is common enough to cross the chain
+  // cutoff on its own (21 "Dental Clinic"s, 20 "Barber Shop"/"Barbershop"s
+  // in the corpus, all unrelated to each other).
+  'dental clinic', 'barber shop', 'barbershop',
 ]);
 
 /** Lowercase, strip accents and punctuation, collapse whitespace. */
@@ -99,8 +104,16 @@ export function stripLocationTokens(cleaned: string): string {
     if (pair && i > 0 && LOCATION_TOKENS.has(pair)) { i++; continue; }
     if (BRANCH_TOKENS.has(w)) continue;
     // Keep a location word that belongs to the name itself, not to a branch.
+    // Checked against BOTH neighbours: a protected bigram like "manila bay"
+    // must save "manila" when it is the first word of the pair too, not
+    // only "bay" when it is the second - otherwise "The Roadhouse Manila
+    // Bay" loses "manila" here before the second-word check ever runs.
     const withPrev = i > 0 ? `${words[i - 1]} ${w}` : '';
-    if (withPrev && PROTECTED_BIGRAMS.has(withPrev)) { kept.push(w); continue; }
+    const withNext = pair ?? '';
+    if ((withPrev && PROTECTED_BIGRAMS.has(withPrev)) || (withNext && PROTECTED_BIGRAMS.has(withNext))) {
+      kept.push(w);
+      continue;
+    }
     if (i > 0 && LOCATION_TOKENS.has(w)) continue;
     // bare branch numbers: "jollibee 2", "starbucks 145"
     if (i > 0 && /^\d{1,4}$/.test(w)) continue;
@@ -109,6 +122,21 @@ export function stripLocationTokens(cleaned: string): string {
   // Never strip a name down to nothing - fall back to the cleaned form.
   const result = kept.join(' ').trim();
   return result.length >= 3 ? result : cleaned;
+}
+
+/**
+ * Strip only a LEADING run of branch-marker words ("The Coffee Bean" ->
+ * "Coffee Bean"), leaving everything else - including non-leading location
+ * words - untouched. Used by isManualChain's forward-match bound, which
+ * needs to know how many *content* words a real name adds past a denylist
+ * stub without also inheriting stripLocationTokens' full normalization.
+ */
+export function stripLeadingBranchTokens(cleaned: string): string {
+  const words = cleaned.split(' ').filter(Boolean);
+  let i = 0;
+  while (i < words.length && BRANCH_TOKENS.has(words[i]!)) i++;
+  const result = words.slice(i).join(' ');
+  return result || cleaned;
 }
 
 /** Full normalization: the chain-index key for a business name. */

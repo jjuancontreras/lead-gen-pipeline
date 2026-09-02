@@ -56,6 +56,25 @@ test('empty and unparseable input never claims a site exists', () => {
   }
 });
 
+test('REGRESSION: messaging/marketplace hosts missing from social-domains.json (QA HIGH #1)', () => {
+  // These were classifying as "standalone" and terminally disqualifying a
+  // business whose only web presence is one of them - exactly the
+  // highest-value prospect class the pipeline exists to find.
+  const cases: [string, string][] = [
+    ['https://m.me/mybakery', 'facebook'],
+    ['https://messenger.com/t/x', 'facebook'],
+    ['https://fb.watch/abc', 'facebook'],
+    ['https://g.page/mybakery', 'marketplace'],
+    ['https://shopee.com.ph/shop/x', 'delivery_app'],
+    ['https://linkedin.com/company/x', 'marketplace'],
+  ];
+  for (const [url, kind] of cases) {
+    const v = classifyWebsite(url);
+    assert.equal(v.kind, kind, url);
+    assert.equal(v.isStandalone, false, `${url} must not disqualify`);
+  }
+});
+
 test('a lookalike domain does not match by substring', () => {
   // "notfacebook.com" and "facebook.com.evil.ph" must not classify as facebook.
   assert.equal(classifyWebsite('https://notfacebook.com').kind, 'standalone');
