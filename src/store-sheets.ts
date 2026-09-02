@@ -21,6 +21,7 @@
  * Every function above the class is pure so the parts that can be wrong
  * quietly (mapping, dedupe, ranges) are testable without credentials.
  */
+import './env.ts';  // loads .env.local before anything reads process.env
 import { readFileSync } from 'node:fs';
 import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
 import type { LeadStore, UpsertResult } from './store.ts';

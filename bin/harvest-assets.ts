@@ -12,6 +12,7 @@
  *
  * Thin wrapper over src/harvest.ts.
  */
+import '../src/env.ts';  // loads .env.local before anything reads process.env
 import { harvestAssets, DEFAULT_LIMIT } from '../src/harvest.ts';
 import { WEBSITES_ROOT } from '../src/scaffold.ts';
 

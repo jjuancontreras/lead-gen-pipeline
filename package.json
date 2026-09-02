@@ -19,7 +19,8 @@
     "publish": "tsx bin/publish.ts",
     "mockup": "tsx bin/mockup.ts",
     "harvest": "tsx bin/harvest-assets.ts",
-    "palette": "python bin/sample-palette.py"
+    "palette": "python bin/sample-palette.py",
+    "doctor": "tsx bin/doctor.ts"
   },
   "devDependencies": {
     "@types/node": "^22",

@@ -11,6 +11,7 @@
  *
  * Stages must never hold state of their own.
  */
+import './env.ts';  // loads .env.local before anything reads process.env
 import type { Lead, Status } from './lead.ts';
 
 export interface StageContext {
