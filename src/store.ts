@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync } from '
 import { dirname } from 'node:path';
 import { dataPath } from './config.ts';
 import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
+import { openSheetsStore } from './store-sheets.ts';
 
 export interface UpsertResult { added: number; skipped: number }
 
@@ -90,9 +91,7 @@ export function openStore(opts: { forceJson?: boolean } = {}): LeadStore {
   const sheetId = process.env.GOOGLE_SHEET_ID;
   const keyPath = process.env.GOOGLE_SA_KEY_PATH;
   if (!opts.forceJson && sheetId && keyPath) {
-    throw new Error(
-      'Sheets backend is not wired yet - run with the JSON store for now.',
-    );
+    return openSheetsStore();
   }
   return new JsonStore(dataPath('leads.json'));
 }

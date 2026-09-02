@@ -4,5 +4,6 @@
  */
 import './source.ts';
 import './verify.ts';
+import './enrich.ts';
 import './scaffold.ts';
 import './outreach.ts';
