@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import Hero from "@/components/Hero";
 import AnimatedSection from "@/components/AnimatedSection";
 import BranchCard from "@/components/BranchCard";
@@ -17,7 +16,7 @@ export default function Home() {
     <>
       <Hero />
 
-      <AnimatedSection className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <AnimatedSection id="menu" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand">
             Fan Favorites
@@ -33,13 +32,17 @@ export default function Home() {
               className="group overflow-hidden rounded-xl border border-white/10 bg-surface/60"
             >
               <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src={dish.image!}
-                  alt={dish.name}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                {dish.image ? (
+                  <Image
+                    src={dish.image}
+                    alt={dish.name}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="bg-surface" />
+                )}
               </div>
               <div className="p-4">
                 <div className="flex items-center justify-between">
@@ -53,16 +56,16 @@ export default function Home() {
         </div>
 
         <div className="mt-10 text-center">
-          <Link
-            href="/menu"
+          <a
+            href="#menu"
             className="inline-block rounded-full border border-text/30 px-7 py-3 text-sm font-semibold uppercase tracking-wider text-text transition-colors hover:border-brand hover:text-brand"
           >
             See Full Menu
-          </Link>
+          </a>
         </div>
       </AnimatedSection>
 
-      <AnimatedSection className="relative overflow-hidden py-20">
+      <AnimatedSection id="branches" className="relative overflow-hidden py-20">
         {assets.texture ? (
           <ParallaxImage
             src={assets.texture}

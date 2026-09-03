@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { btnPrimary } from "@/lib/styles";
@@ -92,18 +91,18 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-8 flex flex-wrap gap-4"
         >
-          <Link
-            href="/menu"
+          <a
+            href="#menu"
             className={`${btnPrimary("px-7 py-3")} hover:bg-brand/90`}
           >
             View Menu
-          </Link>
-          <Link
-            href="/locations"
+          </a>
+          <a
+            href="#branches"
             className="rounded-full border border-text/30 px-7 py-3 text-sm font-semibold uppercase tracking-wider text-text transition-colors hover:border-brand hover:text-brand"
           >
             Find a Branch
-          </Link>
+          </a>
         </motion.div>
       </motion.div>
     </div>

@@ -8,13 +8,14 @@
     "chain-index": "tsx bin/build-chain-index.ts",
     "source": "tsx bin/source-area.ts",
     "campaign": "tsx bin/campaign.ts",
-    "console": "tsx bin/console.ts",
+    "console": "tsx bin/console.ts --port 3067",
     "test": "tsx --test \"test/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "verify": "tsx bin/verify-leads.ts",
     "worklist": "tsx bin/worklist.ts",
     "new-demo": "tsx bin/new-demo.ts",
     "draft": "tsx bin/draft-outreach.ts",
+    "sent": "tsx bin/mark-sent.ts",
     "record": "tsx bin/record.ts",
     "publish": "tsx bin/publish.ts",
     "mockup": "tsx bin/mockup.ts",
@@ -32,5 +33,9 @@
     "playwright": "^1.62.1",
     "sharp": "^0.34.5",
     "undici": "^8.10.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "sharp@0.34.5": true
   }
 }

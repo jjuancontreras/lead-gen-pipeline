@@ -7,9 +7,10 @@
 import {
   cpSync, existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync, statSync, rmSync,
 } from 'node:fs';
-import { join, resolve } from 'node:path';
-import { ROOT } from './config.ts';
+import { dirname, join, resolve } from 'node:path';
+import { loadAreas, ROOT } from './config.ts';
 import type { Lead } from './lead.ts';
+import { writeBuildPrompt } from './build-prompt.ts';
 
 export const WEBSITES_ROOT = resolve(ROOT, '..');
 const TEMPLATE = join(ROOT, 'templates', 'demo-site');
@@ -86,6 +87,12 @@ export function readLaunchConfig(path: string = LAUNCH): LaunchConfig {
   try {
     parsed = JSON.parse(readFileSync(path, 'utf8'));
   } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      // No launch.json yet is the normal first-run state on a fresh
+      // checkout, not a corrupt file - don't send the caller looking for
+      // a syntax error that isn't there.
+      return { version: '0.0.1', configurations: [] };
+    }
     throw new Error(`${path} is not valid JSON: ${(err as Error).message}`);
   }
   const cfg = parsed as Partial<LaunchConfig> | null;
@@ -126,6 +133,37 @@ export function allocatePort(
     },
   ];
   return { port, configurations: next, isNew: true };
+}
+
+/** Qualify a bare business name with its area so the map lookup doesn't
+ *  land on an unrelated place that shares the name (a scaffolded lead
+ *  named "Gubat" resolved to the Sorsogon municipality, not the shop). */
+export function mapQueryFor(displayName: string, areaLabel: string | undefined): string {
+  return areaLabel ? `${displayName}, ${areaLabel}` : displayName;
+}
+
+/** Format a PH phone number for display. `phone` (the raw value) still
+ *  backs the tel: link - this is only ever used for the text a visitor
+ *  reads, and only when the shape is one we're sure of. An unrecognised
+ *  number is returned unchanged rather than risk mangling it. */
+export function formatPhoneDisplay(raw: string): string {
+  const trimmed = raw.trim();
+  const stripped = trimmed.replace(/[\s\-()]/g, '');
+
+  // Normalise international forms (+63... or 63...) down to the local
+  // 0-prefixed form so the mobile/landline patterns below only need to
+  // match one shape each.
+  let local = stripped;
+  if (local.startsWith('+63')) local = `0${local.slice(3)}`;
+  else if (/^63\d{9,10}$/.test(local)) local = `0${local.slice(2)}`;
+
+  if (/^09\d{9}$/.test(local)) {
+    return `${local.slice(0, 4)} ${local.slice(4, 7)} ${local.slice(7)}`;
+  }
+  if (/^02\d{8}$/.test(local)) {
+    return `(02) ${local.slice(2, 6)} ${local.slice(6)}`;
+  }
+  return trimmed;
 }
 
 export function slugify(name: string): string {
@@ -184,10 +222,11 @@ export function scaffoldDemo(opts: {
   content.brand.social.instagram = lead?.instagram ?? '';
   content.brand.social.facebook = lead?.facebook ?? '';
   content.brand.social.tiktok = lead?.tiktok ?? '';
+  const areaLabel = lead?.area ? loadAreas().areas[lead.area]?.label : undefined;
   content.branches[0].name = displayName;
   content.branches[0].phone = lead?.phone ?? '';
-  content.branches[0].phoneDisplay = lead?.phone ?? '';
-  content.branches[0].mapQuery = displayName;
+  content.branches[0].phoneDisplay = formatPhoneDisplay(lead?.phone ?? '');
+  content.branches[0].mapQuery = mapQueryFor(displayName, areaLabel);
   // Seeded values are unconfirmed until checked against the client's own
   // channels. They stay listed on the page until each one is verified.
   content.openItemsToConfirm = [
@@ -200,7 +239,15 @@ export function scaffoldDemo(opts: {
   ];
   writeFileSync(contentPath, JSON.stringify(content, null, 2) + '\n');
 
+  writeBuildPrompt({ slug, lead, targetDir: target });
+
   replaceInTree(target, [['__SLUG__', slug], ['__BUSINESS_NAME__', displayName]]);
+
+  // A missing launch.json is now treated as "first run" rather than an
+  // error (see readLaunchConfig), so .claude/ may not exist yet - create
+  // it before withLaunchLock, since the lock file itself lives there too
+  // and 'wx' would fail with the same ENOENT if the directory were missing.
+  mkdirSync(dirname(LAUNCH), { recursive: true });
 
   // Read launch.json as late as possible, and under the lock: concurrent
   // Claude Code sessions edit this file, and reading it outside the lock

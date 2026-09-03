@@ -25,7 +25,7 @@ registerStage({
       if (ctx.dryRun) { done.push(`${slug} (dry run)`); continue; }
       try {
         const r = scaffoldDemo({ slug, lead });
-        await store.update(lead.lead_id, { demo_slug: r.slug, status: 'demo_built' });
+        await store.update(lead.lead_id, { demo_slug: r.slug, status: 'scaffolded' });
         ctx.log(`${lead.name} -> ${r.slug} on port ${r.port}`);
         done.push(`${r.slug}:${r.port}`);
       } catch (err) {
@@ -36,7 +36,7 @@ registerStage({
     return {
       processed: done.length,
       summary:
-        `scaffolded ${done.length} of ${pool.length} A-tier` +
+        `scaffolded (shell only) ${done.length} of ${pool.length} A-tier` +
         (held > 0 ? ` (${held} held back by the per-run cap)` : '') +
         (done.length ? `: ${done.join(', ')}` : ''),
     };

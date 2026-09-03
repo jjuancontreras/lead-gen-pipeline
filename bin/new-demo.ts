@@ -23,7 +23,7 @@ const lead = leadId ? (await store.all()).find((l) => l.lead_id === leadId) : un
 if (leadId && !lead) console.warn(`  ! lead ${leadId} not found - seeding placeholders only`);
 
 const r = scaffoldDemo({ slug, lead, force: args.includes('--force') });
-if (lead) await store.update(lead.lead_id, { demo_slug: r.slug, status: 'demo_built' });
+if (lead) await store.update(lead.lead_id, { demo_slug: r.slug, status: 'scaffolded' });
 
 console.log(`\n  scaffolded ${lead?.name ?? slug}`);
 console.log(`    path:  ${r.path}`);

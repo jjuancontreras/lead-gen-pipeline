@@ -147,21 +147,34 @@ review and press send yourself, always.
 Honestly: this is the fiddliest step for the smallest gain. Copy-pasting
 from `data/drafts/` works fine. Skip it until the rest is running.
 
-1. Same Cloud project → **APIs & Services → Library** → enable **Gmail API**
-2. **OAuth consent screen** → **External** → fill the required fields →
-   add **your own email** as a Test user
-3. **Credentials → Create credentials → OAuth client ID → Desktop app**
-4. Download that JSON
-5. Run a one-time consent flow to turn it into a refresh token, then save a
-   file containing **`client_id`**, **`client_secret`** and
-   **`refresh_token`** (top-level or nested under `installed`)
+The token file needs a real `refresh_token`. The JSON you download from Google Cloud
+is only the OAuth *client* (`client_id` + `client_secret`) — mint the refresh token
+once by hand:
 
-```
-GMAIL_TOKEN_PATH=C:\Users\xdevi\.secrets\gmail-token.json
-```
+1. Google Cloud Console -> APIs & Services -> enable **Gmail API**.
+2. OAuth consent screen: External; add your own email as a **Test user**; scope
+   `https://www.googleapis.com/auth/gmail.compose`.
+3. Credentials -> your OAuth client (Desktop type is fine) -> note client_id / client_secret.
+4. Open https://developers.google.com/oauthplayground/
+   - gear icon -> "Use your own OAuth credentials" -> paste client id/secret
+   - (Desktop client: also add `https://developers.google.com/oauthplayground` as an
+     authorized redirect URI, or temporarily use a Web client)
+   - Step 1: select scope `https://www.googleapis.com/auth/gmail.compose` -> Authorize
+   - Step 2: "Exchange authorization code for tokens" -> copy the **refresh_token**
+5. Create `C:\Users\xdevi\.secrets\gmail-token.json`:
+   ```json
+   {
+     "client_id": "...",
+     "client_secret": "...",
+     "refresh_token": "1//0..."
+   }
+   ```
+6. Point `.env.local` `GMAIL_TOKEN_PATH` at that file. Move the old client JSON out of
+   `pipeline/` — it must not sit inside OneDrive or the repo.
+7. `npm run doctor` should now report the Gmail token healthy.
 
-Ask me when you get here and I will write the consent-flow script — it is
-about 30 lines and needs to run once.
+Until this is done, outreach still runs — it writes drafts as markdown files into
+`pipeline/data/drafts/` instead of creating Gmail drafts.
 
 ---
 

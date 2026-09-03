@@ -15,6 +15,7 @@ import '../src/env.ts';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { CREDENTIALS } from '../src/env.ts';
+import { gmailCredsUsable } from '../src/gmail-creds.ts';
 import { ROOT, configPath, dataPath, loadAreas, loadChainIndex } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
 
@@ -60,6 +61,14 @@ const envFile = `${ROOT}\\.env.local`;
 console.log(existsSync(envFile) ? ok('.env.local found') : warn('.env.local not found - copy .env.example'));
 for (const c of CREDENTIALS) {
   const v = process.env[c.key];
+  if (c.key === 'GMAIL_TOKEN_PATH' && v) {
+    console.log(
+      gmailCredsUsable(v)
+        ? ok('GMAIL_TOKEN_PATH set')
+        : warn('GMAIL_TOKEN_PATH set but unusable (missing refresh_token) - outreach will write files to data/drafts/'),
+    );
+    continue;
+  }
   console.log(v ? ok(`${c.key} set`) : warn(`${c.key} - ${c.unlocks}`));
 }
 if (process.env.GOOGLE_SA_KEY_PATH && !existsSync(process.env.GOOGLE_SA_KEY_PATH)) {
@@ -97,12 +106,13 @@ if (store.kind === 'json') {
 
 // ---- what runs ------------------------------------------------------
 console.log('\nWhat will run in a campaign right now');
+const gmailOk = process.env.GMAIL_TOKEN_PATH && gmailCredsUsable(process.env.GMAIL_TOKEN_PATH);
 const lines = [
   ['source', true, 'always'],
   ['verify', true, 'always'],
   ['enrich', true, 'always (Gemini only improves it)'],
   ['scaffold', true, 'always'],
-  ['outreach', true, process.env.GMAIL_TOKEN_PATH ? 'creates Gmail drafts' : 'writes files to data/drafts (no Gmail token)'],
+  ['outreach', true, gmailOk ? 'creates Gmail drafts' : 'writes files to data/drafts (no Gmail token)'],
 ] as const;
 for (const [name, on, note] of lines) {
   console.log(`  ${on ? '[on] ' : '[off]'} ${name.padEnd(9)} ${note}`);

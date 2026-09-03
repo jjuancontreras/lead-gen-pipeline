@@ -6,3 +6,9 @@ data/raw/
 data/*.json
 !data/.gitkeep
 secrets/
+
+# Google credential downloads - these belong in C:\Users\<you>\.secrets\, never
+# in the repo. Ignored here too as defense in depth in case one lands anyway.
+client_secret_*.json
+perfect-crow-*.json
+

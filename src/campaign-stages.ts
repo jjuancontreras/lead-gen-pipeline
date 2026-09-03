@@ -12,6 +12,7 @@
  * Stages must never hold state of their own.
  */
 import './env.ts';  // loads .env.local before anything reads process.env
+import { gmailCredsUsable } from './gmail-creds.ts';
 import type { Lead, Status } from './lead.ts';
 
 export interface StageContext {
@@ -82,6 +83,9 @@ export function credentialAvailable(req: Stage['requires']): boolean {
   if (!req) return true;
   if (req === 'gemini') return Boolean(process.env.GEMINI_API_KEY);
   if (req === 'sheets') return Boolean(process.env.GOOGLE_SHEET_ID && process.env.GOOGLE_SA_KEY_PATH);
-  if (req === 'gmail') return Boolean(process.env.GMAIL_TOKEN_PATH);
+  if (req === 'gmail') {
+    const p = process.env.GMAIL_TOKEN_PATH;
+    return p ? gmailCredsUsable(p) : false;
+  }
   return true;
 }

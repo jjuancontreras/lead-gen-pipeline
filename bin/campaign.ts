@@ -93,6 +93,7 @@ const ctx: StageContext = {
 
 const handoff: { lead: Lead; reason: string }[] = [];
 const summaries: string[] = [];
+const failedStages: string[] = [];
 
 for (const stage of toRun) {
   if (!stage) continue;
@@ -109,6 +110,7 @@ for (const stage of toRun) {
     if (res.handoff) handoff.push(...res.handoff);
   } catch (err) {
     // One failing stage must not lose the work the earlier stages did.
+    failedStages.push(stage.name);
     console.log(`      FAILED: ${(err as Error).message}`);
     summaries.push(`${stage.name}: FAILED - ${(err as Error).message}`);
   }
@@ -116,6 +118,15 @@ for (const stage of toRun) {
 
 // ---- handoff brief ---------------------------------------------------------
 const today = new Date().toISOString().slice(0, 10);
+const briefLines: string[] = [];
+for (const summary of summaries) {
+  briefLines.push(`- ${summary}`);
+  // After scaffold summary, note the BUILD-PROMPT files
+  if (summary.startsWith('scaffold:') && summary.includes('scaffolded')) {
+    briefLines.push(`  Each scaffolded folder contains a \`BUILD-PROMPT-<BusinessName>.md\`. Open it in Claude Code and run \`/demo-site-build\` to design the demo.`);
+  }
+}
+
 const lines = [
   `# Campaign brief - ${areaLabel}`,
   ``,
@@ -123,7 +134,7 @@ const lines = [
   ``,
   `## What ran`,
   ``,
-  ...summaries.map((s) => `- ${s}`),
+  ...briefLines,
   ``,
 ];
 
@@ -153,3 +164,8 @@ if (!dryRun) writeFileSync(briefPath, lines.join('\n'));
 
 console.log(`\n  ${handoff.length} leads need manual attention`);
 console.log(dryRun ? '  DRY RUN - no brief written\n' : `  brief: ${briefPath}\n`);
+
+if (failedStages.length > 0) {
+  console.log(`  FAILED: ${failedStages.join(', ')}`);
+  process.exit(1);
+}

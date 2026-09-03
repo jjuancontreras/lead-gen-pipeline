@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { allocatePort, readLaunchConfig, withLaunchLock } from '../src/scaffold.ts';
+import {
+  allocatePort, readLaunchConfig, withLaunchLock, mapQueryFor, formatPhoneDisplay,
+} from '../src/scaffold.ts';
 
 function tmpFile(name: string): string {
   const dir = mkdtempSync(join(tmpdir(), 'scaffold-test-'));
@@ -81,6 +83,23 @@ test('readLaunchConfig accepts a well-formed file', () => {
   assert.deepEqual(cfg.configurations, []);
 });
 
+test('readLaunchConfig returns an empty config when the file does not exist, rather than throwing', () => {
+  // A fresh checkout has no launch.json yet - that's the normal first-run
+  // state, not a corrupt file. tmpFile() only creates the parent dir, not
+  // the file itself, so this path is guaranteed missing.
+  const path = tmpFile('launch.json');
+  const cfg = readLaunchConfig(path);
+  assert.deepEqual(cfg, { version: '0.0.1', configurations: [] });
+});
+
+test('the config returned for a missing launch.json is directly usable by allocatePort', () => {
+  const path = tmpFile('launch.json');
+  const cfg = readLaunchConfig(path);
+  const r = allocatePort(cfg.configurations, 'demo-alpha');
+  assert.equal(r.port, 3011);
+  assert.equal(r.isNew, true);
+});
+
 test('withLaunchLock: the lock file is created and removed around fn', () => {
   const lockPath = tmpFile('launch.json.lock');
   let sawLockDuringRun = false;
@@ -108,4 +127,46 @@ test('withLaunchLock releases the lock even if fn throws', () => {
   const lockPath = tmpFile('launch.json.lock');
   assert.throws(() => withLaunchLock(() => { throw new Error('boom'); }, { lockPath }), /boom/);
   assert.equal(existsSync(lockPath), false, 'lock must not be left behind after a throw');
+});
+
+test('mapQueryFor appends the area label when one resolves', () => {
+  assert.equal(mapQueryFor('Gubat', 'Katipunan, Quezon City'), 'Gubat, Katipunan, Quezon City');
+});
+
+test('mapQueryFor falls back to the bare name when there is no area label', () => {
+  assert.equal(mapQueryFor('Gubat', undefined), 'Gubat');
+});
+
+test('formatPhoneDisplay formats an 09-prefixed mobile number in 4-3-4 groups', () => {
+  assert.equal(formatPhoneDisplay('09171234567'), '0917 123 4567');
+});
+
+test('formatPhoneDisplay normalises a +63 mobile number before formatting', () => {
+  assert.equal(formatPhoneDisplay('+639171234567'), '0917 123 4567');
+});
+
+test('formatPhoneDisplay normalises a bare 63-prefixed mobile number before formatting', () => {
+  assert.equal(formatPhoneDisplay('639171234567'), '0917 123 4567');
+});
+
+test('formatPhoneDisplay formats a Metro Manila landline as (02) NNNN NNNN', () => {
+  assert.equal(formatPhoneDisplay('0288881234'), '(02) 8888 1234');
+});
+
+test('formatPhoneDisplay normalises a +63 landline number before formatting', () => {
+  assert.equal(formatPhoneDisplay('+63288881234'), '(02) 8888 1234');
+});
+
+test('formatPhoneDisplay strips spaces, dashes and parentheses before classifying', () => {
+  assert.equal(formatPhoneDisplay('0917-123 4567'), '0917 123 4567');
+  assert.equal(formatPhoneDisplay('(02) 8888-1234'), '(02) 8888 1234');
+});
+
+test('formatPhoneDisplay returns an empty string unchanged', () => {
+  assert.equal(formatPhoneDisplay(''), '');
+});
+
+test('formatPhoneDisplay returns an unrecognised shape unchanged rather than mangling it', () => {
+  assert.equal(formatPhoneDisplay('12345'), '12345');
+  assert.equal(formatPhoneDisplay('not-a-phone'), 'not-a-phone');
 });
