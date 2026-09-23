@@ -4,7 +4,7 @@ import { classifyWebsite } from '../website.ts';
 import { stage2 } from '../score.ts';
 import { openStore } from '../store.ts';
 import { loadCategories } from '../config.ts';
-import { registerStage, type StageResult } from '../campaign-stages.ts';
+import type { Stage, StageResult } from '../campaign-stages.ts';
 import type { Lead } from '../lead.ts';
 
 export interface VerifyOptions {
@@ -95,10 +95,9 @@ export async function verifyLeads(opts: VerifyOptions): Promise<VerifyReport> {
   return report;
 }
 
-registerStage({
+export const verifyStage: Stage = {
   name: 'verify',
   description: 'resolve on Maps, classify website, tier',
-  consumes: ['sourced', 'shortlisted'],
   async run(ctx): Promise<StageResult> {
     const r = await verifyLeads({
       area: ctx.area, areaLabel: ctx.areaLabel, limit: ctx.caps.maxVerify,
@@ -114,4 +113,4 @@ registerStage({
       handoff: r.handoff,
     };
   },
-});
+};

@@ -11,7 +11,7 @@
  * store, a sheet or a filesystem.
  */
 import { nextActionAfter } from './cadence.ts';
-import { slugify } from './scaffold.ts';
+import { slugify } from './normalize.ts';
 import { isSuppressed, type Lead } from './lead.ts';
 
 /** The status a draft waits in until a human confirms the send. */
@@ -36,6 +36,17 @@ export interface SentPlan {
 }
 
 /**
+ * Why this lead cannot be confirmed sent, or null if it can. The one rule
+ * behind both `npm run sent` and the console's "Mark as sent" button: a flag
+ * left off, or an opt-out, must never record contact.
+ */
+export function sentRefusal(lead: Lead): string | null {
+  if (lead.status !== DRAFTED) return `lead is "${lead.status}", not "${DRAFTED}" - nothing to confirm`;
+  if (isSuppressed(lead)) return 'lead is flagged do_not_contact';
+  return null;
+}
+
+/**
  * Work out which leads a `npm run sent` invocation refers to.
  *
  * An id may be a lead_id or the file slug, because the index a human is
@@ -47,7 +58,7 @@ export function planSent(all: readonly Lead[], sel: SentSelection): SentPlan {
     && (sel.area === undefined || l.area === sel.area));
 
   const suppressed = drafted.filter(isSuppressed);
-  const sendable = drafted.filter((l) => !isSuppressed(l));
+  const sendable = drafted.filter((l) => sentRefusal(l) === null);
 
   if (sel.all || !sel.ids || sel.ids.length === 0) {
     return { chosen: sendable, unmatched: [], suppressed };

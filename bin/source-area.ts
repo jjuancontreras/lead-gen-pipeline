@@ -8,9 +8,8 @@
  */
 import { loadAreas } from '../src/config.ts';
 import { sourceArea } from '../src/stages/source.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const areaKey = val('--area');
 const areas = loadAreas();
 

@@ -8,6 +8,7 @@
  * keeps the schema still and makes both rules - "which step is due" and
  * "when is the next one" - pure functions with tests.
  */
+import { addDays, daysBetween } from './dates.ts';
 
 /** Day of the sequence, counted from first contact, and what to send on it. */
 export const CADENCE: readonly { readonly day: number; readonly template: string }[] = [
@@ -18,24 +19,6 @@ export const CADENCE: readonly { readonly day: number; readonly template: string
 
 /** The last step: after it there is nothing left to send. */
 export const FINAL_TEMPLATE = CADENCE[CADENCE.length - 1]!.template;
-
-export function addDays(isoDate: string, days: number): string {
-  const d = new Date(`${isoDate}T00:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
-}
-
-/**
- * Whole days from `from` to `to`. Returns 0 rather than NaN for a blank or
- * unparseable date - a lead with a missing timestamp should land on the
- * gentlest step, not crash the run.
- */
-export function daysBetween(from: string, to: string): number {
-  const a = Date.parse(`${from}T00:00:00Z`);
-  const b = Date.parse(`${to}T00:00:00Z`);
-  if (Number.isNaN(a) || Number.isNaN(b)) return 0;
-  return Math.round((b - a) / 86_400_000);
-}
 
 /**
  * Which step is due today for a lead first contacted on `firstContactedAt`.

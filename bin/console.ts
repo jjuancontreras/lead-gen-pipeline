@@ -17,14 +17,9 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, normalize, sep } from 'node:path';
 import { ROOT, configPath, loadAreas } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
-import { isSuppressed } from '../src/lead.ts';
-import { renderTemplate, pickChannel, templateForChannel } from '../src/outreach.ts';
-import { followUpTemplateFor } from '../src/cadence.ts';
-import { sentPatch, DRAFTED } from '../src/mark-sent.ts';
-import {
-  draftFileNames, destination, gmailComposeLink, parseDraftBody, WITHDRAWN_MARKER, today,
-} from '../src/draft-file.ts';
-import { DRAFT_DIR, isOpeningEligible, isFollowUpDue } from '../src/stages/outreach.ts';
+import { sentPatch, sentRefusal } from '../src/mark-sent.ts';
+import { draftView } from '../src/draft-view.ts';
+import { today } from '../src/dates.ts';
 
 const PORT = 3008;
 // Bound to loopback only. This console has no authentication and can start
@@ -166,62 +161,7 @@ const server = createServer(async (req, res) => {
       const all = await openStore().all();
       const lead = all.find((l) => l.lead_id === leadId);
       if (!lead) return json(res, 404, { error: 'unknown lead' });
-      if (isSuppressed(lead)) return json(res, 200, { kind: 'suppressed' });
-
-      // Whatever is actually on disk wins - it is exactly what would be, or
-      // was, sent, in the same format a human reads before pasting it. The
-      // fenced markdown is parsed here, once, into the fields it always was
-      // before it got flattened to a file - the browser gets data, not a
-      // document to re-parse.
-      for (const file of draftFileNames(lead)) {
-        const path = join(DRAFT_DIR, file);
-        if (!existsSync(path)) continue;
-        const raw = readFileSync(path, 'utf8');
-        if (raw.includes(WITHDRAWN_MARKER)) return json(res, 200, { kind: 'withdrawn', file });
-
-        const { fields, link } = parseDraftBody(raw);
-        const structured = Object.keys(fields).length > 0;
-        return json(res, 200, {
-          kind: 'draft', file, link,
-          // The real channel a draft went out on, not guessed from which
-          // fields happened to parse - `channel_used` is written the moment
-          // draftOutreach() picks one.
-          channel: lead.channel_used || undefined,
-          to: fields.to, subject: fields.subject, body: fields.body ?? fields.message,
-          // A handful of drafts on disk predate the fenced-field format and
-          // have no "### Label" blocks to parse - fall back to the raw file
-          // rather than silently returning nothing for them.
-          markdown: structured ? undefined : raw,
-          canMarkSent: lead.status === DRAFTED,
-        });
-      }
-
-      // Nothing on disk: the real eligibility rule (also selectPool's),
-      // not a hand-kept copy of it - a preview must never promise a
-      // message for a lead a campaign run would not actually touch.
-      if (!(isOpeningEligible(lead) || isFollowUpDue(lead, today()))) {
-        return json(res, 200, { kind: 'none', reason: 'No draft or preview available at this stage.' });
-      }
-      const channel = pickChannel(lead);
-      if (!channel) return json(res, 200, { kind: 'none', reason: 'No contact channel on file yet.' });
-      const template = lead.status === 'tier1_sent'
-        ? followUpTemplateFor(lead.first_contacted_at, today())
-        : templateForChannel(channel);
-      try {
-        // Rendered but never flattened to a file and never written - a
-        // preview of what a campaign run would draft, structured the same
-        // way a real draft is, so there is something to read before running
-        // one.
-        const rendered = renderTemplate(template, lead);
-        const to = destination(lead, channel);
-        const link = channel === 'email' ? gmailComposeLink(to, rendered.subject ?? '', rendered.body) : to;
-        return json(res, 200, {
-          kind: 'preview', channel, to, subject: rendered.subject, body: rendered.body, link,
-          canMarkSent: false,
-        });
-      } catch (err) {
-        return json(res, 200, { kind: 'none', reason: (err as Error).message });
-      }
+      return json(res, 200, draftView(lead, today()));
     }
 
     if (url.pathname === '/api/sent' && req.method === 'POST') {
@@ -233,12 +173,8 @@ const server = createServer(async (req, res) => {
       const all = await store.all();
       const lead = all.find((l) => l.lead_id === leadId);
       if (!lead) return json(res, 404, { error: 'unknown lead' });
-      // Same two guards bin/mark-sent.ts applies: only a drafted, non-suppressed
-      // lead can be confirmed sent - a flag left off must never mark contact.
-      if (lead.status !== DRAFTED) {
-        return json(res, 400, { error: `lead is "${lead.status}", not "drafted" - nothing to confirm` });
-      }
-      if (isSuppressed(lead)) return json(res, 400, { error: 'lead is flagged do_not_contact' });
+      const refusal = sentRefusal(lead);
+      if (refusal) return json(res, 400, { error: refusal });
 
       const patch = sentPatch(lead, today());
       await store.update(lead.lead_id, patch);

@@ -155,4 +155,15 @@ export function isCountableName(normalized: string): boolean {
   return true;
 }
 
+/** A business name as a folder / filename: demo slugs and draft files. */
+export function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/['\u2018\u2019]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40) || 'demo';
+}
+
 export const _internals = { LOCATION_TOKENS, BRANCH_TOKENS, GENERIC_NAMES, PROTECTED_BIGRAMS };

@@ -25,10 +25,15 @@ export interface LeadStore {
   /** Insert leads whose lead_id is not already present. Never overwrites. */
   upsert(leads: Lead[]): Promise<UpsertResult>;
   update(leadId: string, patch: Partial<Lead>): Promise<void>;
+  /**
+   * Patch several leads with one read and one write. All-or-nothing on
+   * unknown ids: nothing is written if any lead_id is missing.
+   */
+  updateMany(patches: ReadonlyMap<string, Partial<Lead>>): Promise<void>;
   byStatus(...statuses: Status[]): Promise<Lead[]>;
 }
 
-class JsonStore implements LeadStore {
+export class JsonStore implements LeadStore {
   readonly kind = 'json' as const;
   constructor(readonly location: string) {}
 
@@ -69,11 +74,15 @@ class JsonStore implements LeadStore {
   }
 
   async update(leadId: string, patch: Partial<Lead>): Promise<void> {
+    await this.updateMany(new Map([[leadId, patch]]));
+  }
+
+  async updateMany(patches: ReadonlyMap<string, Partial<Lead>>): Promise<void> {
+    if (patches.size === 0) return;
     const rows = this.read();
-    const i = rows.findIndex((l) => l.lead_id === leadId);
-    if (i === -1) throw new Error(`No such lead: ${leadId}`);
-    rows[i] = { ...rows[i]!, ...patch };
-    this.write(rows);
+    const known = new Set(rows.map((l) => l.lead_id));
+    for (const id of patches.keys()) if (!known.has(id)) throw new Error(`No such lead: ${id}`);
+    this.write(rows.map((l) => ({ ...l, ...patches.get(l.lead_id) })));
   }
 
   async byStatus(...statuses: Status[]): Promise<Lead[]> {

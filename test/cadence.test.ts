@@ -1,20 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  addDays, daysBetween, followUpTemplateFor, nextActionAfter, FINAL_TEMPLATE,
-} from '../src/cadence.ts';
-
-test('addDays crosses month boundaries in UTC', () => {
-  assert.equal(addDays('2026-08-30', 3), '2026-09-02');
-  assert.equal(addDays('2026-09-02', 0), '2026-09-02');
-});
-
-test('daysBetween counts whole days, and never returns NaN', () => {
-  assert.equal(daysBetween('2026-09-01', '2026-09-08'), 7);
-  assert.equal(daysBetween('2026-09-08', '2026-09-01'), -7);
-  assert.equal(daysBetween('', '2026-09-01'), 0, 'a blank start is day zero, not NaN');
-  assert.equal(daysBetween('not-a-date', '2026-09-01'), 0);
-});
+import { followUpTemplateFor, nextActionAfter, FINAL_TEMPLATE } from '../src/cadence.ts';
 
 test('the due step is derived from days since first contact', () => {
   const first = '2026-09-01';

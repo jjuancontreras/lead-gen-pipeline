@@ -1,12 +1,12 @@
 /** Stage: scaffold demo sites for A-tier leads, capped per run. */
 import { openStore } from '../store.ts';
-import { scaffoldDemo, slugify } from '../scaffold.ts';
-import { registerStage, type StageResult } from '../campaign-stages.ts';
+import { scaffoldDemo } from '../scaffold.ts';
+import { slugify } from '../normalize.ts';
+import type { Stage, StageResult } from '../campaign-stages.ts';
 
-registerStage({
+export const scaffoldStage: Stage = {
   name: 'scaffold',
   description: 'scaffold demo sites for A-tier leads',
-  consumes: ['verified'],
   async run(ctx): Promise<StageResult> {
     const store = openStore();
     const pool = (await store.all())
@@ -39,6 +39,9 @@ registerStage({
         `scaffolded (shell only) ${done.length} of ${pool.length} A-tier` +
         (held > 0 ? ` (${held} held back by the per-run cap)` : '') +
         (done.length ? `: ${done.join(', ')}` : ''),
+      briefNotes: done.length
+        ? ['Each scaffolded folder contains a `BUILD-PROMPT-<BusinessName>.md`. Open it in Claude Code and run `/demo-site-build` to design the demo.']
+        : [],
     };
   },
-});
+};

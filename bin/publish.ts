@@ -7,11 +7,10 @@ import { execFile, spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { promisify } from 'node:util';
 import { WEBSITES_ROOT } from '../src/scaffold.ts';
+import { args, val } from '../src/cli-args.ts';
 
 const execFileAsync = promisify(execFile);
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const dryRun = args.includes('--dry-run');
 
 const slug = val('--slug');

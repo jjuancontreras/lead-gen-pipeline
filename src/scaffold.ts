@@ -166,16 +166,6 @@ export function formatPhoneDisplay(raw: string): string {
   return trimmed;
 }
 
-export function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/['\u2018\u2019]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 40) || 'demo';
-}
-
 function replaceInTree(dir: string, pairs: [string, string][]): void {
   for (const entry of readdirSync(dir)) {
     if (entry === 'node_modules' || entry === '.next') continue;

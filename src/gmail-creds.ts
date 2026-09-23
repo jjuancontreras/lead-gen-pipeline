@@ -1,10 +1,5 @@
-/**
- * Gmail OAuth token file: loading and a throw-free usability probe.
- *
- * This module imports ONLY from `node:fs`. It is pulled in by
- * `campaign-stages.ts`, which must not import a stage file (import cycle),
- * so nothing here may reach back into the rest of the repo.
- */
+/** Gmail OAuth token file: loading and a throw-free usability probe. */
+import './env.ts';
 import { readFileSync } from 'node:fs';
 
 export interface GmailCreds { client_id: string; client_secret: string; refresh_token: string }
@@ -44,4 +39,13 @@ export function gmailCredsUsable(path: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * Whether outreach can create Gmail drafts right now. False means drafts go
+ * to files instead - the documented fallback, not an error.
+ */
+export function gmailReady(): boolean {
+  const path = process.env.GMAIL_TOKEN_PATH;
+  return path ? gmailCredsUsable(path) : false;
 }

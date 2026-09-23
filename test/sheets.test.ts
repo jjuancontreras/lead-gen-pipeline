@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   columnLetter, a1Range, fullRange, LAST_COLUMN, HEADER_ROW,
-  headerMismatch, assertHeader, sheetToLeads, appendPlan, updatePlan,
+  headerMismatch, assertHeader, sheetToLeads, appendPlan, updatePlan, batchUpdatePlan,
   parseServiceAccount, DEFAULT_TAB,
 } from '../src/store-sheets.ts';
 import { COLUMNS, emptyLead, toRow, type Lead } from '../src/lead.ts';
@@ -218,6 +218,25 @@ test('a lead_id can never be matched against the header row', () => {
   // Paranoia with a point: "lead_id" in A1 must not be updatable as a lead.
   const values = [HEADER_ROW, toRow(lead('node/1'))];
   assert.throws(() => updatePlan(values, 'lead_id', {}), /No such lead/);
+});
+
+test('batchUpdatePlan: one row per lead, each merged against the same snapshot', () => {
+  const values = [HEADER_ROW, toRow(lead('node/1')), [], toRow(lead('node/2', { phone: '0917' }))];
+  const plans = batchUpdatePlan(values, new Map<string, Partial<Lead>>([
+    ['node/1', { status: 'shortlisted' }],
+    ['node/2', { status: 'shortlisted' }],
+  ]));
+  assert.deepEqual(plans.map((p) => p.row), [2, 4]);
+  assert.equal(plans[1]!.values[COLUMNS.indexOf('phone')], '0917', 'untouched fields survive');
+  assert.ok(plans.every((p) => p.values[COLUMNS.indexOf('status')] === 'shortlisted'));
+});
+
+test('CRITICAL: one unknown lead rejects the whole batch before anything is written', () => {
+  const values = [HEADER_ROW, toRow(lead('node/1'))];
+  assert.throws(
+    () => batchUpdatePlan(values, new Map([['node/1', {}], ['node/404', {}]])),
+    /No such lead: node\/404/,
+  );
 });
 
 // ---- credentials ------------------------------------------------------------

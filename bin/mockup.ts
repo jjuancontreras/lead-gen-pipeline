@@ -10,9 +10,7 @@
  * assertReachable's hint if it is not already running.
  */
 import { generateMockup } from '../src/mockup.ts';
-
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
+import { args, val } from '../src/cli-args.ts';
 
 const slug = val('--slug');
 if (!slug) {

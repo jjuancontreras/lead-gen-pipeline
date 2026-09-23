@@ -15,9 +15,8 @@
 import '../src/env.ts';  // loads .env.local before anything reads process.env
 import { harvestAssets, DEFAULT_LIMIT } from '../src/harvest.ts';
 import { WEBSITES_ROOT } from '../src/scaffold.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const slug = val('--slug');
 const ig = val('--ig');
 

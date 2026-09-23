@@ -8,7 +8,7 @@
     "chain-index": "tsx bin/build-chain-index.ts",
     "source": "tsx bin/source-area.ts",
     "campaign": "tsx bin/campaign.ts",
-    "console": "tsx bin/console.ts --port 3067",
+    "console": "tsx bin/console.ts",
     "test": "tsx --test \"test/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "verify": "tsx bin/verify-leads.ts",

@@ -11,11 +11,14 @@
  */
 import { readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { slugify } from './scaffold.ts';
+import { slugify } from './normalize.ts';
+import { dataPath } from './config.ts';
+import { localDate, today } from './dates.ts';
 import type { Channel, Rendered } from './outreach.ts';
 import type { Lead } from './lead.ts';
 
-export const today = (): string => new Date().toISOString().slice(0, 10);
+/** Where drafts land while there is no working Gmail token. */
+export const DRAFT_DIR = dataPath('drafts');
 
 /** Where a human goes to send this by hand. */
 export function destination(lead: Lead, channel: Channel): string {
@@ -256,7 +259,7 @@ export function earlierDrafts(dir: string, written: ReadonlySet<string>): Earlie
     .filter((f) => f.endsWith('.md') && f !== INDEX_FILE && !written.has(f))
     .map((f) => ({
       file: f,
-      modified: statSync(join(dir, f)).mtime.toISOString().slice(0, 10),
+      modified: localDate(statSync(join(dir, f)).mtime),
     }))
     .sort((a, b) => (a.modified === b.modified
       ? a.file.localeCompare(b.file)

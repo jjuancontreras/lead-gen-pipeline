@@ -20,10 +20,8 @@ import { mkdtemp, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, extname } from 'node:path';
 import { generateFromImages, type JsonSchema, type GeminiResult } from './gemini.ts';
+import { USER_AGENT } from './browser-identity.ts';
 
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-  '(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
 const REFERER = 'https://www.instagram.com/';
 
 export const DEFAULT_LIMIT = 12;
@@ -301,7 +299,7 @@ export async function fetchInstagramGrid(
   let res: Response;
   try {
     res = await fetchImpl(instagramProfileUrl(handle), {
-      headers: { 'user-agent': UA, referer: REFERER, 'accept-language': 'en-US,en;q=0.9' },
+      headers: { 'user-agent': USER_AGENT, referer: REFERER, 'accept-language': 'en-US,en;q=0.9' },
       signal: AbortSignal.timeout(opts.timeoutMs ?? 20_000),
     });
   } catch (err) {
@@ -322,7 +320,7 @@ export async function fetchInstagramGrid(
 async function downloadOne(url: string, destPath: string, fetchImpl: typeof fetch): Promise<{ ok: true } | { ok: false; error: string }> {
   try {
     const res = await fetchImpl(url, {
-      headers: { 'user-agent': UA, referer: REFERER },
+      headers: { 'user-agent': USER_AGENT, referer: REFERER },
       signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };

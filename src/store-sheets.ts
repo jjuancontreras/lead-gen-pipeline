@@ -184,6 +184,17 @@ export function updatePlan(
   return { row: i + 1, values: toRow({ ...fromRow([...values[i]!]), ...patch }) };
 }
 
+/**
+ * Every row a batch should write, planned against one snapshot. Keyed by
+ * lead_id so no row can be written twice, and an unknown id throws while
+ * planning - before a single cell has been written.
+ */
+export function batchUpdatePlan(
+  values: readonly (readonly string[])[], patches: ReadonlyMap<string, Partial<Lead>>,
+): UpdatePlan[] {
+  return [...patches].map(([leadId, patch]) => updatePlan(values, leadId, patch));
+}
+
 // ---- credentials ------------------------------------------------------------
 
 export interface ServiceAccount { client_email: string; private_key: string }
@@ -230,6 +241,10 @@ interface ValuesApi {
   update(params: {
     spreadsheetId: string; range: string; valueInputOption: string;
     requestBody: { values: string[][] };
+  }): Promise<unknown>;
+  batchUpdate(params: {
+    spreadsheetId: string;
+    requestBody: { valueInputOption: string; data: { range: string; values: string[][] }[] };
   }): Promise<unknown>;
 }
 
@@ -313,14 +328,20 @@ export class SheetsStore implements LeadStore {
   }
 
   async update(leadId: string, patch: Partial<Lead>): Promise<void> {
-    const snap = await this.snapshot();
-    const plan = updatePlan(snap.values, leadId, patch);
+    await this.updateMany(new Map([[leadId, patch]]));
+  }
+
+  /** One read and one write for the whole batch, however many leads it names. */
+  async updateMany(patches: ReadonlyMap<string, Partial<Lead>>): Promise<void> {
+    if (patches.size === 0) return;
+    const plans = batchUpdatePlan((await this.snapshot()).values, patches);
     const api = await this.values();
-    await api.update({
+    await api.batchUpdate({
       spreadsheetId: this.spreadsheetId,
-      range: a1Range(this.tab, plan.row, plan.row),
-      valueInputOption: 'RAW',
-      requestBody: { values: [plan.values] },
+      requestBody: {
+        valueInputOption: 'RAW',
+        data: plans.map((p) => ({ range: a1Range(this.tab, p.row, p.row), values: [p.values] })),
+      },
     });
   }
 }

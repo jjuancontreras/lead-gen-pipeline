@@ -19,6 +19,7 @@
  */
 import { chromium, type Browser, type Page } from 'playwright';
 import { basicClean, normalizeName } from './normalize.ts';
+import { CONTEXT_OPTIONS, BLOCKED_ASSETS } from './browser-identity.ts';
 
 export interface PlaceFacts {
   websiteUrl: string | null;
@@ -34,9 +35,6 @@ export type FetchOutcome =
   | { ok: true; facts: PlaceFacts; confidence: 'high' | 'medium' }
   | { ok: false; reason: 'consent-wall' | 'no-match' | 'ambiguous' | 'error'; detail?: string };
 
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-  '(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
 
 export async function launch(headless = true): Promise<Browser> {
   return chromium.launch({ headless });
@@ -151,12 +149,9 @@ async function fetchPlaceOnce(
 ): Promise<FetchOutcome> {
   const timeout = opts.timeoutMs ?? 30_000;
   const minSim = opts.minSimilarity ?? 0.6;
-  const ctx = await browser.newContext({
-    userAgent: UA, locale: 'en-PH', timezoneId: 'Asia/Manila',
-    viewport: { width: 1280, height: 900 },
-  });
+  const ctx = await browser.newContext(CONTEXT_OPTIONS);
   const page = await ctx.newPage();
-  await page.route('**/*.{png,jpg,jpeg,webp,gif,svg,woff,woff2,mp4}', (r) => r.abort());
+  await page.route(BLOCKED_ASSETS, (r) => r.abort());
 
   try {
     const query = `${business.name} ${business.area}`;

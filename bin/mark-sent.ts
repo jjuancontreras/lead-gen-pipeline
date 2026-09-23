@@ -14,11 +14,9 @@
  */
 import { openStore } from '../src/store.ts';
 import { loadAreas } from '../src/config.ts';
-import { today } from '../src/draft-file.ts';
+import { today } from '../src/dates.ts';
 import { planSent, sentPatch } from '../src/mark-sent.ts';
-
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
+import { args, val } from '../src/cli-args.ts';
 
 /** --lead is repeatable: every value that follows one. */
 const ids = args.flatMap((a, i) => (a === '--lead' && args[i + 1] ? [args[i + 1]!] : []));
@@ -65,12 +63,13 @@ if (plan.chosen.length === 0) {
   process.exit(1);
 }
 
+const patches = new Map(plan.chosen.map((lead) => [lead.lead_id, sentPatch(lead, now)]));
 for (const lead of plan.chosen) {
-  const patch = sentPatch(lead, now);
+  const patch = patches.get(lead.lead_id)!;
   const next = patch.next_action_date ? `follow up ${patch.next_action_date}` : 'sequence finished';
-  console.log(`  ${dryRun ? 'would mark' : 'marked'} ${lead.name.slice(0, 30).padEnd(31)} -> ${patch.status}, ${next}`);
-  if (!dryRun) await store.update(lead.lead_id, patch);
+  console.log(`  ${dryRun ? 'would mark' : 'marking'} ${lead.name.slice(0, 30).padEnd(31)} -> ${patch.status}, ${next}`);
 }
+if (!dryRun) await store.updateMany(patches);
 
 console.log(`\n  ${dryRun ? 'would update' : 'updated'} ${plan.chosen.length} lead(s).`);
 console.log('  Follow-ups become due on their next_action_date - run `npm run draft` then.\n');

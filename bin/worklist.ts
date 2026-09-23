@@ -18,10 +18,10 @@ import { openStore } from '../src/store.ts';
 import { classifyWebsite } from '../src/website.ts';
 import { stage2 } from '../src/score.ts';
 import { loadCategories } from '../src/config.ts';
+import { today } from '../src/dates.ts';
 import type { Lead } from '../src/lead.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const areaKey = val('--area');
 const limit = Number(val('--limit')) || 60;
 const ingest = args.includes('--ingest');
@@ -97,6 +97,7 @@ if (ingest) {
   const config = loadCategories();
   const tally: Record<string, number> = {};
   const tallyTier: Record<string, number> = {};
+  const patches = new Map<string, Partial<Lead>>();
   let filled = 0, blank = 0;
 
   for (const rec of records) {
@@ -128,9 +129,10 @@ if (ingest) {
     tally[result.status] = (tally[result.status] ?? 0) + 1;
     if (result.tier) tallyTier[result.tier] = (tallyTier[result.tier] ?? 0) + 1;
 
-    await store.update(rec.id!, patch);
+    patches.set(rec.id!, { ...patches.get(rec.id!), ...patch });
     filled++;
   }
+  await store.updateMany(patches);
   console.log(`
   ingested ${filled} verified, ${blank} left blank (still shortlisted)`);
   console.log(`  tiers   ` + (['A','B','C'] as const).map((t) => `${t}:${tallyTier[t] ?? 0}`).join('  '));
@@ -150,7 +152,7 @@ if (ingest) {
   const label = areas.areas[areaKey]?.label ?? areaKey;
   const header = `# Verification worklist — ${label}
 
-${pool.length} leads, highest stage-1 score first. Generated ${new Date().toISOString().slice(0, 10)}.
+${pool.length} leads, highest stage-1 score first. Generated ${today()}.
 
 **A website means a separate standalone site.** Facebook, Instagram, TikTok,
 Linktree and delivery-app listings do not count — a business with only those
@@ -165,9 +167,9 @@ Fill the \`yaml\` blocks, then: \`npm run worklist -- --area ${areaKey} --ingest
   const body = pool.map((l, i) => block(l, areaKey, i + 1, pool.length)).join('\n---\n');
   writeFileSync(file(areaKey), header + body);
 
-  for (const l of pool) {
-    if (l.status === 'sourced') await store.update(l.lead_id, { status: 'shortlisted' });
-  }
+  await store.updateMany(new Map(pool
+    .filter((l) => l.status === 'sourced')
+    .map((l) => [l.lead_id, { status: 'shortlisted' as const }])));
   console.log(`\n  wrote ${pool.length} leads to ${file(areaKey)}`);
   console.log(`  marked them 'shortlisted'\n`);
 }

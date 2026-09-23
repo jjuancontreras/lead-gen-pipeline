@@ -8,103 +8,28 @@
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { dataPath } from '../config.ts';
 import { openStore } from '../store.ts';
-import { slugify } from '../scaffold.ts';
+import { renderTemplate, pickChannel, type Channel, type Rendered } from '../outreach.ts';
 import {
-  renderTemplate, pickChannel, templateForChannel, channelForTemplate,
-  type Channel, type Rendered,
-} from '../outreach.ts';
-import {
-  today, destination, draftFileBody, draftIndexBody, draftFileNames, earlierDrafts,
+  DRAFT_DIR, destination, draftFileBody, draftIndexBody, draftFileNames, earlierDrafts,
   withdrawnBody, INDEX_FILE, WITHDRAWN_MARKER, type DraftRow, type WithdrawnDraft,
 } from '../draft-file.ts';
-import { followUpTemplateFor } from '../cadence.ts';
-import { credentialAvailable, registerStage, type StageResult } from '../campaign-stages.ts';
+import { selectPool, templateFor } from '../outreach-policy.ts';
+import { loadGmailCreds, gmailReady, type GmailCreds } from '../gmail-creds.ts';
+import { today } from '../dates.ts';
+import type { Stage, StageResult } from '../campaign-stages.ts';
 import { isSuppressed, type Lead, type Tier } from '../lead.ts';
-
-// The markdown lives in ../draft-file.ts; re-exported so existing importers
-// (and tests) keep the paths they already use.
-export { destination, draftFileBody, gmailComposeLink, MAX_COMPOSE_URL } from '../draft-file.ts';
-
-export const DRAFT_DIR = dataPath('drafts');
-
-/** Templates that open a conversation rather than continue one. */
-export const FIRST_CONTACT_TEMPLATES: ReadonlySet<string> = new Set([
-  'email-first', 'instagram-dm', 'messenger-dm',
-]);
 
 /**
  * Outreach has no entry in `Caps`, so the stage carries its own ceiling.
  *
- * The 3 / 7 / 14 cadence itself lives in `src/cadence.ts` now: it is arithmetic
+ * The 3 / 7 / 14 cadence itself lives in `src/cadence.ts`: it is arithmetic
  * on `first_contacted_at`, and it is applied when a human confirms a send
  * (`npm run sent`), not when this stage writes a file.
  */
 export const DEFAULT_OUTREACH_LIMIT = 20;
 
-export interface SelectOptions {
-  area: string;
-  /** Explicit sequence step, or undefined to pick per lead by channel. */
-  template?: string;
-  tiers: Tier[];
-  today: string;
-}
-
-/**
- * Who is due, given the whole store. Pure, so the selection rules can be
- * tested without a store or a filesystem.
- */
-/**
- * A lead qualifies for a first-contact touch: qualified enough to reach out
- * to, and nobody has yet. Tier is deliberately not part of this - tier is a
- * campaign's own volume choice (`wantTier` below), not a fact about the lead.
- */
-export function isOpeningEligible(lead: Lead): boolean {
-  return (lead.status === 'verified' || lead.status === 'scaffolded') && !lead.first_contacted_at;
-}
-
-/**
- * A lead's follow-up is due today. This is the one piece of `selectPool`'s
- * eligibility that `bin/console.ts` also needs (to know whether a "preview"
- * is honest), so it is exported rather than kept private - the alternative
- * is a second, hand-copied notion of "due" that can drift from this one.
- */
-export function isFollowUpDue(lead: Lead, today: string): boolean {
-  return lead.status === 'tier1_sent' && lead.next_action_date !== '' && lead.next_action_date <= today;
-}
-
-export function selectPool(all: readonly Lead[], opts: SelectOptions): Lead[] {
-  const wantTier = new Set<Tier>(opts.tiers);
-  // No template means "whatever each lead is due for". The campaign never
-  // passes one, and without both branches the 3/7/14 cadence was unreachable
-  // from `npm run campaign`: every run only ever opened new conversations.
-  const opening = !opts.template || FIRST_CONTACT_TEMPLATES.has(opts.template);
-  const following = !opts.template || !FIRST_CONTACT_TEMPLATES.has(opts.template);
-
-  let pool = all.filter((l) => {
-    if (l.area !== opts.area) return false;
-    // Belt and braces: renderTemplate refuses these too, but a suppressed
-    // lead should never even reach a rendering attempt.
-    if (isSuppressed(l)) return false;
-    if (opening && isOpeningEligible(l) && wantTier.has(l.tier)) return true;
-    if (following && isFollowUpDue(l, opts.today)) return true;
-    return false;
-  });
-
-  // A channel-specific template must not be aimed at the wrong channel: the
-  // email body is six paragraphs and would be ignored as an Instagram DM.
-  const only = opts.template ? channelForTemplate(opts.template) : null;
-  if (only) pool = pool.filter((l) => pickChannel(l) === only);
-
-  return pool.sort((a, b) => Number(b.osm_score) - Number(a.osm_score));
-}
-
 // ---- Gmail ------------------------------------------------------------------
-
-import { loadGmailCreds, type GmailCreds } from '../gmail-creds.ts';
-
-export { loadGmailCreds, type GmailCreds };
 
 /** RFC 2047 encoded-word - business names are not all ASCII. */
 const encodeHeader = (s: string): string =>
@@ -247,74 +172,78 @@ export async function draftOutreach(opts: OutreachOptions): Promise<OutreachRepo
     today: now,
   }).slice(0, opts.limit);
 
-  const gmailReady = credentialAvailable('gmail');
+  // Checked per lead's channel below, not by skipping the stage: Instagram,
+  // Messenger and TikTok never touch Gmail, and a missing token just means
+  // email drafts land in files instead.
   const report: OutreachReport = {
     attempted: pool.length, drafted: 0, gmailDrafts: 0,
-    files: [], gmailReady, skipped: [], withdrawn: [],
+    files: [], gmailReady: gmailReady(), skipped: [], withdrawn: [],
   };
 
   // Runs even when the pool is empty - an opt-out is usually the REASON the
   // pool is empty, and that is exactly when the old draft has to go.
   if (!opts.dryRun) report.withdrawn = withdrawSuppressedDrafts(all, opts.area, now);
 
-  const creds = pool.length > 0 && gmailReady
+  const creds = pool.length > 0 && report.gmailReady
     ? loadGmailCreds(process.env.GMAIL_TOKEN_PATH!) : null;
   const rows: DraftRow[] = [];
+  // 'drafted', not 'tier1_sent': writing a file is not sending a message, and
+  // nothing in this codebase sends. The contact timestamps and next action
+  // date are written by `npm run sent`, once a human confirms the send.
+  const drafted = new Map<string, Partial<Lead>>();
 
-  for (const lead of pool) {
-    const channel = pickChannel(lead);
-    if (!channel) {
-      report.skipped.push({ lead, reason: 'no contact channel on the record' });
-      continue;
-    }
-    // A due follow-up continues the sequence; anything else opens one. The
-    // step is derived from first_contacted_at, so no column has to remember it.
-    const template = opts.template ?? (lead.status === 'tier1_sent'
-      ? followUpTemplateFor(lead.first_contacted_at, now)
-      : templateForChannel(channel));
+  // One batched write at the end. If a lead throws mid-run (a Gmail API
+  // error, say), the drafts already written are still recorded - and the
+  // original error is the one that surfaces, not a follow-on store error.
+  const record = () => store.updateMany(drafted);
+  try {
+    for (const lead of pool) {
+      const channel = pickChannel(lead);
+      if (!channel) {
+        report.skipped.push({ lead, reason: 'no contact channel on the record' });
+        continue;
+      }
+      const template = opts.template ?? templateFor(lead, channel, now);
 
-    let rendered: Rendered;
-    try {
-      rendered = renderTemplate(template, lead);
-    } catch (err) {
-      // One lead with a missing field must not cost the whole batch.
-      report.skipped.push({ lead, reason: (err as Error).message });
-      continue;
-    }
+      let rendered: Rendered;
+      try {
+        rendered = renderTemplate(template, lead);
+      } catch (err) {
+        // One lead with a missing field must not cost the whole batch.
+        report.skipped.push({ lead, reason: (err as Error).message });
+        continue;
+      }
 
-    let where: string;
-    if (opts.dryRun) {
-      where = 'dry run';
-    } else if (channel === 'email' && creds) {
-      const id = await createGmailDraft(creds, destination(lead, channel), rendered);
-      report.gmailDrafts++;
-      where = `gmail draft ${id}`;
-    } else {
-      const path = writeDraftFile(lead, channel, template, rendered, now);
-      report.files.push(path);
-      rows.push({
-        name: lead.name,
-        channel,
-        destination: destination(lead, channel),
-        tier: lead.tier,
-        template,
-        file: basename(path),
-      });
-      where = path;
-    }
+      let where: string;
+      if (opts.dryRun) {
+        where = 'dry run';
+      } else if (channel === 'email' && creds) {
+        const id = await createGmailDraft(creds, destination(lead, channel), rendered);
+        report.gmailDrafts++;
+        where = `gmail draft ${id}`;
+      } else {
+        const path = writeDraftFile(lead, channel, template, rendered, now);
+        report.files.push(path);
+        rows.push({
+          name: lead.name,
+          channel,
+          destination: destination(lead, channel),
+          tier: lead.tier,
+          template,
+          file: basename(path),
+        });
+        where = path;
+      }
 
-    if (!opts.dryRun) {
-      // 'drafted', not 'tier1_sent': writing a file is not sending a message,
-      // and nothing in this codebase sends. Recording contact here starts the
-      // 3/7/14 clock on a draft nobody has opened yet, so the whole sequence
-      // would run against a business that never heard from us. The contact
-      // timestamps and the next action date are written by `npm run sent`,
-      // once a human confirms the message actually went out.
-      await store.update(lead.lead_id, { status: 'drafted', channel_used: channel });
+      if (!opts.dryRun) drafted.set(lead.lead_id, { status: 'drafted', channel_used: channel });
+      report.drafted++;
+      log(`${lead.name.slice(0, 32).padEnd(33)} ${channel.padEnd(10)} ${template.padEnd(13)} ${where}`);
     }
-    report.drafted++;
-    log(`${lead.name.slice(0, 32).padEnd(33)} ${channel.padEnd(10)} ${template.padEnd(13)} ${where}`);
+  } catch (err) {
+    await record().catch((e: Error) => log(`could not record ${drafted.size} drafted lead(s): ${e.message}`));
+    throw err;
   }
+  await record();
 
   // A dry run writes nothing at all, index included. Every other run rewrites
   // the index even with nothing new, so a withdrawal shows up immediately.
@@ -322,15 +251,9 @@ export async function draftOutreach(opts: OutreachOptions): Promise<OutreachRepo
   return report;
 }
 
-registerStage({
+export const outreachStage: Stage = {
   name: 'outreach',
   description: 'draft first contact and due follow-ups (drafts only, never sends)',
-  // 'tier1_sent' too: selectPool also picks up leads whose follow-up is due.
-  consumes: ['verified', 'scaffolded', 'tier1_sent'],
-  // Deliberately NOT `requires: 'gmail'`. Gating the stage would also skip
-  // Instagram, Messenger and TikTok, which never touch Gmail, and would turn
-  // the documented no-credentials fallback into "stage skipped". The Gmail
-  // check happens per lead instead, via credentialAvailable('gmail').
   async run(ctx): Promise<StageResult> {
     const r = await draftOutreach({
       area: ctx.area,
@@ -354,4 +277,4 @@ registerStage({
       handoff: r.skipped,
     };
   },
-});
+};

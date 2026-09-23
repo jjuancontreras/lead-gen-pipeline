@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { planSent, sentPatch, DRAFTED } from '../src/mark-sent.ts';
-import { CADENCE, FINAL_TEMPLATE, addDays } from '../src/cadence.ts';
+import { planSent, sentPatch, sentRefusal, DRAFTED } from '../src/mark-sent.ts';
+import { CADENCE, FINAL_TEMPLATE } from '../src/cadence.ts';
+import { addDays } from '../src/dates.ts';
 import { emptyLead, INACTIVE, type Lead } from '../src/lead.ts';
 
 /** A Katipunan lead sitting in the drafted state, waiting on a human. */
@@ -74,6 +75,12 @@ test('CRITICAL: an opted-out lead is never marked as contacted, even by name', (
   assert.deepEqual(named.unmatched, ['node/1'], 'and the human is told why nothing happened');
   assert.deepEqual(sweep.chosen, []);
   assert.deepEqual(sweep.suppressed.map((l) => l.name), ['Test Cafe']);
+});
+
+test('sentRefusal: only a drafted, non-suppressed lead can be confirmed sent', () => {
+  assert.equal(sentRefusal(lead()), null);
+  assert.match(sentRefusal(lead({ status: 'verified' })) ?? '', /"verified", not "drafted"/);
+  assert.match(sentRefusal(lead({ do_not_contact: 'yes' })) ?? '', /do_not_contact/);
 });
 
 test('omitting --area sweeps every area', () => {

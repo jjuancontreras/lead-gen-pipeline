@@ -12,13 +12,12 @@
  * Thin wrapper over src/stages/outreach.ts.
  */
 import { loadAreas } from '../src/config.ts';
-import { credentialAvailable } from '../src/campaign-stages.ts';
+import { gmailReady } from '../src/gmail-creds.ts';
 import { availableTemplates } from '../src/outreach.ts';
 import { draftOutreach, DEFAULT_OUTREACH_LIMIT } from '../src/stages/outreach.ts';
 import type { Tier } from '../src/lead.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const areaKey = val('--area');
 const areas = loadAreas();
 
@@ -46,11 +45,10 @@ const dryRun = args.includes('--dry-run');
 const tiers = (val('--tier') ?? 'B').split(',').map((t) => t.trim().toUpperCase()) as Tier[];
 const label = areas.areas[areaKey]!.label;
 const gmailTokenPath = process.env.GMAIL_TOKEN_PATH;
-const gmailReady = credentialAvailable('gmail');
 
 console.log(`\nDrafting outreach for ${label}${dryRun ? '  [DRY RUN]' : ''}`);
 console.log(`  tier ${tiers.join('/')}   template ${template ?? 'auto (by channel)'}`);
-if (gmailReady) {
+if (gmailReady()) {
   console.log('  email -> Gmail drafts (token is usable)');
 } else if (gmailTokenPath) {
   console.log('  email -> data/drafts/ files (GMAIL_TOKEN_PATH set but token unusable - missing refresh_token)');

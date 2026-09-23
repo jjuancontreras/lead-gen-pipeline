@@ -4,12 +4,10 @@ import {
   renderTemplate, pickChannel, availableTemplates, interpolate, variantFor,
   templateForChannel, channelForTemplate, SENDER,
 } from '../src/outreach.ts';
-import {
-  selectPool, destination, draftFileBody, mimeMessage, withdrawSuppressedDrafts,
-  isOpeningEligible, isFollowUpDue,
-} from '../src/stages/outreach.ts';
+import { mimeMessage, withdrawSuppressedDrafts } from '../src/stages/outreach.ts';
+import { selectPool, isOpeningEligible, isFollowUpDue } from '../src/outreach-policy.ts';
 import { followUpTemplateFor, CADENCE } from '../src/cadence.ts';
-import { WITHDRAWN_MARKER } from '../src/draft-file.ts';
+import { WITHDRAWN_MARKER, destination, draftFileBody } from '../src/draft-file.ts';
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';

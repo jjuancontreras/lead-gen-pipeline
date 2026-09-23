@@ -17,9 +17,9 @@ import {
 } from '../src/config.ts';
 import { buildCategoryQuery, runOverpass, type OsmElement } from '../src/overpass.ts';
 import { normalizeName, isCountableName } from '../src/normalize.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const phase = Number(args[args.indexOf('--phase') + 1]) || 2; // index all categories by default
+const phase = Number(val('--phase')) || 2; // index all categories by default
 const keepRaw = args.includes('--keep-raw');
 
 const areas = loadAreas();

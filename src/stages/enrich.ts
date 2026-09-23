@@ -22,26 +22,15 @@
  */
 import type { Browser, Page } from 'playwright';
 import { launch, jitter, nameSimilarity } from '../fetcher.ts';
+import { CONTEXT_OPTIONS, BLOCKED_ASSETS } from '../browser-identity.ts';
 import { openStore } from '../store.ts';
 import { classifyWebsite } from '../website.ts';
-import { registerStage, type StageResult } from '../campaign-stages.ts';
+import type { Stage, StageResult } from '../campaign-stages.ts';
 import {
   extractHandles, contactPatch, ENRICHABLE,
   type EnrichableChannel, type Handles,
 } from '../social.ts';
 import type { Lead } from '../lead.ts';
-
-/**
- * Identical to the Maps fetcher's context: same UA, same locale, same
- * timezone, same image blocking. Duplicated only because fetcher.ts keeps its
- * UA constant module-private - if it is ever exported, import it instead of
- * maintaining two copies that can drift apart.
- */
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-  '(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
-
-const BLOCK_IMAGES = '**/*.{png,jpg,jpeg,webp,gif,svg,woff,woff2,mp4}';
 
 /**
  * Bing, and not for want of trying the alternatives. Google's results sit
@@ -272,12 +261,9 @@ type Visit =
  * are always the logged-out visitor we claim to be.
  */
 async function visit(browser: Browser, source: EnrichSource): Promise<Visit> {
-  const ctx = await browser.newContext({
-    userAgent: UA, locale: 'en-PH', timezoneId: 'Asia/Manila',
-    viewport: { width: 1280, height: 900 },
-  });
+  const ctx = await browser.newContext(CONTEXT_OPTIONS);
   const page: Page = await ctx.newPage();
-  await page.route(BLOCK_IMAGES, (r) => r.abort());
+  await page.route(BLOCKED_ASSETS, (r) => r.abort());
   try {
     await page.goto(source.url, { waitUntil: 'domcontentloaded', timeout: 30_000 });
     // Social pages hydrate their content - and their login overlays - after
@@ -391,10 +377,9 @@ export async function enrichLeads(opts: EnrichOptions): Promise<EnrichReport> {
   return report;
 }
 
-registerStage({
+export const enrichStage: Stage = {
   name: 'enrich',
   description: "find contacts on the business's own channels",
-  consumes: ['verified'],
   async run(ctx): Promise<StageResult> {
     const r = await enrichLeads({
       area: ctx.area,
@@ -410,4 +395,4 @@ registerStage({
       handoff: r.handoff,
     };
   },
-});
+};

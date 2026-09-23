@@ -1,9 +1,11 @@
-/**
- * Importing this module registers every stage, in execution order.
- * The orchestrator imports it for the side effect.
- */
-import './source.ts';
-import './verify.ts';
-import './enrich.ts';
-import './scaffold.ts';
-import './outreach.ts';
+/** Every campaign stage, in the order a run executes them. */
+import type { Stage } from '../campaign-stages.ts';
+import { sourceStage } from './source.ts';
+import { verifyStage } from './verify.ts';
+import { enrichStage } from './enrich.ts';
+import { scaffoldStage } from './scaffold.ts';
+import { outreachStage } from './outreach.ts';
+
+export const STAGES: readonly Stage[] = [
+  sourceStage, verifyStage, enrichStage, scaffoldStage, outreachStage,
+];

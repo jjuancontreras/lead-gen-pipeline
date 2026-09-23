@@ -6,7 +6,7 @@ import { buildCategoryQuery, runOverpass, elementId, elementLatLon } from '../ov
 import { applyCeiling, stage1Score, chainLocations, categoryKeyOf, type RejectReason } from '../sme.ts';
 import { emptyLead, type Lead } from '../lead.ts';
 import { openStore } from '../store.ts';
-import { registerStage, type StageResult } from '../campaign-stages.ts';
+import type { Stage, StageResult } from '../campaign-stages.ts';
 
 export interface SourceOptions {
   area: string;
@@ -93,10 +93,9 @@ export async function sourceArea(opts: SourceOptions): Promise<SourceReport> {
   return { named: named.length, rejects, kept: selected, added, skipped };
 }
 
-registerStage({
+export const sourceStage: Stage = {
   name: 'source',
   description: 'sweep the area for SME leads',
-  consumes: [],
   async run(ctx): Promise<StageResult> {
     const r = await sourceArea({
       area: ctx.area, phase: 1, dryRun: ctx.dryRun, log: ctx.log,
@@ -112,4 +111,4 @@ registerStage({
         `(dropped: ${dropped || 'none'}); ${r.added} new, ${r.skipped} already known`,
     };
   },
-});
+};

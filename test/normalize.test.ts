@@ -1,6 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeName, isCountableName, basicClean } from '../src/normalize.ts';
+import { normalizeName, isCountableName, basicClean, slugify } from '../src/normalize.ts';
+
+test('slugify: lowercase kebab, accents folded, apostrophes closed up, 40 chars max', () => {
+  assert.equal(slugify("Fred's Revolucion"), 'freds-revolucion');
+  assert.equal(slugify('Café Niño & Co.'), 'cafe-nino-co');
+  assert.equal(slugify('  --Tiny Tavern--  '), 'tiny-tavern');
+  assert.equal(slugify('a'.repeat(60)).length, 40);
+  assert.equal(slugify('!!!'), 'demo', 'a name with no usable characters still gets a slug');
+});
 
 test('collapses branch variants of the same chain onto one key', () => {
   const variants = [

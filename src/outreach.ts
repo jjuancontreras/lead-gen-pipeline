@@ -14,6 +14,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT, loadAreas } from './config.ts';
 import { isHighIntent } from './website.ts';
+import { today } from './dates.ts';
 import { isSuppressed, type Lead, type WebsiteKind } from './lead.ts';
 
 const TEMPLATE_DIR = join(ROOT, 'templates', 'outreach');
@@ -159,7 +160,7 @@ function buildContext(lead: Lead, extra: Record<string, string>): Record<string,
     // Already plural and grammatical - templates must NOT append an "s".
     category_plural: pluralizeCategory(lead.category ?? ''),
     page_kind: PAGE_KIND_LABEL[lead.website_kind] ?? '',
-    today: new Date().toISOString().slice(0, 10),
+    today: today(),
     ...SENDER,
     ...extra,
   };

@@ -14,15 +14,12 @@
 import { createInterface } from 'node:readline/promises';
 import { writeFileSync } from 'node:fs';
 import { loadAreas, loadChainIndex, dataPath } from '../src/config.ts';
-import {
-  stages, findStage, credentialAvailable, DEFAULT_CAPS,
-  type StageContext, type Caps,
-} from '../src/campaign-stages.ts';
-import '../src/stages/index.ts'; // side-effect: registers stages
+import { DEFAULT_CAPS, type StageContext, type Caps } from '../src/campaign-stages.ts';
+import { STAGES } from '../src/stages/index.ts';
 import type { Lead } from '../src/lead.ts';
+import { today } from '../src/dates.ts';
+import { args, val } from '../src/cli-args.ts';
 
-const args = process.argv.slice(2);
-const val = (n: string) => (args.includes(n) ? args[args.indexOf(n) + 1] : undefined);
 const dryRun = args.includes('--dry-run');
 const onlyStage = val('--stage');
 
@@ -78,11 +75,9 @@ if (ageDays > 90) {
 console.log(`\n  Campaign: ${areaLabel}${dryRun ? '   [DRY RUN - nothing will be written]' : ''}`);
 console.log(`  caps: ${caps.maxVerify} verifications, ${caps.maxScaffolds} scaffolds per run\n`);
 
-const toRun = onlyStage
-  ? [findStage(onlyStage)].filter(Boolean)
-  : [...stages()];
-if (onlyStage && toRun.length === 0) {
-  console.error(`  Unknown stage "${onlyStage}". Known: ${stages().map((s) => s.name).join(', ')}\n`);
+const toRun = onlyStage ? STAGES.filter((s) => s.name === onlyStage) : STAGES;
+if (toRun.length === 0) {
+  console.error(`  Unknown stage "${onlyStage}". Known: ${STAGES.map((s) => s.name).join(', ')}\n`);
   process.exit(1);
 }
 
@@ -92,45 +87,31 @@ const ctx: StageContext = {
 };
 
 const handoff: { lead: Lead; reason: string }[] = [];
-const summaries: string[] = [];
+const briefLines: string[] = [];
 const failedStages: string[] = [];
 
 for (const stage of toRun) {
-  if (!stage) continue;
-  if (!credentialAvailable(stage.requires)) {
-    console.log(`  - ${stage.name.padEnd(12)} skipped (needs ${stage.requires} credentials)`);
-    summaries.push(`${stage.name}: skipped, needs ${stage.requires}`);
-    continue;
-  }
   console.log(`  > ${stage.name}  ${stage.description}`);
   try {
     const res = await stage.run(ctx);
     console.log(`      ${res.summary}`);
-    summaries.push(`${stage.name}: ${res.summary}`);
+    briefLines.push(`- ${stage.name}: ${res.summary}`, ...(res.briefNotes ?? []).map((n) => `  ${n}`));
     if (res.handoff) handoff.push(...res.handoff);
   } catch (err) {
     // One failing stage must not lose the work the earlier stages did.
     failedStages.push(stage.name);
     console.log(`      FAILED: ${(err as Error).message}`);
-    summaries.push(`${stage.name}: FAILED - ${(err as Error).message}`);
+    briefLines.push(`- ${stage.name}: FAILED - ${(err as Error).message}`);
   }
 }
 
 // ---- handoff brief ---------------------------------------------------------
-const today = new Date().toISOString().slice(0, 10);
-const briefLines: string[] = [];
-for (const summary of summaries) {
-  briefLines.push(`- ${summary}`);
-  // After scaffold summary, note the BUILD-PROMPT files
-  if (summary.startsWith('scaffold:') && summary.includes('scaffolded')) {
-    briefLines.push(`  Each scaffolded folder contains a \`BUILD-PROMPT-<BusinessName>.md\`. Open it in Claude Code and run \`/demo-site-build\` to design the demo.`);
-  }
-}
+const runDate = today();
 
 const lines = [
   `# Campaign brief - ${areaLabel}`,
   ``,
-  `Run ${today}${dryRun ? '  (dry run)' : ''}`,
+  `Run ${runDate}${dryRun ? '  (dry run)' : ''}`,
   ``,
   `## What ran`,
   ``,
@@ -159,7 +140,7 @@ lines.push(
   ``,
 );
 
-const briefPath = dataPath(`campaign-brief-${area}-${today}.md`);
+const briefPath = dataPath(`campaign-brief-${area}-${runDate}.md`);
 if (!dryRun) writeFileSync(briefPath, lines.join('\n'));
 
 console.log(`\n  ${handoff.length} leads need manual attention`);
