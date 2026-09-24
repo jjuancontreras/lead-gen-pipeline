@@ -26,7 +26,8 @@
     "e2e": "tsx --test --test-reporter=spec \"test/e2e/pipeline.e2e.ts\"",
     "test:ui": "tsx --test --test-reporter=spec --test-concurrency=1 \"test/e2e/dashboard.e2e.ts\"",
     "lint": "eslint .",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run e2e && npm run test:ui"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

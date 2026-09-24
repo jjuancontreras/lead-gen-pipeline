@@ -128,12 +128,19 @@ fails at startup with the name of the setting. `.env.local` is loaded first
 
 | Setting | Default | Meaning |
 |---|---|---|
-| `PIPELINE_DATA_DIR` | `./data` | Leads, drafts, sites, videos, emails, pipeline state |
+| `PIPELINE_DATA_DIR` | `./data` | Leads (JSON store), drafts, sites, videos, emails, pipeline state |
 | `PIPELINE_STORE` | `auto` | `auto` uses the Sheet when credentials exist; `json` forces the local store |
 | `SEND_EMAILS` | `false` | Must be `false`. No transport is implemented, so `true` is refused |
-| `SENDER_NAME`, `SENDER_EMAIL` | name from `SENDER`, no email | Sender identity in the email signature |
+| `SENDER_NAME`, `SENDER_EMAIL` | name from `SENDER`, no email | Sender identity in the email signature. The email stage fails without `SENDER_EMAIL` |
 | `PUBLIC_BASE_URL` | `http://localhost:3008` | Prefix for the site and video links in emails |
+| `DEMO_SITES_ROOT` | the repo's parent folder | Where scaffolded Next.js demos and `.claude/launch.json` live |
+| `PIPELINE_VIDEO_MS` | `27000` | Target walkthrough length |
+| `CONSOLE_PORT` | `3008` | Console port; `0` picks a free one (the dashboard tests use this) |
 | `LOG_FORMAT` / `LOG_LEVEL` | `pretty` / `info` | Structured logger (`src/log.ts`) |
+
+A blank value (`PIPELINE_STORE=`) means unset. `npm run doctor` reports all of
+them, and `test/settings.test.ts` checks that `.env.example`, copied as is, is
+a valid configuration.
 
 ## Console (`bin/console.ts`, `console/`)
 
@@ -149,7 +156,23 @@ API:
 
 | Route | Purpose |
 |---|---|
-| `GET /api/pipeline` | leads with their per-stage states |
-| `POST /api/pipeline/retry` | `{lead_id, stage}`: reset that stage and every later one, then rerun that lead |
-| `GET /sites/<slug>/`, `/videos/<file>`, `/emails/<slug>` | preview artifacts (path-checked) |
+| `GET /pipeline` | the dashboard page (`console/pipeline.html`, `console/js/pipeline*.js`, `console/dashboard.css`) |
+| `GET /api/pipeline` | one row per lead with each stage's status, attempts and error; stage counts; job status; areas with how many leads are ready |
+| `POST /api/pipeline/retry` | `{lead_id, stage}`: reset that stage and every later one, then rerun that lead in the background (202; 409 while a job runs) |
+| `POST /api/pipeline/run` | `{area, limit}` (1-10): run the area's demo-ready leads in the background |
+| `GET /sites/<slug>/`, `GET /videos/<slug>/<file>` | preview artifacts from the data directory, path-checked, with byte ranges for video |
 | `GET /api/leads`, `/api/draft`, `POST /api/sent`, `/api/areas`, `/api/campaign` | discovery-side |
+
+The email preview comes from the email stage's recorded output in
+`/api/pipeline`, not from a file route. One job runs at a time
+(`SingleJob` in `src/pipeline/dashboard.ts`), because two runs would each
+read-modify-write the same state file.
+
+## Tests
+
+| Command | What it covers | Time |
+|---|---|---|
+| `npm test` | Unit and integration tests: every stage, each hand-off schema, the runner (isolation, resume, rebuild), the send gate, settings, the static server, the dashboard view model, plus the discovery campaign's existing suites | ~2 s |
+| `npm run e2e` | The CLI takes the 3 fixture businesses through all four stages in a temp dir, offline; asserts sites render in Chromium, videos have real durations, drafts are complete, zero sent, and a rerun is a no-op | ~45 s |
+| `npm run test:ui` | Playwright against the real console: states, retry, previews, validation, keyboard, phone width, axe, zero console errors | ~15 s |
+| `npm run check` | lint, typecheck, test, build, e2e, test:ui, in that order | ~1.5 min |
