@@ -13,6 +13,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { dataPath } from './config.ts';
+import { settings } from './settings.ts';
 import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
 import { openSheetsStore } from './store-sheets.ts';
 
@@ -95,11 +96,15 @@ export class JsonStore implements LeadStore {
  * Pick a backend. Sheets when credentials are configured, JSON otherwise.
  * The JSON path is not a toy - it is the correct store until the service
  * account exists, and stays useful for dry runs and tests.
+ *
+ * `PIPELINE_STORE=json` forces the local store even when Sheet credentials
+ * are present - the Sheet is production data, and a test must never reach it.
  */
 export function openStore(opts: { forceJson?: boolean } = {}): LeadStore {
   const sheetId = process.env.GOOGLE_SHEET_ID;
   const keyPath = process.env.GOOGLE_SA_KEY_PATH;
-  if (!opts.forceJson && sheetId && keyPath) {
+  const forceJson = opts.forceJson || settings().store === 'json';
+  if (!forceJson && sheetId && keyPath) {
     return openSheetsStore();
   }
   return new JsonStore(dataPath('leads.json'));

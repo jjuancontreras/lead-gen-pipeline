@@ -1,12 +1,12 @@
-import './env.ts';  // loads .env.local before anything reads process.env
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
+import { settings } from './settings.ts';  // loads .env.local and validates it
 import type { Bbox } from './overpass.ts';
 
-export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+export const ROOT = settings().root;
 export const configPath = (name: string) => resolve(ROOT, 'config', name);
-export const dataPath = (name: string) => resolve(ROOT, 'data', name);
+/** Under PIPELINE_DATA_DIR, so a test or dry run never lands in the real data. */
+export const dataPath = (name: string) => resolve(settings().dataDir, name);
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, 'utf8')) as T;

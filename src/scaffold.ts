@@ -7,12 +7,14 @@
 import {
   cpSync, existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync, statSync, rmSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join } from 'node:path';
 import { loadAreas, ROOT } from './config.ts';
+import { settings } from './settings.ts';
 import type { Lead } from './lead.ts';
 import { writeBuildPrompt } from './build-prompt.ts';
 
-export const WEBSITES_ROOT = resolve(ROOT, '..');
+/** Where demo folders live. `DEMO_SITES_ROOT`, default the repo's parent. */
+export const WEBSITES_ROOT = settings().demoSitesRoot;
 const TEMPLATE = join(ROOT, 'templates', 'demo-site');
 const LAUNCH = join(WEBSITES_ROOT, '.claude', 'launch.json');
 const LAUNCH_LOCK = `${LAUNCH}.lock`;

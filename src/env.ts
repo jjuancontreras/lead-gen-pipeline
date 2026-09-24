@@ -14,11 +14,10 @@
  * export can override without editing anything on disk.
  */
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
+import { findPackageRoot } from './root.ts';
 
-const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const envFile = resolve(packageRoot, '.env.local');
+const envFile = resolve(findPackageRoot(), '.env.local');
 
 let loaded = false;
 
