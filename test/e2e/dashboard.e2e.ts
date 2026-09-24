@@ -8,7 +8,7 @@
  * port, and drives the page in headless Chromium: loading, empty and error
  * states, per-stage retry, the site/video/email previews, form validation,
  * keyboard use, phone width, and an axe accessibility scan. Every page must
- * finish with zero console errors. Screenshots go to docs/screenshots/.
+ * finish with zero console errors. Screenshots go to test-results/dashboard/.
  */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -34,7 +34,9 @@ import type { PipelineStage } from '../../src/pipeline/stage.ts';
 const execFileAsync = promisify(execFile);
 const ROOT = resolve(import.meta.dirname, '..', '..');
 const TSX = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
-const SHOTS = join(ROOT, 'docs', 'screenshots');
+// Git-ignored, so a test run never dirties the tree; docs/screenshots/ holds a
+// committed snapshot copied from here.
+const SHOTS = join(ROOT, 'test-results', 'dashboard');
 
 /** A real, tiny H.264 clip, so the video preview plays without a 30 s recording. */
 const quickVideo: PipelineStage<'video'> = {

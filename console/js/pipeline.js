@@ -10,7 +10,9 @@ import {
 } from './pipeline-view.js';
 import { wirePreview, openPreview } from './pipeline-preview.js';
 
-const POLL_MS = 1500;
+// Each poll is cheap (state file + a cached store read), but the store may be
+// the Google Sheet with a 60-reads-a-minute quota; 2.5 s keeps well inside it.
+const POLL_MS = 2500;
 const page = { data: null, pollTimer: null, wasRunning: false };
 
 async function api(path, init) {

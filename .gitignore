@@ -17,3 +17,4 @@ perfect-crow-*.json
 .pipeline-fixture/
 dist/
 __pycache__/
+test-results/
