@@ -27,6 +27,7 @@ import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
 import type { LeadStore, UpsertResult } from './store.ts';
 
 export const SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
+const SHEETS_TIMEOUT_MS = 30_000;
 
 /** Default tab name. The pipeline creates nothing; this tab must exist. */
 export const DEFAULT_TAB = 'Leads';
@@ -274,7 +275,12 @@ export class SheetsStore implements LeadStore {
       key: creds.private_key,
       scopes: [SHEETS_SCOPE],
     });
-    this.api = google.sheets({ version: 'v4', auth }).spreadsheets.values as unknown as ValuesApi;
+    // A timeout, so a stalled request cannot hang a run. gaxios retries only
+    // idempotent methods (GET, PUT) with backoff, so a POST append is never
+    // repeated into a duplicate row.
+    this.api = google.sheets({
+      version: 'v4', auth, timeout: SHEETS_TIMEOUT_MS, retry: true,
+    }).spreadsheets.values as unknown as ValuesApi;
     return this.api;
   }
 

@@ -17,6 +17,7 @@ import {
 import { selectPool, templateFor } from '../outreach-policy.ts';
 import { loadGmailCreds, gmailReady, type GmailCreds } from '../gmail-creds.ts';
 import { today } from '../dates.ts';
+import { withRetry } from '../retry.ts';
 import type { Stage, StageResult } from '../campaign-stages.ts';
 import { isSuppressed, type Lead, type Tier } from '../lead.ts';
 
@@ -28,6 +29,8 @@ import { isSuppressed, type Lead, type Tier } from '../lead.ts';
  * (`npm run sent`), not when this stage writes a file.
  */
 export const DEFAULT_OUTREACH_LIMIT = 20;
+
+const GMAIL_TIMEOUT_MS = 30_000;
 
 // ---- Gmail ------------------------------------------------------------------
 
@@ -68,7 +71,15 @@ async function createGmailDraft(creds: GmailCreds, to: string, r: Rendered): Pro
   auth.setCredentials({ refresh_token: creds.refresh_token });
   const gmail = google.gmail({ version: 'v1', auth });
   const raw = Buffer.from(mimeMessage(to, r.subject ?? '', r.body), 'utf8').toString('base64url');
-  const res = await gmail.users.drafts.create({ userId: 'me', requestBody: { message: { raw } } });
+  // A retry after a timeout can leave two drafts if the first request did
+  // land. Two drafts of one email is a nuisance; a run that hangs forever on
+  // one lead is worse.
+  const res = await withRetry(
+    (_attempt, signal) => gmail.users.drafts.create(
+      { userId: 'me', requestBody: { message: { raw } } }, { signal },
+    ),
+    { attempts: 2, timeoutMs: GMAIL_TIMEOUT_MS, label: 'Gmail draft create' },
+  );
   return res.data.id ?? '(created)';
 }
 

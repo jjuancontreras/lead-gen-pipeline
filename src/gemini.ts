@@ -25,6 +25,7 @@
  */
 import { readFile } from 'node:fs/promises';
 import { extname } from 'node:path';
+import { computeBackoffMs } from './retry.ts';
 
 /** Change the model in exactly one place. gemini-2.5-flash is free-tier
  *  eligible, vision-capable, and has the friendliest free RPM of the
@@ -123,25 +124,8 @@ export function isRetryableStatus(status: number): boolean {
   return RETRYABLE_STATUS.has(status);
 }
 
-export interface BackoffOptions {
-  baseMs?: number;
-  maxMs?: number;
-  /** Injectable for deterministic tests; defaults to Math.random. */
-  rand?: () => number;
-}
-
-/**
- * Exponential backoff with full jitter (0..cap, not cap/2..cap): under a
- * shared free-tier 429, several harvest runs retrying in lockstep is worse
- * than each picking an independent delay.
- */
-export function computeBackoffMs(attempt: number, opts: BackoffOptions = {}): number {
-  const base = opts.baseMs ?? 1000;
-  const max = opts.maxMs ?? 20_000;
-  const rand = opts.rand ?? Math.random;
-  const cap = Math.min(max, base * 2 ** attempt);
-  return Math.round(rand() * cap);
-}
+// Backoff lives in retry.ts so every external call shares one formula.
+export { computeBackoffMs, type BackoffOptions } from './retry.ts';
 
 /**
  * How long to wait before the next call given an RPM budget and when the
