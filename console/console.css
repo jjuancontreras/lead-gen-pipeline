@@ -78,6 +78,16 @@ button,input,select{font:inherit;color:inherit}
 .spacer{flex:1}
 .topbar-actions{display:flex;gap:8px;align-items:center}
 
+/* ---- view switcher, shared by the inbox and the pipeline dashboard ---- */
+.views{display:flex;gap:4px}
+.views a{
+  color:var(--dim);text-decoration:none;font-size:12.5px;padding:5px 10px;border-radius:var(--radius-sm);
+  border:1px solid transparent
+}
+.views a:hover{color:var(--text);background:var(--surface-2)}
+.views a[aria-current="page"]{color:var(--text);border-color:var(--line);background:var(--surface-2)}
+.send-off{border-color:rgba(79,209,165,.4);color:#8ce8c8;background:rgba(79,209,165,.08)}
+
 /* ---- buttons ---- */
 .btn{
   display:inline-flex;align-items:center;gap:7px;cursor:pointer;

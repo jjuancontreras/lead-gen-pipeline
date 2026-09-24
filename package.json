@@ -10,7 +10,7 @@
     "campaign": "tsx bin/campaign.ts",
     "console": "tsx bin/console.ts",
     "test": "tsx --test \"test/**/*.test.ts\"",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.e2e.json",
     "verify": "tsx bin/verify-leads.ts",
     "worklist": "tsx bin/worklist.ts",
     "new-demo": "tsx bin/new-demo.ts",
@@ -23,9 +23,11 @@
     "palette": "python bin/sample-palette.py",
     "doctor": "tsx bin/doctor.ts",
     "pipeline": "tsx bin/pipeline.ts",
-    "e2e": "tsx --test --test-reporter=spec \"test/e2e/pipeline.e2e.ts\""
+    "e2e": "tsx --test --test-reporter=spec \"test/e2e/pipeline.e2e.ts\"",
+    "test:ui": "tsx --test --test-reporter=spec --test-concurrency=1 \"test/e2e/dashboard.e2e.ts\""
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^9.39.5",
     "@types/node": "^22",
     "eslint": "^9.39.5",

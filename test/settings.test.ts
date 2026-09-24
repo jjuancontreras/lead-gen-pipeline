@@ -17,6 +17,7 @@ test('defaults: data under the repo, auto store, sending off, local links', () =
   assert.equal(s.logFormat, 'pretty');
   assert.equal(s.logLevel, 'info');
   assert.equal(s.demoSitesRoot, resolve(ROOT, '..'));
+  assert.equal(s.consolePort, 3008);
 });
 
 test('PIPELINE_DATA_DIR is resolved against the repo root, not the cwd', () => {
@@ -45,6 +46,8 @@ test('bad values name the setting that is wrong', () => {
   assert.throws(() => parseSettings({ PUBLIC_BASE_URL: 'localhost' }, ROOT), /PUBLIC_BASE_URL/);
   assert.throws(() => parseSettings({ LOG_LEVEL: 'loud' }, ROOT), /LOG_LEVEL/);
   assert.throws(() => parseSettings({ PIPELINE_VIDEO_MS: '-5' }, ROOT), /PIPELINE_VIDEO_MS/);
+  assert.throws(() => parseSettings({ CONSOLE_PORT: '70000' }, ROOT), /CONSOLE_PORT/);
+  assert.equal(parseSettings({ CONSOLE_PORT: '0' }, ROOT).consolePort, 0);
 });
 
 test('an empty SENDER_EMAIL means unset, not invalid', () => {

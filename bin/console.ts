@@ -4,14 +4,16 @@
  *
  *   npm run console        then open http://localhost:3008
  *
- * Serves the map area-picker, the campaign launcher and the lead inbox.
+ * Serves the lead inbox, the map area-picker and campaign launcher, and the
+ * demo-pipeline dashboard at /pipeline (routes in src/pipeline/console-routes.ts).
  * A browser page cannot spawn Playwright, so this thin server does it and
  * streams the orchestrator's output back over SSE.
  *
  * The CLI remains the source of truth: this is a convenience layer, and if it
  * breaks nothing else is blocked.
  */
-import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, normalize, sep } from 'node:path';
@@ -20,29 +22,21 @@ import { openStore } from '../src/store.ts';
 import { sentPatch, sentRefusal } from '../src/mark-sent.ts';
 import { draftView } from '../src/draft-view.ts';
 import { today } from '../src/dates.ts';
+import { settings } from '../src/settings.ts';
+import { json, readBody, BadRequest } from '../src/http.ts';
+import { handlePipelineRoute } from '../src/pipeline/console-routes.ts';
 
-const PORT = 3008;
+const PORT = settings().consolePort;
 // Bound to loopback only. This console has no authentication and can start
 // browser automation, so it must never be reachable from the network.
 const HOST = '127.0.0.1';
 
-const json = (res: ServerResponse, code: number, body: unknown) => {
-  const s = JSON.stringify(body);
-  res.writeHead(code, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(s) });
-  res.end(s);
+const PAGES: Record<string, string> = {
+  '/': 'index.html',
+  '/index.html': 'index.html',
+  '/pipeline': 'pipeline.html',
 };
-
-async function readBody(req: IncomingMessage): Promise<unknown> {
-  const chunks: Buffer[] = [];
-  let size = 0;
-  for await (const c of req) {
-    size += (c as Buffer).length;
-    // A local tool still should not accept an unbounded body.
-    if (size > 1_000_000) throw new Error('body too large');
-    chunks.push(c as Buffer);
-  }
-  return chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : {};
-}
+const STYLESHEETS = new Set(['/console.css', '/dashboard.css']);
 
 function isValidBbox(b: unknown): b is [number, number, number, number] {
   return (
@@ -53,20 +47,23 @@ function isValidBbox(b: unknown): b is [number, number, number, number] {
 }
 
 const server = createServer(async (req, res) => {
-  const url = new URL(req.url ?? '/', `http://${HOST}:${PORT}`);
+  const url = new URL(req.url ?? '/', `http://${HOST}`);
 
   try {
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-      const html = readFileSync(join(ROOT, 'console', 'index.html'));
+    const page = PAGES[url.pathname];
+    if (page) {
+      const html = readFileSync(join(ROOT, 'console', page));
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       return res.end(html);
     }
 
-    if (url.pathname === '/console.css') {
-      const css = readFileSync(join(ROOT, 'console', 'console.css'));
+    if (STYLESHEETS.has(url.pathname)) {
+      const css = readFileSync(join(ROOT, 'console', url.pathname.slice(1)));
       res.writeHead(200, { 'Content-Type': 'text/css; charset=utf-8' });
       return res.end(css);
     }
+
+    if (await handlePipelineRoute(req, res, url)) return;
 
     // The console's own JS, split into ES modules under console/js/. Path is
     // resolved and re-checked against the directory it must stay under -
@@ -184,10 +181,13 @@ const server = createServer(async (req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('not found');
   } catch (err) {
-    json(res, 500, { error: (err as Error).message });
+    // A streamed file (a video) can fail after its headers went out.
+    if (res.headersSent) { res.end(); return; }
+    json(res, err instanceof BadRequest ? 400 : 500, { error: (err as Error).message });
   }
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`\n  pipeline console -> http://localhost:${PORT}\n`);
+  const { port } = server.address() as AddressInfo;
+  console.log(`\n  pipeline console -> http://localhost:${port}\n  demo pipeline    -> http://localhost:${port}/pipeline\n`);
 });

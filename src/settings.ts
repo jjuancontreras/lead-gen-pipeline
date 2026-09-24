@@ -39,6 +39,10 @@ const Env = z.object({
     .transform((v) => v.replace(/\/+$/, '')),
   DEMO_SITES_ROOT: optionalText,
   PIPELINE_VIDEO_MS: positiveInt(27_000),
+  // 0 picks a free port - the dashboard tests run their own console.
+  CONSOLE_PORT: z.string().trim().default('3008')
+    .refine((v) => /^\d+$/.test(v) && Number(v) < 65_536, 'must be a port number (0 picks a free one)')
+    .transform(Number),
   LOG_FORMAT: z.enum(['pretty', 'json']).default('pretty'),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
@@ -55,6 +59,7 @@ export interface Settings {
   demoSitesRoot: string;
   /** Target length of a walkthrough video. */
   videoMs: number;
+  consolePort: number;
   logFormat: 'pretty' | 'json';
   logLevel: 'debug' | 'info' | 'warn' | 'error';
 }
@@ -80,6 +85,7 @@ export function parseSettings(
     publicBaseUrl: e.PUBLIC_BASE_URL,
     demoSitesRoot: resolve(root, e.DEMO_SITES_ROOT ?? '..'),
     videoMs: e.PIPELINE_VIDEO_MS,
+    consolePort: e.CONSOLE_PORT,
     logFormat: e.LOG_FORMAT,
     logLevel: e.LOG_LEVEL,
   };

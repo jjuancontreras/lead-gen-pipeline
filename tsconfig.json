@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "lib": ["ES2023"],
+    "lib": [
+      "ES2023"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
@@ -15,5 +19,12 @@
     "noEmit": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "bin/**/*.ts", "test/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "bin/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "test/e2e/**"
+  ]
 }
