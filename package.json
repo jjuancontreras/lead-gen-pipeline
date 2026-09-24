@@ -22,7 +22,8 @@
     "harvest": "tsx bin/harvest-assets.ts",
     "palette": "python bin/sample-palette.py",
     "doctor": "tsx bin/doctor.ts",
-    "pipeline": "tsx bin/pipeline.ts"
+    "pipeline": "tsx bin/pipeline.ts",
+    "e2e": "tsx --test --test-reporter=spec \"test/e2e/pipeline.e2e.ts\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
