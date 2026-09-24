@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { parseEnv } from 'node:util';
 import { parseSettings } from '../src/settings.ts';
 import { findPackageRoot } from '../src/root.ts';
 
@@ -57,6 +58,13 @@ test('an empty SENDER_EMAIL means unset, not invalid', () => {
 test('PUBLIC_BASE_URL loses its trailing slash so links join cleanly', () => {
   assert.equal(parseSettings({ PUBLIC_BASE_URL: 'https://demo.example.com/' }, ROOT).publicBaseUrl,
     'https://demo.example.com');
+});
+
+test('.env.example, copied as is, is a valid configuration', () => {
+  const env = parseEnv(readFileSync(resolve(ROOT, '.env.example'), 'utf8'));
+  const s = parseSettings(env, ROOT);
+  assert.equal(s.sendEmails, false);
+  assert.equal(s.publicBaseUrl, 'http://localhost:3008');
 });
 
 test('findPackageRoot finds the directory holding package.json', () => {

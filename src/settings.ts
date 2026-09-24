@@ -69,7 +69,12 @@ export function parseSettings(
   env: Readonly<Record<string, string | undefined>>,
   root: string,
 ): Settings {
-  const parsed = Env.safeParse(env);
+  // A blank value (`PIPELINE_STORE=` in a copied .env.example) means unset,
+  // not an invalid setting.
+  const given = Object.fromEntries(
+    Object.entries(env).filter(([, v]) => v !== undefined && v.trim() !== ''),
+  );
+  const parsed = Env.safeParse(given);
   if (!parsed.success) {
     const lines = parsed.error.issues.map((i) => `  ${i.path.join('.')}: ${i.message}`);
     throw new Error(`Invalid settings:\n${lines.join('\n')}`);

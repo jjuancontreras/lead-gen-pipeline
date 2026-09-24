@@ -13,11 +13,13 @@
  */
 import '../src/env.ts';
 import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { CREDENTIALS } from '../src/env.ts';
 import { gmailCredsUsable } from '../src/gmail-creds.ts';
 import { ROOT, configPath, dataPath, loadAreas, loadChainIndex } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
+import { settings } from '../src/settings.ts';
 
 const ok = (s: string) => `  [ok]      ${s}`;
 const warn = (s: string) => `  [missing] ${s}`;
@@ -121,6 +123,20 @@ console.log(`  ${process.env.GEMINI_API_KEY ? '[on] ' : '[off]'} harvest   ` +
   (process.env.GEMINI_API_KEY
     ? 'photo curation + menu OCR enabled'
     : 'photos still download; curation and menu OCR skipped'));
+
+// ---- demo pipeline --------------------------------------------------
+console.log('\nDemo pipeline  (npm run pipeline, console /pipeline)');
+const s = settings();
+console.log(ok('sending: OFF - SEND_EMAILS is false and no transport exists; emails are drafts'));
+console.log(s.senderEmail
+  ? ok(`sender: ${s.senderName ?? 'default name'} <${s.senderEmail}>`)
+  : warn('SENDER_EMAIL not set - every email stage will fail until it is'));
+console.log(/\/\/(localhost|127\.)/.test(s.publicBaseUrl)
+  ? warn(`PUBLIC_BASE_URL is ${s.publicBaseUrl} - links in drafts only open on this machine`)
+  : ok(`links in drafts point at ${s.publicBaseUrl}`));
+console.log(existsSync(join(s.demoSitesRoot, '.claude', 'launch.json'))
+  ? ok(`Next.js demos (scaffold/record/harvest): ${s.demoSitesRoot}`)
+  : warn(`no .claude/launch.json under ${s.demoSitesRoot} - set DEMO_SITES_ROOT to where the demo folders live`));
 
 console.log(`\n  data dir: ${dataPath('')}`);
 console.log(`  config:   ${configPath('')}\n`);
