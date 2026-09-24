@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   renderTemplate, pickChannel, availableTemplates, interpolate, variantFor,
-  templateForChannel, channelForTemplate, SENDER,
+  templateForChannel, channelForTemplate, SENDER, OPT_OUT_MARKER, assertEmailCompliance,
 } from '../src/outreach.ts';
 import { mimeMessage, withdrawSuppressedDrafts } from '../src/stages/outreach.ts';
 import { selectPool, isOpeningEligible, isFollowUpDue } from '../src/outreach-policy.ts';
@@ -92,10 +92,18 @@ test('renderTemplate surfaces the missing field by name', () => {
   assert.throws(() => renderTemplate('email-first', lead({ area: '' })), /area_label/);
 });
 
+/** What the demo pipeline passes the demo email: links it produced. */
+const DEMO_EXTRA = {
+  site_url: 'https://demos.example.com/sites/test-cafe/',
+  video_url: 'https://demos.example.com/videos/test-cafe/test-cafe-16x9.mp4',
+  video_seconds: '24',
+  sender_email: 'sender@example.com',
+};
+
 test('every template renders clean for a complete lead, both variants', () => {
   for (const name of availableTemplates()) {
     for (const l of both()) {
-      const r = renderTemplate(name, l);
+      const r = renderTemplate(name, l, DEMO_EXTRA);
       assert.ok(!r.body.includes('{{'), `${name} left a placeholder in the body`);
       assert.ok(!r.body.includes('}}'), `${name} left a placeholder in the body`);
       assert.ok(!(r.subject ?? '').includes('{{'), `${name} left a placeholder in the subject`);
@@ -123,6 +131,37 @@ test('CRITICAL: every first-contact template identifies him and offers an opt-ou
       assert.match(text, /no thanks|will not message again/i, `${name} has no opt-out line`);
     }
   }
+});
+
+test('CRITICAL: every email template ends with the same opt-out line', () => {
+  for (const name of availableTemplates()) {
+    for (const l of both()) {
+      const r = renderTemplate(name, l, DEMO_EXTRA);
+      if (r.subject === undefined) continue; // DMs carry their own shorter opt-out
+      assert.ok(r.body.includes(OPT_OUT_MARKER), `${name} has no opt-out line`);
+      assert.match(r.body.trim().split('\n').pop()!, /no thanks/, `${name}: opt-out is not the last line`);
+    }
+  }
+});
+
+test('REGRESSION: an email without the opt-out line is refused, not rendered', () => {
+  assert.throws(
+    () => assertEmailCompliance('follow-up-7', { subject: 'Re: hi', body: 'Hi.\n\nJfer\n' }),
+    /follow-up-7.*opt-out/,
+  );
+  assert.doesNotThrow(() => assertEmailCompliance('dm', { body: 'Hi! (If not, just say so.)' }));
+});
+
+test('the demo email carries both links, the sender address and the business name', () => {
+  const r = renderTemplate('email-demo', lead(), DEMO_EXTRA);
+  assert.match(r.subject ?? '', /Test Cafe/);
+  for (const needle of [DEMO_EXTRA.site_url, DEMO_EXTRA.video_url, DEMO_EXTRA.sender_email, 'Test Cafe', 'Jfer Contreras']) {
+    assert.ok(r.body.includes(needle), `demo email is missing ${needle}`);
+  }
+});
+
+test('the demo email refuses to render without its links', () => {
+  assert.throws(() => renderTemplate('email-demo', lead()), /unresolved placeholder.*site_url/);
 });
 
 test('the email quotes the real prices and never invents a detail', () => {
@@ -203,7 +242,7 @@ test('each channel maps to copy written for it', () => {
 
 test('availableTemplates lists logical names, variants collapsed', () => {
   assert.deepEqual(availableTemplates(), [
-    'breakup-14', 'email-first', 'follow-up-3', 'follow-up-7',
+    'breakup-14', 'email-demo', 'email-first', 'follow-up-3', 'follow-up-7',
     'instagram-dm', 'messenger-dm',
   ]);
 });

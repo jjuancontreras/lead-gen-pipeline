@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import { ROOT, loadAreas } from './config.ts';
 import { isHighIntent } from './website.ts';
 import { today } from './dates.ts';
+import { settings } from './settings.ts';
 import { isSuppressed, type Lead, type WebsiteKind } from './lead.ts';
 
 const TEMPLATE_DIR = join(ROOT, 'templates', 'outreach');
@@ -43,6 +44,7 @@ const CHANNEL_TEMPLATE: Record<Channel, string> = {
 /** Templates written for one channel only; the rest are channel-agnostic. */
 const TEMPLATE_CHANNELS: Record<string, Channel> = {
   'email-first': 'email',
+  'email-demo': 'email',
   'instagram-dm': 'instagram',
   'messenger-dm': 'facebook',
 };
@@ -80,6 +82,21 @@ const PAGE_KIND_LABEL: Partial<Record<WebsiteKind, string>> = {
 export interface Rendered {
   subject?: string;
   body: string;
+}
+
+/**
+ * Every email ends with the same way out. DMs carry their own shorter one
+ * ("If not, just say so"), which is why only messages with a subject are
+ * checked. The exact line lives in the templates; this proves it is there.
+ */
+export const OPT_OUT_MARKER = 'Not interested? Reply "no thanks"';
+
+/** Throws if an email (a message with a subject) has no opt-out line. */
+export function assertEmailCompliance(name: string, r: Rendered): void {
+  if (r.subject === undefined) return;
+  if (!r.body.includes(OPT_OUT_MARKER)) {
+    throw new Error(`email template "${name}" has no opt-out line (${OPT_OUT_MARKER} ...)`);
+  }
 }
 
 const PLACEHOLDER = /\{\{\s*([a-z0-9_]+)\s*\}\}/gi;
@@ -148,6 +165,15 @@ export function pluralizeCategory(label: string): string {
   return key + 's';
 }
 
+/** SENDER_NAME and SENDER_EMAIL from settings, when set. */
+function senderOverrides(): Record<string, string> {
+  const s = settings();
+  return {
+    ...(s.senderName ? { sender_name: s.senderName } : {}),
+    ...(s.senderEmail ? { sender_email: s.senderEmail } : {}),
+  };
+}
+
 /** Every value a template may reference, lowest precedence first. */
 function buildContext(lead: Lead, extra: Record<string, string>): Record<string, string> {
   const areas = loadAreas().areas;
@@ -162,6 +188,7 @@ function buildContext(lead: Lead, extra: Record<string, string>): Record<string,
     page_kind: PAGE_KIND_LABEL[lead.website_kind] ?? '',
     today: today(),
     ...SENDER,
+    ...senderOverrides(),
     ...extra,
   };
 }
@@ -196,10 +223,12 @@ export function renderTemplate(
 
   const match = filled.match(/^Subject:\s*(.+)\n+/);
   if (!match) return { body: filled.trim() + '\n' };
-  return {
+  const rendered = {
     subject: match[1]!.trim(),
     body: filled.slice(match[0].length).trim() + '\n',
   };
+  assertEmailCompliance(name, rendered);
+  return rendered;
 }
 
 /**

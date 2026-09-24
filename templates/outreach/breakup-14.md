@@ -10,3 +10,5 @@ Either way, good luck with everything.
 
 {{sender_name}}
 {{sender_course}}, {{sender_school}}
+
+Not interested? Reply "no thanks" and I will take {{name}} off my list for good.

@@ -9,3 +9,5 @@ The offer has not changed: I build it first, you look at it, you decide after. N
 And if it is simply not the right time, that is a completely fine answer - say so and I will leave it there.
 
 {{sender_name}}
+
+Not interested? Reply "no thanks" and I will take {{name}} off my list for good.
