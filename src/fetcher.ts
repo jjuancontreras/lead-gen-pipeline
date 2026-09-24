@@ -97,6 +97,20 @@ export function nameSimilarity(a: string, b: string): number {
 }
 
 /** Read the detail fields off an open place panel. */
+/**
+ * Review count from the panel's text. It has no stable selector. The header
+ * renders it fast as a parenthesised count beneath the rating, while the
+ * "8 reviews" wording appears lower down and later - reading only the
+ * latter loses the count whenever the page settles slowly. Header first,
+ * then the fallback, anchored with a word boundary.
+ */
+export function parseReviewCount(panelText: string): string | null {
+  const header = panelText.slice(0, 600);
+  return header.match(/\(([\d,]+)\)/)?.[1]?.replace(/,/g, '')
+    ?? panelText.match(/([\d,]+)\s+reviews?\b/i)?.[1]?.replace(/,/g, '')
+    ?? null;
+}
+
 async function extractPanel(page: Page): Promise<PlaceFacts> {
   const websiteEl = await page.$('a[data-item-id="authority"]');
   const websiteUrl = websiteEl ? await websiteEl.getAttribute('href') : null;
@@ -113,22 +127,8 @@ async function extractPanel(page: Page): Promise<PlaceFacts> {
   const label = ratingEl ? await ratingEl.getAttribute('aria-label') : null;
   if (label) rating = label.match(/([\d.]+)\s*stars?/i)?.[1] ?? null;
 
-  // Review count has no stable selector. The header renders it fast as a
-  // parenthesised count directly beneath the rating, while the
-  // "8 reviews" wording appears lower down and later - reading only the
-  // latter loses the count whenever the page settles slowly. Try the header
-  // first, then fall back.
-  let reviewCount: string | null = null;
   const mainEl = await page.$('[role="main"]');
-  if (mainEl) {
-    const panelText = await mainEl.innerText();
-    const header = panelText.slice(0, 600);
-    reviewCount =
-      header.match(/\(([\d,]+)\)/)?.[1]?.replace(/,/g, '') ??
-      // Anchored to avoid matching a reviewer byline ("Local Guide - 10 reviews").
-      panelText.match(/([\d,]+)\s+reviews?/i)?.[1]?.replace(/,/g, '') ??
-      null;
-  }
+  const reviewCount = mainEl ? parseReviewCount(await mainEl.innerText()) : null;
 
   return { websiteUrl, phone, rating, reviewCount, address, resolvedName, photoCount: null };
 }

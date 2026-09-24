@@ -279,7 +279,7 @@ export type GeminiResult<T> =
       detail: string;
     };
 
-export interface GenerateJsonOptions<T> {
+export interface GenerateJsonOptions {
   /** Undefined/empty means "no key configured" - a clean, expected result,
    *  never a thrown error. Callers read this from process.env themselves so
    *  this module never touches env directly. */
@@ -299,8 +299,6 @@ export interface GenerateJsonOptions<T> {
    *  so pacing can be verified without real time passing. */
   lastCallAt?: number | null;
   onRateLimited?: (waitMs: number) => void;
-  // T is used only for the return type; expressed via a phantom parameter is
-  // unnecessary here since generateJson<T> below supplies it explicitly.
 }
 
 const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
@@ -314,7 +312,7 @@ const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(r
  * between attempts so a caller doing several calls in a row does not hammer
  * the free tier's per-minute limit.
  */
-export async function generateJson<T>(opts: GenerateJsonOptions<T>): Promise<GeminiResult<T>> {
+export async function generateJson<T>(opts: GenerateJsonOptions): Promise<GeminiResult<T>> {
   if (!opts.apiKey) {
     return { ok: false, reason: 'no-api-key', detail: 'GEMINI_API_KEY is not set - skipping Gemini call.' };
   }
@@ -394,7 +392,7 @@ async function safeText(res: Response): Promise<string> {
   }
 }
 
-export interface GenerateFromImagesOptions<T> extends Omit<GenerateJsonOptions<T>, 'images'> {
+export interface GenerateFromImagesOptions extends Omit<GenerateJsonOptions, 'images'> {
   imagePaths: string[];
 }
 
@@ -403,7 +401,7 @@ export interface GenerateFromImagesOptions<T> extends Omit<GenerateJsonOptions<T
  * to `generateJson`. Kept separate from `generateJson` so the file-reading
  * step has one clear place to fail with a per-file message.
  */
-export async function generateFromImages<T>(opts: GenerateFromImagesOptions<T>): Promise<GeminiResult<T>> {
+export async function generateFromImages<T>(opts: GenerateFromImagesOptions): Promise<GeminiResult<T>> {
   if (!opts.apiKey) {
     return { ok: false, reason: 'no-api-key', detail: 'GEMINI_API_KEY is not set - skipping Gemini call.' };
   }

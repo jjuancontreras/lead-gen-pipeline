@@ -68,7 +68,7 @@ const RESERVED: Record<HandleKind, ReadonlySet<string>> = {
  */
 const SHAPE: Record<HandleKind, RegExp> = {
   instagram: /^[a-z0-9._]{1,30}$/,
-  facebook: /^[a-z0-9.\-]{5,50}$/,
+  facebook: /^[a-z0-9.-]{5,50}$/,
   tiktok: /^[a-z0-9._]{2,24}$/,
 };
 

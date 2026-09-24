@@ -16,3 +16,4 @@ perfect-crow-*.json
 # demo pipeline fixture runs and builds
 .pipeline-fixture/
 dist/
+__pycache__/

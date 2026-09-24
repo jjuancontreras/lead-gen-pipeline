@@ -164,7 +164,7 @@ test('CRITICAL: a withdrawn draft keeps no sendable text at all', () => {
 
   // Assert
   assert.match(md, /^# Test Cafe$/m);
-  assert.match(md, new RegExp(WITHDRAWN_MARKER.replace(/[#]/g, '\#')));
+  assert.ok(md.includes(WITHDRAWN_MARKER), 'the withdrawal marker is present');
   assert.match(md, /2026-09-02/);
   assert.doesNotMatch(md, /hello@testcafe\.ph/, 'the address must be gone');
   assert.doesNotMatch(md, /mail\.google\.com/, 'no compose link may survive');

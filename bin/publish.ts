@@ -3,7 +3,7 @@
  * Deploy a demo site to Vercel.
  *   npm run publish -- --slug <slug> [--dry-run]
  */
-import { execFile, spawn } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { promisify } from 'node:util';
 import { WEBSITES_ROOT } from '../src/scaffold.ts';

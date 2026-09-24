@@ -1,4 +1,5 @@
 'use strict';
+/* global L */ // Leaflet, loaded by a <script> tag in index.html
 import { el, h } from './dom.js';
 import { toast } from './toast.js';
 import { state } from './state.js';

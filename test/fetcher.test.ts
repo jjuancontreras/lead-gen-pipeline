@@ -1,6 +1,23 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { nameSimilarity } from '../src/fetcher.ts';
+import { nameSimilarity, parseReviewCount } from '../src/fetcher.ts';
+
+test('review count comes from the parenthesised header count first', () => {
+  assert.equal(parseReviewCount('Kohi\n4.6\n(1,234)\nCafe'), '1234');
+});
+
+test('REGRESSION: the "N reviews" fallback matches when the header has no count', () => {
+  // The fallback regex once held a literal backspace where \b was meant, so
+  // it could never match and every slow-settling panel lost its count.
+  const panel = `Kohi\n4.6\nCafe\n${'Menu and more. '.repeat(60)}\n23 reviews\nWrite a review`;
+  assert.equal(parseReviewCount(panel), '23');
+  assert.equal(parseReviewCount(`${'x'.repeat(700)}\n1 review\n`), '1');
+});
+
+test('no count anywhere is null, and "reviewsx" is not a count', () => {
+  assert.equal(parseReviewCount('Kohi\nCafe'), null);
+  assert.equal(parseReviewCount(`${'x'.repeat(700)} 5 reviewsx`), null);
+});
 
 test('identical and near-identical names score high', () => {
   assert.equal(nameSimilarity('Kohi', 'Kohi'), 1);

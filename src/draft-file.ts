@@ -55,6 +55,8 @@ function mdInline(text: string): string {
  * could not turn into a URL - a broken link is worse than none.
  */
 function mdUrl(raw: string): string | null {
+  // Stripping control characters is the point of this pattern.
+  // eslint-disable-next-line no-control-regex
   const url = raw.trim().replace(/[\s\u0000-\u001f]+/g, '');
   if (!/^https?:\/\//i.test(url)) return null;
   return url.replace(/[()<>"`\\]/g,
