@@ -225,9 +225,11 @@ const dwellFor = (n: number, targetMs: number) =>
 export function planWalkthrough(
   sectionTops: readonly number[],
   layout: { pageHeight: number; viewportHeight: number },
-  opts: { targetMs?: number } = {},
+  opts: { targetMs?: number; minTotalMs?: number } = {},
 ): WalkPlan {
   const target = opts.targetMs ?? TARGET_MS;
+  // A smoke test wants a few seconds, not twenty; the default is unchanged.
+  const floor = Math.min(opts.minTotalMs ?? MIN_TOTAL_MS, MIN_TOTAL_MS);
   const vh = Math.max(1, Math.round(layout.viewportHeight));
   const maxScroll = Math.max(0, Math.round(layout.pageHeight - vh));
 
@@ -263,8 +265,8 @@ export function planWalkthrough(
   // each section reads as deliberate; padding the head or tail with a static
   // frame reads as a broken video - so the dwell band gives before the
   // runtime floor does.
-  if (total < MIN_TOTAL_MS && ys.length > 1) {
-    dwell = Math.min(HARD_MAX_DWELL_MS, dwell + (MIN_TOTAL_MS - total) / (ys.length - 1));
+  if (total < floor && ys.length > 1) {
+    dwell = Math.min(HARD_MAX_DWELL_MS, dwell + (floor - total) / (ys.length - 1));
     total = totalFor(ys.length, dwell);
     stretched = true;
   }
@@ -644,6 +646,8 @@ export interface RecordOptions {
   url?: string;
   only?: VideoFormat;
   targetMs?: number;
+  /** Lower the 20 s runtime floor, for short smoke-test takes. */
+  minTotalMs?: number;
   outDir?: string;
   headed?: boolean;
   log?: (msg: string) => void;
@@ -661,7 +665,7 @@ async function recordTake(
   url: string,
   format: VideoFormat,
   outPath: string,
-  targetMs: number | undefined,
+  pacing: { targetMs?: number; minTotalMs?: number },
   log: (msg: string) => void,
 ): Promise<Take> {
   const spec = FORMATS[format];
@@ -732,7 +736,7 @@ async function recordTake(
 
     const measured = await measureSections(page);
     sectionSource = measured.source;
-    plan = planWalkthrough(measured.tops, measured, { targetMs });
+    plan = planWalkthrough(measured.tops, measured, pacing);
     log(
       `${format}: ${measured.tops.length} sections via "${measured.source}", ` +
       `${plan.stops.length} stops, ~${(plan.estimatedMs / 1000).toFixed(1)}s planned` +
@@ -805,7 +809,7 @@ export async function recordDemo(opts: RecordOptions): Promise<RecordReport> {
           url,
           format,
           join(outDir, `${opts.slug}-${format}.mp4`),
-          opts.targetMs,
+          { targetMs: opts.targetMs, minTotalMs: opts.minTotalMs },
           log,
         ),
       );
