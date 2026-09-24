@@ -27,6 +27,8 @@ needs the owner), or **open**.
 | 16 | Copying `.env.example` to `.env.local` would stop every command at startup. | Blank template values (`PIPELINE_STORE=`) failed validation instead of meaning "unset". Caught by a new test that validates the template itself. | fixed |
 | 17 | A compiled Python cache was committed. | `bin/__pycache__/*.pyc` was never ignored. | fixed: untracked (still on disk) and `__pycache__/` ignored |
 | 18 | `.env.example` pointed at a stale OneDrive path and named the service-account key file. | Left over from before the repo moved. | fixed: now a placeholder with the `.secrets` convention |
+| 19 | Any web page open in your browser could read lead contact data from the console, or start a live campaign. | Binding to 127.0.0.1 keeps other machines out, not other pages. DNS rebinding makes the API same-origin to an attacker's page. A cross-site `GET /api/campaign` spawns a campaign, and a `text/plain` form POST passes as JSON. Found by the security review, and present in the console before tonight. | fixed: `requestRefusal` in `src/http.ts` enforces a Host allowlist on every route, refuses cross-site `Sec-Fetch-Site` or a foreign Origin on `/api/`, and requires JSON POSTs. Unit-tested, and checked against the live console in `test:ui`. |
+| 20 | Running the pipeline from the CLI and the console at once can lose state updates. | Both do read-modify-write on `pipeline-state.json` and `leads.json`. Found by the code review in tonight's new code. | fixed: a cross-process lock file (`<data dir>/pipeline.lock`, pid inside, taken over from a crashed holder) |
 
 ## Not bugs (checked, left alone)
 
