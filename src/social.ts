@@ -13,10 +13,6 @@
  * clear a reserved-path denylist AND a shape check before it is returned.
  */
 
-/** Contact channels in strict priority order. */
-export const CONTACT_PRIORITY = ['email', 'phone', 'instagram', 'facebook', 'tiktok'] as const;
-export type ContactChannel = (typeof CONTACT_PRIORITY)[number];
-
 /** The channels a page can yield. `phone` comes from the Maps panel instead. */
 export const ENRICHABLE = ['email', 'instagram', 'facebook', 'tiktok'] as const;
 export type EnrichableChannel = (typeof ENRICHABLE)[number];

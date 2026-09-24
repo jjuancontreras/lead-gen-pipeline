@@ -23,7 +23,7 @@
  */
 import './env.ts';  // loads .env.local before anything reads process.env
 import { readFileSync } from 'node:fs';
-import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
+import { type Lead, COLUMNS, fromRow, toRow } from './lead.ts';
 import type { LeadStore, UpsertResult } from './store.ts';
 
 export const SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
@@ -308,11 +308,6 @@ export class SheetsStore implements LeadStore {
 
   async all(): Promise<Lead[]> {
     return (await this.snapshot()).leads;
-  }
-
-  async byStatus(...statuses: Status[]): Promise<Lead[]> {
-    const want = new Set<string>(statuses);
-    return (await this.snapshot()).leads.filter((l) => want.has(l.status));
   }
 
   async upsert(leads: Lead[]): Promise<UpsertResult> {

@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync } from '
 import { dirname } from 'node:path';
 import { dataPath } from './config.ts';
 import { settings } from './settings.ts';
-import { type Lead, type Status, COLUMNS, fromRow, toRow } from './lead.ts';
+import { type Lead, COLUMNS, fromRow, toRow } from './lead.ts';
 import { openSheetsStore } from './store-sheets.ts';
 
 export interface UpsertResult { added: number; skipped: number }
@@ -31,7 +31,6 @@ export interface LeadStore {
    * unknown ids: nothing is written if any lead_id is missing.
    */
   updateMany(patches: ReadonlyMap<string, Partial<Lead>>): Promise<void>;
-  byStatus(...statuses: Status[]): Promise<Lead[]>;
 }
 
 export class JsonStore implements LeadStore {
@@ -86,10 +85,6 @@ export class JsonStore implements LeadStore {
     this.write(rows.map((l) => ({ ...l, ...patches.get(l.lead_id) })));
   }
 
-  async byStatus(...statuses: Status[]): Promise<Lead[]> {
-    const want = new Set<string>(statuses);
-    return this.read().filter((l) => want.has(l.status));
-  }
 }
 
 /**

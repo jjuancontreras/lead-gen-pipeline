@@ -15,8 +15,8 @@
  * Playwright - Instagram walls aggressively on anything that looks scripted,
  * so on a block this reports the wall rather than guessing or retrying blind.
  */
-import { mkdirSync, writeFileSync, rmSync, copyFileSync, existsSync } from 'node:fs';
-import { mkdtemp, stat } from 'node:fs/promises';
+import { mkdirSync, writeFileSync, rmSync, copyFileSync } from 'node:fs';
+import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, extname } from 'node:path';
 import { generateFromImages, type JsonSchema, type GeminiResult } from './gemini.ts';
@@ -554,11 +554,3 @@ function curationSkipMessage(result: GeminiResult<unknown>): string {
   return `${result.reason}: ${result.detail}`;
 }
 
-// Re-exported for callers that want to probe a raw file's dimensions without
-// pulling in the whole harvest pipeline (e.g. a future palette-sampling step
-// that wants to skip files sharp could not read).
-export async function fileExistsAndNonEmpty(path: string): Promise<boolean> {
-  if (!existsSync(path)) return false;
-  const s = await stat(path);
-  return s.size > 0;
-}

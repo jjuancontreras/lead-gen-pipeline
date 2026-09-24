@@ -165,5 +165,3 @@ export function slugify(name: string): string {
     .replace(/^-+|-+$/g, '')
     .slice(0, 40) || 'demo';
 }
-
-export const _internals = { LOCATION_TOKENS, BRANCH_TOKENS, GENERIC_NAMES, PROTECTED_BIGRAMS };
