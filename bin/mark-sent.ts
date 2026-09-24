@@ -16,10 +16,10 @@ import { openStore } from '../src/store.ts';
 import { loadAreas } from '../src/config.ts';
 import { today } from '../src/dates.ts';
 import { planSent, sentPatch } from '../src/mark-sent.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, multiFlag } from '../src/cli-args.ts';
 
 /** --lead is repeatable: every value that follows one. */
-const ids = args.flatMap((a, i) => (a === '--lead' && args[i + 1] ? [args[i + 1]!] : []));
+const ids = multiFlag('--lead');
 const areaKey = val('--area');
 const all = args.includes('--all');
 const dryRun = args.includes('--dry-run');

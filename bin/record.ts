@@ -15,7 +15,7 @@
  *   npm --prefix <slug> run dev -- --port <port>
  */
 import { recordDemo, VIDEO_FORMATS, type VideoFormat } from '../src/record.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, optionalIntFlag } from '../src/cli-args.ts';
 
 
 const slug = val('--slug');
@@ -30,7 +30,7 @@ if (only && !VIDEO_FORMATS.includes(only)) {
   process.exit(1);
 }
 
-const targetMs = val('--target-ms') ? Number(val('--target-ms')) : undefined;
+const targetMs = optionalIntFlag('--target-ms');
 
 try {
   const report = await recordDemo({

@@ -7,7 +7,7 @@
  */
 import { loadAreas } from '../src/config.ts';
 import { verifyLeads } from '../src/stages/verify.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, intFlag } from '../src/cli-args.ts';
 
 const areaKey = val('--area');
 const areas = loadAreas();
@@ -19,12 +19,12 @@ if (!areaKey || !areas.areas[areaKey]) {
 
 const label = areas.areas[areaKey]!.label;
 const dryRun = args.includes('--dry-run');
-const pace = Number(val('--pace')) || 12_000;
+const pace = intFlag('--pace', 12_000);
 console.log(`\nVerifying ${label}${dryRun ? '  [DRY RUN]' : ''}   pacing ~${(pace / 1000).toFixed(0)}s\n`);
 
 const r = await verifyLeads({
   area: areaKey, areaLabel: label,
-  limit: Number(val('--limit')) || 20,
+  limit: intFlag('--limit', 20),
   dryRun, paceMs: pace, headed: args.includes('--headed'),
   log: (m) => console.log('  ' + m),
 });

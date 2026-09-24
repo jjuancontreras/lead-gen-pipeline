@@ -15,7 +15,7 @@
 import '../src/env.ts';  // loads .env.local before anything reads process.env
 import { harvestAssets, DEFAULT_LIMIT } from '../src/harvest.ts';
 import { WEBSITES_ROOT } from '../src/scaffold.ts';
-import { args, val } from '../src/cli-args.ts';
+import { val, optionalIntFlag } from '../src/cli-args.ts';
 
 const slug = val('--slug');
 const ig = val('--ig');
@@ -50,7 +50,7 @@ console.log();
 const report = await harvestAssets({
   slug,
   ig,
-  limit: Number(val('--limit')) || undefined,
+  limit: optionalIntFlag('--limit'),
   websitesRoot: WEBSITES_ROOT,
   apiKey,
   log: (m) => console.log('  ' + m),

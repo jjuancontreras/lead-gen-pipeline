@@ -8,7 +8,7 @@
  */
 import { loadAreas } from '../src/config.ts';
 import { sourceArea } from '../src/stages/source.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, intFlag, optionalIntFlag } from '../src/cli-args.ts';
 
 const areaKey = val('--area');
 const areas = loadAreas();
@@ -25,8 +25,8 @@ console.log(`\nSourcing ${area.label}${dryRun ? '  [DRY RUN]' : ''}`);
 
 const r = await sourceArea({
   area: areaKey,
-  phase: Number(val('--phase')) || 1,
-  limit: Number(val('--limit')) || undefined,
+  phase: intFlag('--phase', 1),
+  limit: optionalIntFlag('--limit'),
   dryRun,
   log: (m) => console.log(m),
 });

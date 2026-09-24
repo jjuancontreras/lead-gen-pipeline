@@ -16,7 +16,7 @@ import { gmailReady } from '../src/gmail-creds.ts';
 import { availableTemplates } from '../src/outreach.ts';
 import { draftOutreach, DEFAULT_OUTREACH_LIMIT } from '../src/stages/outreach.ts';
 import type { Tier } from '../src/lead.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, intFlag } from '../src/cli-args.ts';
 
 const areaKey = val('--area');
 const areas = loadAreas();
@@ -59,7 +59,7 @@ console.log();
 
 const r = await draftOutreach({
   area: areaKey,
-  limit: Number(val('--limit')) || DEFAULT_OUTREACH_LIMIT,
+  limit: intFlag('--limit', DEFAULT_OUTREACH_LIMIT),
   template, tiers, dryRun,
   log: (m) => console.log('  ' + m),
 });

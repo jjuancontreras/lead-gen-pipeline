@@ -18,7 +18,7 @@ import { DEFAULT_CAPS, type StageContext, type Caps } from '../src/campaign-stag
 import { STAGES } from '../src/stages/index.ts';
 import type { Lead } from '../src/lead.ts';
 import { today } from '../src/dates.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, intFlag } from '../src/cli-args.ts';
 
 const dryRun = args.includes('--dry-run');
 const onlyStage = val('--stage');
@@ -57,8 +57,8 @@ const areaLabel = areas.areas[area]!.label;
 
 const caps: Caps = {
   ...DEFAULT_CAPS,
-  maxScaffolds: Number(val('--max-scaffolds') ?? DEFAULT_CAPS.maxScaffolds),
-  maxVerify: Number(val('--max-verify') ?? DEFAULT_CAPS.maxVerify),
+  maxScaffolds: intFlag('--max-scaffolds', DEFAULT_CAPS.maxScaffolds),
+  maxVerify: intFlag('--max-verify', DEFAULT_CAPS.maxVerify),
 };
 
 // A stale or missing chain index means every chain looks like an independent.

@@ -20,10 +20,10 @@ import { stage2 } from '../src/score.ts';
 import { loadCategories } from '../src/config.ts';
 import { today } from '../src/dates.ts';
 import type { Lead } from '../src/lead.ts';
-import { args, val } from '../src/cli-args.ts';
+import { args, val, intFlag } from '../src/cli-args.ts';
 
 const areaKey = val('--area');
-const limit = Number(val('--limit')) || 60;
+const limit = intFlag('--limit', 60);
 const ingest = args.includes('--ingest');
 
 const store = openStore();
