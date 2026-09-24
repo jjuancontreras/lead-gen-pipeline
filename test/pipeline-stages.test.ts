@@ -123,6 +123,11 @@ test('CRITICAL: a hostile business name is escaped, not rendered as markup', asy
   assert.ok(html.includes('&lt;script&gt;'));
 });
 
+test('the about line reads as a sentence, with the right article', async () => {
+  assert.match((await site()).html, /Kapihan sa Kanto is a cafe in Katipunan, Quezon City\./);
+  assert.match((await site({ category: 'Optical' })).html, /is an optical in/);
+});
+
 test('the footer discloses that the page is a demo from public listings', async () => {
   const { html } = await site();
   assert.match(html, /demo website prepared by Jfer Contreras/);

@@ -21,7 +21,8 @@
     "mockup": "tsx bin/mockup.ts",
     "harvest": "tsx bin/harvest-assets.ts",
     "palette": "python bin/sample-palette.py",
-    "doctor": "tsx bin/doctor.ts"
+    "doctor": "tsx bin/doctor.ts",
+    "pipeline": "tsx bin/pipeline.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

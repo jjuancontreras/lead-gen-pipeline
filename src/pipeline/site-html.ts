@@ -41,6 +41,9 @@ export function formatCuisine(raw: string): string {
     .join(' · ');
 }
 
+/** "a cafe", "an ice cream shop". */
+const article = (word: string): string => (/^[aeiou]/i.test(word.trim()) ? 'an' : 'a');
+
 const telHref = (phone: string): string => `tel:${phone.replace(/[^\d+]/g, '')}`;
 
 function mapsHref(f: FoundLead): string {
@@ -124,7 +127,7 @@ function styles(hue: number): string {
     h1 { font-size: clamp(2.25rem, 7vw, 4.5rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 1rem; }
     h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.15; margin: 0 0 1rem; }
     .lede { font-size: clamp(1.1rem, 2.4vw, 1.35rem); color: var(--muted); max-width: 40rem; margin: 0 0 2rem; }
-    .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; align-content: flex-start; align-self: center; }
     .btn {
       display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.6rem 1.2rem;
       border-radius: 999px; border: 2px solid var(--accent); color: var(--accent);
@@ -160,9 +163,9 @@ export interface SiteOptions {
 export function renderSiteHtml(f: FoundLead, opts: SiteOptions): string {
   const cuisine = formatCuisine(f.cuisine);
   const what = `${f.category} in ${f.areaLabel}`;
-  const about = cuisine
-    ? `${esc(f.name)} is a ${esc(f.category.toLowerCase())} in ${esc(f.areaLabel)}, serving ${esc(cuisine.toLowerCase())}.`
-    : `${esc(f.name)} is a ${esc(f.category.toLowerCase())} in ${esc(f.areaLabel)}.`;
+  // Cuisine tags ("coffee_shop;filipino") read badly in a sentence; they
+  // get their own labelled row in the card instead.
+  const about = `${esc(f.name)} is ${article(f.category)} ${esc(f.category.toLowerCase())} in ${esc(f.areaLabel)}.`;
   const contacts = contactRows(f);
 
   return `<!DOCTYPE html>

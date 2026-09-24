@@ -12,3 +12,7 @@ secrets/
 client_secret_*.json
 perfect-crow-*.json
 
+
+# demo pipeline fixture runs and builds
+.pipeline-fixture/
+dist/
