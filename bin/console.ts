@@ -23,7 +23,7 @@ import { sentPatch, sentRefusal } from '../src/mark-sent.ts';
 import { draftView } from '../src/draft-view.ts';
 import { today } from '../src/dates.ts';
 import { settings } from '../src/settings.ts';
-import { json, readBody, BadRequest } from '../src/http.ts';
+import { json, readBody, BadRequest, requestRefusal } from '../src/http.ts';
 import { handlePipelineRoute } from '../src/pipeline/console-routes.ts';
 
 const PORT = settings().consolePort;
@@ -46,8 +46,15 @@ function isValidBbox(b: unknown): b is [number, number, number, number] {
   );
 }
 
+/** The port actually bound - CONSOLE_PORT=0 picks one at listen time. */
+let boundPort = PORT;
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://${HOST}`);
+
+  // Loopback keeps other machines out, not other web pages (see requestRefusal).
+  const refusal = requestRefusal({ method: req.method ?? 'GET', path: url.pathname, headers: req.headers }, boundPort);
+  if (refusal) return json(res, 403, { error: refusal });
 
   try {
     const page = PAGES[url.pathname];
@@ -189,5 +196,6 @@ const server = createServer(async (req, res) => {
 
 server.listen(PORT, HOST, () => {
   const { port } = server.address() as AddressInfo;
+  boundPort = port;
   console.log(`\n  pipeline console -> http://localhost:${port}\n  demo pipeline    -> http://localhost:${port}/pipeline\n`);
 });

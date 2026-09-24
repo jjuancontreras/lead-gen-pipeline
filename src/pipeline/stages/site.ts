@@ -16,8 +16,9 @@ export const siteStage: PipelineStage<'site'> = {
     mkdirSync(dir, { recursive: true });
     const indexPath = join(dir, 'index.html');
     const html = renderSiteHtml(f, { senderName: ctx.senderName, year: new Date().getFullYear() });
-    // Rewritten on every run: the page is a pure function of the lead, so a
-    // corrected phone number in the store shows up on the next retry.
+    // Overwritten whenever this stage runs. A done stage is skipped on later
+    // runs, so a corrected phone number reaches the page through an explicit
+    // retry (`--retry <lead>:site`, or Retry in the dashboard).
     writeFileSync(indexPath, html);
     return SiteArtifact.parse({
       slug: f.slug,

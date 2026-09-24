@@ -5,14 +5,15 @@
  * fixture run before settings are first read.
  */
 import { dataPath } from '../config.ts';
-import { openStore } from '../store.ts';
-import { rootLogger } from '../log.ts';
+import { openStore, type LeadStore } from '../store.ts';
+import { rootLogger, type Logger } from '../log.ts';
 import { settings } from '../settings.ts';
 import { intFlag, multiFlag, val } from '../cli-args.ts';
 import type { Lead } from '../lead.ts';
 import { PipelineState } from './state.ts';
 import { STAGE_NAMES, type StageName } from './schemas.ts';
-import { runPipeline, type LeadResult } from './runner.ts';
+import { runPipeline, type LeadResult, type RunSummary } from './runner.ts';
+import { acquireRunLock } from './run-lock.ts';
 import { loadFixtureLeads, selectForDemo, stageContext } from './leads.ts';
 
 export const USAGE = `
@@ -62,23 +63,11 @@ function statusRows(leads: readonly Lead[], state: PipelineState): LeadResult[] 
   });
 }
 
-export async function main(argv: readonly string[]): Promise<number> {
-  if (argv.includes('--help') || argv.length === 0) {
-    console.log(USAGE);
-    return argv.length === 0 ? 1 : 0;
-  }
-  const s = settings();
-  const log = rootLogger();
-  const store = openStore();
-  const state = new PipelineState(dataPath('pipeline-state.json'));
+/** The leads this invocation names, or null when it names none (print usage). */
+async function chooseLeads(
+  argv: readonly string[], store: LeadStore, state: PipelineState, log: Logger,
+): Promise<Lead[] | null> {
   const all = await store.all();
-
-  if (argv.includes('--status')) {
-    console.log(`\n${formatTable(statusRows(all, state))}\n`);
-    return 0;
-  }
-
-  let leads: Lead[];
   const fixtures = val('--fixtures', argv);
   const retry = val('--retry', argv);
   if (fixtures) {
@@ -88,30 +77,27 @@ export async function main(argv: readonly string[]): Promise<number> {
     const { added } = await store.upsert(loaded);
     log.info('fixtures loaded', { file: fixtures, businesses: loaded.length, added });
     const ids = new Set(loaded.map((l) => l.lead_id));
-    leads = (await store.all()).filter((l) => ids.has(l.lead_id));
-  } else if (retry) {
+    return (await store.all()).filter((l) => ids.has(l.lead_id));
+  }
+  if (retry) {
     const { leadId, stage } = parseRetry(retry);
     const lead = all.find((l) => l.lead_id === leadId);
     if (!lead) throw new Error(`no lead ${leadId} in the store`);
     state.reset(leadId, stage);
     log.info('reset for retry', { lead: leadId, from: stage });
-    leads = [lead];
-  } else if (argv.includes('--lead')) {
+    return [lead];
+  }
+  if (argv.includes('--lead')) {
     const ids = multiFlag('--lead', argv);
     const missing = ids.filter((id) => !all.some((l) => l.lead_id === id));
     if (missing.length) throw new Error(`not in the store: ${missing.join(', ')}`);
-    leads = all.filter((l) => ids.includes(l.lead_id));
-  } else if (val('--area', argv)) {
-    leads = selectForDemo(all, val('--area', argv)!, intFlag('--limit', 3, argv));
-  } else {
-    console.error(USAGE);
-    return 1;
+    return all.filter((l) => ids.includes(l.lead_id));
   }
+  const area = val('--area', argv);
+  return area ? selectForDemo(all, area, intFlag('--limit', 3, argv)) : null;
+}
 
-  console.log(`\n  Demo pipeline: ${leads.length} lead(s)   store: ${store.kind}   data: ${s.dataDir}`);
-  console.log(`  sending: OFF (drafts only)   links: ${s.publicBaseUrl}\n`);
-  const summary = await runPipeline({ leads, state, ctx: stageContext(log), store });
-
+function report(summary: RunSummary): number {
   const failed = summary.results.filter((r) => r.error).length;
   const complete = summary.results.filter((r) => STAGE_NAMES.every((st) => r.stages[st] === 'done')).length;
   console.log(`\n${formatTable(summary.results)}\n`);
@@ -120,4 +106,36 @@ export async function main(argv: readonly string[]): Promise<number> {
   if (summary.writebackError) console.log(`  could not record demo links on the leads: ${summary.writebackError}`);
   console.log();
   return failed > 0 || summary.writebackError ? 1 : 0;
+}
+
+export async function main(argv: readonly string[]): Promise<number> {
+  if (argv.includes('--help') || argv.length === 0) {
+    console.log(USAGE);
+    return argv.length === 0 ? 1 : 0;
+  }
+  const s = settings();
+  const log = rootLogger();
+  const store = openStore();
+  const state = new PipelineState(dataPath('pipeline-state.json'));
+
+  if (argv.includes('--status')) {
+    console.log(`\n${formatTable(statusRows(await store.all(), state))}\n`);
+    return 0;
+  }
+
+  // Everything from here writes the store or the state file: one run per
+  // data directory at a time, whether it comes from here or the console.
+  const lock = acquireRunLock(dataPath('pipeline.lock'));
+  try {
+    const leads = await chooseLeads(argv, store, state, log);
+    if (!leads) {
+      console.error(USAGE);
+      return 1;
+    }
+    console.log(`\n  Demo pipeline: ${leads.length} lead(s)   store: ${store.kind}   data: ${s.dataDir}`);
+    console.log(`  sending: OFF (drafts only)   links: ${s.publicBaseUrl}\n`);
+    return report(await runPipeline({ leads, state, ctx: stageContext(log), store }));
+  } finally {
+    lock.release();
+  }
 }

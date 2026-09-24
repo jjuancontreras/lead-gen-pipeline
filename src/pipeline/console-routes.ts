@@ -24,6 +24,7 @@ import { STAGE_NAMES } from './schemas.ts';
 import { runPipeline } from './runner.ts';
 import { selectForDemo, stageContext } from './leads.ts';
 import { dashboardView, SingleJob } from './dashboard.ts';
+import { acquireRunLock, RunLockHeld, type RunLock } from './run-lock.ts';
 import type { Lead } from '../lead.ts';
 
 export const RetryBody = z.object({
@@ -41,19 +42,59 @@ export const RunBody = z.object({
 const job = new SingleJob();
 const state = () => new PipelineState(dataPath('pipeline-state.json'));
 
+/**
+ * The lead store, read at most every LEADS_TTL_MS for the dashboard.
+ *
+ * On the real setup the store is the Google Sheet, whose read quota is 60 a
+ * minute, and the dashboard polls while a job runs - a job that reads the
+ * Sheet itself. The dashboard only needs names and categories, which a few
+ * seconds of staleness cannot hurt; stage status comes from the state file
+ * and is always fresh. Writes (retry, run) read the store directly.
+ */
+const LEADS_TTL_MS = 15_000;
+let leadsCache: { at: number; leads: Lead[] } | null = null;
+async function cachedLeads(): Promise<Lead[]> {
+  if (leadsCache && Date.now() - leadsCache.at < LEADS_TTL_MS) return leadsCache.leads;
+  leadsCache = { at: Date.now(), leads: await openStore().all() };
+  return leadsCache.leads;
+}
+
 function invalid(res: ServerResponse, err: z.ZodError): void {
   json(res, 400, { error: err.issues.map((i) => i.message).join('; '), fields: err.issues.map((i) => i.path.join('.')) });
 }
 
-function startRun(label: string, leads: readonly Lead[], res: ServerResponse): void {
-  const log = rootLogger().child({ job: label });
-  const started = job.start(label, async () => {
-    await runPipeline({ leads, state: state(), ctx: stageContext(log), store: openStore() });
-  });
-  if (!started) {
+/**
+ * Start a background run, holding the cross-process run lock for its whole
+ * length, so a CLI run over the same data directory cannot interleave with
+ * it. `prepare` (a retry's reset) runs only once the lock is ours.
+ */
+function startRun(label: string, leads: readonly Lead[], res: ServerResponse, prepare = () => {}): void {
+  if (job.status().running) {
     json(res, 409, { error: `a job is already running (${job.status().label})` });
     return;
   }
+  let lock: RunLock;
+  try {
+    lock = acquireRunLock(dataPath('pipeline.lock'));
+  } catch (err) {
+    if (err instanceof RunLockHeld) { json(res, 409, { error: err.message }); return; }
+    throw err;
+  }
+  try {
+    prepare();
+  } catch (err) {
+    lock.release(); // this process stays alive, so a held lock would never go stale
+    throw err;
+  }
+  const log = rootLogger().child({ job: label });
+  job.start(label, async () => {
+    try {
+      await runPipeline({ leads, state: state(), ctx: stageContext(log), store: openStore() });
+    } finally {
+      lock.release();
+      leadsCache = null; // the run may have written demo links and statuses
+    }
+  });
   json(res, 202, { ok: true, job: job.status() });
 }
 
@@ -75,7 +116,7 @@ export async function handlePipelineRoute(
   }
 
   if (pathname === '/api/pipeline' && req.method === 'GET') {
-    const leads = await openStore().all();
+    const leads = await cachedLeads();
     json(res, 200, {
       ...dashboardView(leads, state().read()),
       job: job.status(),
@@ -100,9 +141,7 @@ export async function handlePipelineRoute(
     }
     const lead = (await openStore().all()).find((l) => l.lead_id === leadId);
     if (!lead) { json(res, 404, { error: `lead ${leadId} is not in the lead store` }); return true; }
-    if (job.status().running) { json(res, 409, { error: `a job is already running (${job.status().label})` }); return true; }
-    state().reset(leadId, stage);
-    startRun(`retry ${stage} for ${lead.name}`, [lead], res);
+    startRun(`retry ${stage} for ${lead.name}`, [lead], res, () => state().reset(leadId, stage));
     return true;
   }
 

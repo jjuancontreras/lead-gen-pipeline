@@ -13,6 +13,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn, execFile, type ChildProcess } from 'node:child_process';
+import { request as httpRequest } from 'node:http';
 import { promisify } from 'node:util';
 import { mkdirSync, mkdtempSync, rmSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -286,9 +287,33 @@ test('the API refuses bad input on its own, whatever the page does', async () =>
   assert.match((await none.json() as { error: string }).error, /no verified tier-A leads/);
   assert.equal((await post('/api/pipeline/retry', { lead_id: 'fixture/1', stage: 'deploy' })).status, 400);
   assert.equal((await post('/api/pipeline/retry', { lead_id: 'nope/1', stage: 'site' })).status, 404);
-  const garbled = await fetch(`${seeded.url}/api/pipeline/run`, { method: 'POST', body: '{not json' });
+  const garbled = await fetch(`${seeded.url}/api/pipeline/run`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{not json',
+  });
   assert.equal(garbled.status, 400);
   assert.equal((await fetch(`${seeded.url}/sites/..%2f..%2fpackage.json`)).status, 404);
+});
+
+/** A raw request, so the Host header can be forged the way DNS rebinding would. */
+function rawStatus(base: string, path: string, headers: Record<string, string>, method = 'GET'): Promise<number> {
+  const { port } = new URL(base);
+  return new Promise((ok, fail) => {
+    const req = httpRequest({ host: '127.0.0.1', port, path, method, headers }, (res) => { res.resume(); ok(res.statusCode ?? 0); });
+    req.on('error', fail);
+    req.end();
+  });
+}
+
+test('CRITICAL: the console refuses DNS-rebinding and cross-site requests', async () => {
+  const { port } = new URL(seeded.url);
+  const host = `localhost:${port}`;
+  assert.equal(await rawStatus(seeded.url, '/api/pipeline', { Host: 'evil.example' }), 403, 'foreign Host');
+  assert.equal(await rawStatus(seeded.url, '/api/pipeline', { Host: host, 'Sec-Fetch-Site': 'cross-site' }), 403, 'cross-site GET');
+  assert.equal(await rawStatus(seeded.url, '/api/campaign?area=katipunan', { Host: host, Origin: 'https://evil.example' }), 403,
+    'a cross-origin page cannot start a campaign');
+  assert.equal(await rawStatus(seeded.url, '/api/pipeline/run', { Host: host, 'Content-Type': 'text/plain' }, 'POST'), 403,
+    'a text/plain form POST is refused before its body is read');
+  assert.equal(await rawStatus(seeded.url, '/api/pipeline', { Host: host }), 200, 'the console itself still works');
 });
 
 test('phone width: no sideways scroll, rows become cards, the form still works', async () => {
