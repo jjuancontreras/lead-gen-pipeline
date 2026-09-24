@@ -23,7 +23,12 @@ export const DRAFT_DIR = dataPath('drafts');
 /** Where a human goes to send this by hand. */
 export function destination(lead: Lead, channel: Channel): string {
   const raw = (lead[channel] ?? '').trim();
-  if (channel === 'email') return raw;
+  return channel === 'email' ? raw : socialUrl(channel, raw);
+}
+
+/** A profile URL from a handle, a bare name or a URL already. */
+export function socialUrl(channel: Exclude<Channel, 'email'>, value: string): string {
+  const raw = value.trim();
   if (/^https?:\/\//i.test(raw)) return raw;
   const handle = raw.replace(/^@/, '');
   if (channel === 'instagram') return `https://www.instagram.com/${handle}/`;

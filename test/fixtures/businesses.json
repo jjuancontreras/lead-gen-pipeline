@@ -1,0 +1,62 @@
+{
+  "_note": "Three fictional businesses for the offline end-to-end run. Every name, number and address here is invented; the email domains are example.com/.net/.org, which are reserved and cannot receive mail.",
+  "businesses": [
+    {
+      "lead_id": "fixture/1",
+      "name": "Kapihan sa Kanto",
+      "category": "Cafe",
+      "area": "katipunan",
+      "lat": "14.639210",
+      "lng": "121.075480",
+      "cuisine": "coffee_shop;filipino",
+      "phone": "+63 917 555 0101",
+      "email": "hello@kapihan.example.com",
+      "instagram": "@kapihansakanto",
+      "facebook": "",
+      "has_website": "no",
+      "website_kind": "instagram",
+      "website_url": "https://www.instagram.com/kapihansakanto/",
+      "status": "verified",
+      "tier": "A",
+      "osm_score": "31"
+    },
+    {
+      "lead_id": "fixture/2",
+      "name": "Lola Nena's Kusina",
+      "category": "Restaurant",
+      "area": "katipunan",
+      "lat": "14.636870",
+      "lng": "121.077120",
+      "cuisine": "filipino",
+      "phone": "0917 555 0202",
+      "email": "orders@lolanena.example.net",
+      "instagram": "",
+      "facebook": "lolanenaskusina",
+      "has_website": "no",
+      "website_kind": "facebook",
+      "website_url": "https://www.facebook.com/lolanenaskusina",
+      "status": "verified",
+      "tier": "A",
+      "osm_score": "28"
+    },
+    {
+      "lead_id": "fixture/3",
+      "name": "Café Ñora & Sons Bakery",
+      "category": "Bakery",
+      "area": "katipunan",
+      "lat": "14.640050",
+      "lng": "121.074300",
+      "cuisine": "",
+      "phone": "",
+      "email": "nora@cafenora.example.org",
+      "instagram": "",
+      "facebook": "",
+      "has_website": "no",
+      "website_kind": "none",
+      "website_url": "",
+      "status": "verified",
+      "tier": "A",
+      "osm_score": "24"
+    }
+  ]
+}
