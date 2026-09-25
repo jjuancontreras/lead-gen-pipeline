@@ -4,12 +4,12 @@ Hi {{name}} team,
 
 I'm {{sender_name}}, a {{sender_year}} {{sender_course}} student at {{sender_school}}. Building websites for small businesses around Metro Manila is what I do in my free time.
 
-I was going through {{category_plural}} around {{area_label}} and could not find a website for {{name}}, so I made you one. It uses only details that are already public - your name, what you do, where you are and how to reach you - and it is yours to look at, free:
+I was going through {{category_plural}} around {{area_label}} and could not find a website for {{name}}, so I built you one from what you already share publicly - your photos, your menu, where you are and how to reach you. It is yours to look at, free:
 
 Website: {{site_url}}
-Video walkthrough ({{video_seconds}} seconds): {{video_url}}
+Video walkthrough: {{video_url}}
 
-If you like where it is going, I can finish it with your own photos, menu and opening hours: {{price_range}} for the full site, designed, built and deployed by me, and {{maintenance_price}} after that only if you want me handling updates. If it is not for you, no problem at all - there is no invoice either way.
+If you like it, it can be yours: {{price_range}} to finish it with you and launch it, and {{maintenance_price}} after that only if you want me handling updates. Anything I got wrong or guessed, you tell me and I fix it. If it is not for you, no problem at all - there is no invoice either way.
 
 Would you like me to keep going with it?
 

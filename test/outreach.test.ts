@@ -96,7 +96,6 @@ test('renderTemplate surfaces the missing field by name', () => {
 const DEMO_EXTRA = {
   site_url: 'https://demos.example.com/sites/test-cafe/',
   video_url: 'https://demos.example.com/videos/test-cafe/test-cafe-16x9.mp4',
-  video_seconds: '24',
   sender_email: 'sender@example.com',
 };
 
