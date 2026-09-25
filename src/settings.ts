@@ -38,6 +38,15 @@ const Env = z.object({
     .refine((v) => /^https?:\/\//.test(v), 'must be an http(s) URL')
     .transform((v) => v.replace(/\/+$/, '')),
   DEMO_SITES_ROOT: optionalText,
+  // Live demos to show a cold lead in the first-contact email. Optional: with
+  // none, that line of the email is left out rather than sent empty.
+  PORTFOLIO_URLS: z.string().default('')
+    .transform((v) => v.split(/[\s,]+/).filter(Boolean))
+    .superRefine((urls, ctx) => {
+      for (const u of urls) {
+        if (!/^https?:\/\/[^/\s]+\.[^/\s]+/.test(u)) ctx.addIssue({ code: 'custom', message: `"${u}" is not an http(s) link` });
+      }
+    }),
   PIPELINE_VIDEO_MS: positiveInt(27_000),
   // 0 picks a free port - the dashboard tests run their own console.
   CONSOLE_PORT: z.string().trim().default('3008')
@@ -57,6 +66,8 @@ export interface Settings {
   publicBaseUrl: string;
   /** Where scaffolded Next.js demos live (one folder per slug). */
   demoSitesRoot: string;
+  /** Live demo sites linked from first-contact emails. */
+  portfolioUrls: string[];
   /** Target length of a walkthrough video. */
   videoMs: number;
   consolePort: number;
@@ -89,6 +100,7 @@ export function parseSettings(
     senderEmail: e.SENDER_EMAIL,
     publicBaseUrl: e.PUBLIC_BASE_URL,
     demoSitesRoot: resolve(root, e.DEMO_SITES_ROOT ?? '..'),
+    portfolioUrls: e.PORTFOLIO_URLS,
     videoMs: e.PIPELINE_VIDEO_MS,
     consolePort: e.CONSOLE_PORT,
     logFormat: e.LOG_FORMAT,

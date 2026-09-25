@@ -51,6 +51,13 @@ test('bad values name the setting that is wrong', () => {
   assert.equal(parseSettings({ CONSOLE_PORT: '0' }, ROOT).consolePort, 0);
 });
 
+test('PORTFOLIO_URLS is a comma-separated list of http(s) links, empty by default', () => {
+  assert.deepEqual(parseSettings({}, ROOT).portfolioUrls, []);
+  assert.deepEqual(parseSettings({ PORTFOLIO_URLS: 'https://kuro.vercel.app, https://gotbaked.vercel.app' }, ROOT).portfolioUrls,
+    ['https://kuro.vercel.app', 'https://gotbaked.vercel.app']);
+  assert.throws(() => parseSettings({ PORTFOLIO_URLS: 'https://ok.app, kuro.vercel.app' }, ROOT), /PORTFOLIO_URLS.*kuro\.vercel\.app/);
+});
+
 test('an empty SENDER_EMAIL means unset, not invalid', () => {
   assert.equal(parseSettings({ SENDER_EMAIL: '  ' }, ROOT).senderEmail, undefined);
 });

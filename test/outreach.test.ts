@@ -81,6 +81,26 @@ test('an empty value counts as unresolved, not as an empty substitution', () => 
   assert.throws(() => interpolate('see {{demo_url}}', { demo_url: '   ' }), /unresolved/);
 });
 
+test('an optional {{?placeholder}} with no value removes its whole line', () => {
+  assert.equal(interpolate('Hi.\n{{?portfolio_line}}\nBye.', { portfolio_line: '' }), 'Hi.\nBye.');
+  assert.equal(interpolate('Hi.\n{{?portfolio_line}}\nBye.', {}), 'Hi.\nBye.');
+  assert.equal(interpolate('Hi.\n{{?portfolio_line}}\nBye.', { portfolio_line: 'See: x' }), 'Hi.\nSee: x\nBye.');
+});
+
+test('an optional placeholder does not relax the strict ones on the same template', () => {
+  assert.throws(() => interpolate('{{?portfolio_line}}\n{{demo_url}}', {}), /unresolved.*demo_url/);
+});
+
+test('the first-contact email carries portfolio links when there are some, and nothing when not', () => {
+  const withLinks = renderTemplate('email-first', lead(), {
+    portfolio_line: 'A few sites I have built: https://kuro-demo.vercel.app',
+  }).body;
+  assert.match(withLinks, /https:\/\/kuro-demo\.vercel\.app/);
+  const without = renderTemplate('email-first', lead(), { portfolio_line: '' }).body;
+  assert.doesNotMatch(without, /sites I have built/);
+  assert.doesNotMatch(without, /\n\n\n/, 'no blank gap where the line was');
+});
+
 test('a malformed placeholder throws too', () => {
   // "{{ name" never matches the substitution regex, so it would sail through.
   assert.throws(() => interpolate('Hi {{ name', { name: 'x' }), /malformed/);

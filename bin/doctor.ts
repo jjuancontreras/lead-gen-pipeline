@@ -133,6 +133,9 @@ console.log(s.senderEmail
 console.log(/\/\/(localhost|127\.)/.test(s.publicBaseUrl)
   ? warn(`PUBLIC_BASE_URL is ${s.publicBaseUrl} - links in drafts only open on this machine`)
   : ok(`links in drafts point at ${s.publicBaseUrl}`));
+console.log(s.portfolioUrls.length
+  ? ok(`portfolio: ${s.portfolioUrls.length} link(s) in first-contact emails`)
+  : warn('PORTFOLIO_URLS not set - first-contact emails go out without links to your past demos'));
 console.log(existsSync(join(s.demoSitesRoot, '.claude', 'launch.json'))
   ? ok(`Next.js demos (scaffold/record/harvest): ${s.demoSitesRoot}`)
   : warn(`no .claude/launch.json under ${s.demoSitesRoot} - set DEMO_SITES_ROOT to where the demo folders live`));

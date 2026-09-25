@@ -100,6 +100,23 @@ export function assertEmailCompliance(name: string, r: Rendered): void {
 }
 
 const PLACEHOLDER = /\{\{\s*([a-z0-9_]+)\s*\}\}/gi;
+const OPTIONAL = /\{\{\?\s*([a-z0-9_]+)\s*\}\}/gi;
+
+/** Fill `{{?key}}` lines, or remove them when any of their keys is empty. */
+function dropEmptyOptionalLines(text: string, ctx: Readonly<Record<string, string>>): string {
+  const valueOf = (key: string) => (ctx[key.toLowerCase()] ?? '').trim();
+  return text
+    .split('\n')
+    .flatMap((line) => {
+      const keys = [...line.matchAll(OPTIONAL)].map((m) => m[1]!);
+      if (keys.length === 0) return [line];
+      if (keys.some((k) => valueOf(k) === '')) return [];
+      return [line.replace(OPTIONAL, (_m, k: string) => valueOf(k))];
+    })
+    .join('\n')
+    // A removed paragraph must not leave a double gap behind it.
+    .replace(/\n{3,}/g, '\n\n');
+}
 
 /**
  * Substitute {{keys}}, refusing anything it cannot fill.
@@ -107,10 +124,15 @@ const PLACEHOLDER = /\{\{\s*([a-z0-9_]+)\s*\}\}/gi;
  * An empty value counts as unresolved, not as an empty substitution. A
  * template that reaches for {{demo_url}} on a lead with no demo must fail
  * loudly here rather than mail someone "here it is: ".
+ *
+ * The one exception is written differently on purpose: `{{?key}}` marks a
+ * whole line as optional, and with no value the line is removed rather than
+ * sent half-empty. Used for a line that is a bonus (portfolio links), never
+ * for anything the message depends on.
  */
 export function interpolate(text: string, ctx: Readonly<Record<string, string>>): string {
   const missing = new Set<string>();
-  const out = text.replace(PLACEHOLDER, (_match, key: string) => {
+  const out = dropEmptyOptionalLines(text, ctx).replace(PLACEHOLDER, (_match, key: string) => {
     const value = ctx[key.toLowerCase()];
     if (value === undefined || value.trim() === '') {
       missing.add(key);
@@ -165,12 +187,14 @@ export function pluralizeCategory(label: string): string {
   return key + 's';
 }
 
-/** SENDER_NAME and SENDER_EMAIL from settings, when set. */
+/** SENDER_NAME, SENDER_EMAIL and PORTFOLIO_URLS from settings. */
 function senderOverrides(): Record<string, string> {
   const s = settings();
   return {
     ...(s.senderName ? { sender_name: s.senderName } : {}),
     ...(s.senderEmail ? { sender_email: s.senderEmail } : {}),
+    // Feeds the optional {{?portfolio_line}}: empty drops the line.
+    portfolio_line: s.portfolioUrls.length ? `A few sites I have built so far: ${s.portfolioUrls.join(', ')}` : '',
   };
 }
 

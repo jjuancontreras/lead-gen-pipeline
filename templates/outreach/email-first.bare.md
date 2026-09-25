@@ -12,6 +12,8 @@ If you do want it: {{price_range}} for the full site, designed, built and deploy
 
 I am a student, so those are student rates, and I only take on {{client_capacity}}. That is also why I would rather show you something real than send you a price list.
 
+{{?portfolio_line}}
+
 Would it be alright if I put a demo together for {{name}}?
 
 {{sender_name}}
