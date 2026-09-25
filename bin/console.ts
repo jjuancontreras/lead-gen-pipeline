@@ -5,7 +5,7 @@
  *   npm run console        then open http://localhost:3008
  *
  * Serves the lead inbox, the map area-picker and campaign launcher, and the
- * demo-pipeline dashboard at /pipeline (routes in src/pipeline/console-routes.ts).
+ * Work Queue at /queue (routes in src/queue-routes.ts).
  * A browser page cannot spawn Playwright, so this thin server does it and
  * streams the orchestrator's output back over SSE.
  *
@@ -24,7 +24,7 @@ import { draftView } from '../src/draft-view.ts';
 import { today } from '../src/dates.ts';
 import { settings } from '../src/settings.ts';
 import { json, readBody, BadRequest, requestRefusal } from '../src/http.ts';
-import { handlePipelineRoute } from '../src/pipeline/console-routes.ts';
+import { handleQueueRoute } from '../src/queue-routes.ts';
 
 const PORT = settings().consolePort;
 // Bound to loopback only. This console has no authentication and can start
@@ -34,9 +34,9 @@ const HOST = '127.0.0.1';
 const PAGES: Record<string, string> = {
   '/': 'index.html',
   '/index.html': 'index.html',
-  '/pipeline': 'pipeline.html',
+  '/queue': 'queue.html',
 };
-const STYLESHEETS = new Set(['/console.css', '/dashboard.css']);
+const STYLESHEETS = new Set(['/console.css', '/queue.css']);
 
 function isValidBbox(b: unknown): b is [number, number, number, number] {
   return (
@@ -70,7 +70,7 @@ const server = createServer(async (req, res) => {
       return res.end(css);
     }
 
-    if (await handlePipelineRoute(req, res, url)) return;
+    if (await handleQueueRoute(req, res, url)) return;
 
     // The console's own JS, split into ES modules under console/js/. Path is
     // resolved and re-checked against the directory it must stay under -

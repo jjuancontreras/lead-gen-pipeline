@@ -8,12 +8,11 @@ import { findPackageRoot } from '../src/root.ts';
 
 const ROOT = findPackageRoot();
 
-test('defaults: data under the repo, auto store, sending off, local links', () => {
+test('defaults: data under the repo, auto store, sending off', () => {
   const s = parseSettings({}, ROOT);
   assert.equal(s.dataDir, resolve(ROOT, 'data'));
   assert.equal(s.store, 'auto');
   assert.equal(s.sendEmails, false);
-  assert.equal(s.publicBaseUrl, 'http://localhost:3008');
   assert.equal(s.senderEmail, undefined);
   assert.equal(s.logFormat, 'pretty');
   assert.equal(s.logLevel, 'info');
@@ -44,7 +43,6 @@ test('a typo in SEND_EMAILS is an error, not a silent default', () => {
 test('bad values name the setting that is wrong', () => {
   assert.throws(() => parseSettings({ PIPELINE_STORE: 'sheet' }, ROOT), /PIPELINE_STORE/);
   assert.throws(() => parseSettings({ SENDER_EMAIL: 'not-an-address' }, ROOT), /SENDER_EMAIL/);
-  assert.throws(() => parseSettings({ PUBLIC_BASE_URL: 'localhost' }, ROOT), /PUBLIC_BASE_URL/);
   assert.throws(() => parseSettings({ LOG_LEVEL: 'loud' }, ROOT), /LOG_LEVEL/);
   assert.throws(() => parseSettings({ PIPELINE_VIDEO_MS: '-5' }, ROOT), /PIPELINE_VIDEO_MS/);
   assert.throws(() => parseSettings({ CONSOLE_PORT: '70000' }, ROOT), /CONSOLE_PORT/);
@@ -62,16 +60,11 @@ test('an empty SENDER_EMAIL means unset, not invalid', () => {
   assert.equal(parseSettings({ SENDER_EMAIL: '  ' }, ROOT).senderEmail, undefined);
 });
 
-test('PUBLIC_BASE_URL loses its trailing slash so links join cleanly', () => {
-  assert.equal(parseSettings({ PUBLIC_BASE_URL: 'https://demo.example.com/' }, ROOT).publicBaseUrl,
-    'https://demo.example.com');
-});
-
 test('.env.example, copied as is, is a valid configuration', () => {
   const env = parseEnv(readFileSync(resolve(ROOT, '.env.example'), 'utf8'));
   const s = parseSettings(env, ROOT);
   assert.equal(s.sendEmails, false);
-  assert.equal(s.publicBaseUrl, 'http://localhost:3008');
+  assert.deepEqual(s.portfolioUrls, []);
 });
 
 test('findPackageRoot finds the directory holding package.json', () => {

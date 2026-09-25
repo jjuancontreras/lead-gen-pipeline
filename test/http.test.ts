@@ -7,9 +7,9 @@ const ok = { host: `localhost:${PORT}` };
 
 test('the console\'s own pages and API calls are allowed', () => {
   assert.equal(requestRefusal({ method: 'GET', path: '/pipeline', headers: ok }, PORT), null);
-  assert.equal(requestRefusal({ method: 'GET', path: '/api/pipeline',
+  assert.equal(requestRefusal({ method: 'GET', path: '/api/queue',
     headers: { host: `127.0.0.1:${PORT}`, 'sec-fetch-site': 'same-origin' } }, PORT), null);
-  assert.equal(requestRefusal({ method: 'POST', path: '/api/pipeline/run',
+  assert.equal(requestRefusal({ method: 'POST', path: '/api/queue/transition',
     headers: { ...ok, 'content-type': 'application/json', origin: `http://localhost:${PORT}` } }, PORT), null);
   assert.equal(requestRefusal({ method: 'GET', path: '/api/leads',
     headers: { ...ok, 'sec-fetch-site': 'none' } }, PORT), null, 'typed into the address bar');
@@ -27,12 +27,12 @@ test('CRITICAL: a cross-site request cannot reach the API, even a GET', () => {
   // GET /api/campaign starts a live campaign, so GETs need the check too.
   assert.match(requestRefusal({ method: 'GET', path: '/api/campaign',
     headers: { ...ok, 'sec-fetch-site': 'cross-site' } }, PORT)!, /cross-site/);
-  assert.match(requestRefusal({ method: 'POST', path: '/api/pipeline/retry',
+  assert.match(requestRefusal({ method: 'POST', path: '/api/queue/build',
     headers: { ...ok, 'content-type': 'application/json', origin: 'https://evil.example' } }, PORT)!, /cross-origin/);
 });
 
 test('a POST must be JSON - a text/plain form cannot smuggle a body in', () => {
-  assert.match(requestRefusal({ method: 'POST', path: '/api/pipeline/run',
+  assert.match(requestRefusal({ method: 'POST', path: '/api/queue/transition',
     headers: { ...ok, 'content-type': 'text/plain' } }, PORT)!, /application\/json/);
   assert.match(requestRefusal({ method: 'POST', path: '/api/sent', headers: ok }, PORT)!, /application\/json/);
   assert.equal(requestRefusal({ method: 'POST', path: '/api/sent',

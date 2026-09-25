@@ -34,9 +34,6 @@ const Env = z.object({
     .transform(() => false as const),
   SENDER_NAME: optionalText,
   SENDER_EMAIL: optionalText.pipe(z.email().optional()),
-  PUBLIC_BASE_URL: z.url().default('http://localhost:3008')
-    .refine((v) => /^https?:\/\//.test(v), 'must be an http(s) URL')
-    .transform((v) => v.replace(/\/+$/, '')),
   DEMO_SITES_ROOT: optionalText,
   // Live demos to show a cold lead in the first-contact email. Optional: with
   // none, that line of the email is left out rather than sent empty.
@@ -63,7 +60,6 @@ export interface Settings {
   sendEmails: false;
   senderName?: string;
   senderEmail?: string;
-  publicBaseUrl: string;
   /** Where scaffolded Next.js demos live (one folder per slug). */
   demoSitesRoot: string;
   /** Live demo sites linked from first-contact emails. */
@@ -98,7 +94,6 @@ export function parseSettings(
     sendEmails: e.SEND_EMAILS,
     senderName: e.SENDER_NAME,
     senderEmail: e.SENDER_EMAIL,
-    publicBaseUrl: e.PUBLIC_BASE_URL,
     demoSitesRoot: resolve(root, e.DEMO_SITES_ROOT ?? '..'),
     portfolioUrls: e.PORTFOLIO_URLS,
     videoMs: e.PIPELINE_VIDEO_MS,

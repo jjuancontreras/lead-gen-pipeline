@@ -57,7 +57,9 @@ export function buildDemoKit(lead: Lead, root: string = WEBSITES_ROOT): DemoKit 
 
 export interface Recording {
   videos: string[];
-  mockup: string;
+  /** The DM hero image, or null if its capture was refused. */
+  mockup: string | null;
+  mockupError?: string;
 }
 
 /** Film the live demo and capture its hero. Needs `demo_url`. */
@@ -72,8 +74,15 @@ export async function recordLiveDemo(
   const report = await recordDemo({
     slug, url: lead.demo_url, outDir, targetMs: opts.videoMs, minTotalMs: opts.videoMs, log: opts.log,
   });
-  const hero = await generateMockup({
-    slug, url: lead.demo_url, outPath: join(outDir, `${slug}-hero.png`), log: opts.log,
-  });
-  return { videos: report.takes.map((t) => t.path), mockup: hero.outPath };
+  const videos = report.takes.map((t) => t.path);
+  // The hero image is a bonus for DM pitches. Its capture refuses anything
+  // that looks blank; that must not throw away two good recordings.
+  try {
+    const hero = await generateMockup({
+      slug, url: lead.demo_url, outPath: join(outDir, `${slug}-hero.png`), log: opts.log,
+    });
+    return { videos, mockup: hero.outPath };
+  } catch (err) {
+    return { videos, mockup: null, mockupError: (err as Error).message };
+  }
 }

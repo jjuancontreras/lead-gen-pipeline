@@ -123,21 +123,18 @@ console.log(`  ${process.env.GEMINI_API_KEY ? '[on] ' : '[off]'} harvest   ` +
     ? 'photo curation + menu OCR enabled'
     : 'photos still download; curation and menu OCR skipped'));
 
-// ---- demo pipeline --------------------------------------------------
-console.log('\nDemo pipeline  (npm run pipeline, console /pipeline)');
+// ---- work queue -----------------------------------------------------
+console.log('\nWork Queue  (npm run console, then /queue)');
 const s = settings();
-console.log(ok('sending: OFF - SEND_EMAILS is false and no transport exists; emails are drafts'));
+console.log(ok('sending: OFF - SEND_EMAILS is false and nothing in this codebase sends; every message is a draft'));
 console.log(s.senderEmail
-  ? ok(`sender: ${s.senderName ?? 'default name'} <${s.senderEmail}>`)
-  : warn('SENDER_EMAIL not set - every email stage will fail until it is'));
-console.log(/\/\/(localhost|127\.)/.test(s.publicBaseUrl)
-  ? warn(`PUBLIC_BASE_URL is ${s.publicBaseUrl} - links in drafts only open on this machine`)
-  : ok(`links in drafts point at ${s.publicBaseUrl}`));
+  ? ok(`pitch sender: ${s.senderName ?? 'default name'} <${s.senderEmail}>`)
+  : warn('SENDER_EMAIL not set - Tier-2 pitch drafts refuse until it is'));
 console.log(s.portfolioUrls.length
   ? ok(`portfolio: ${s.portfolioUrls.length} link(s) in first-contact emails`)
   : warn('PORTFOLIO_URLS not set - first-contact emails go out without links to your past demos'));
 console.log(existsSync(join(s.demoSitesRoot, '.claude', 'launch.json'))
-  ? ok(`Next.js demos (scaffold/record/harvest): ${s.demoSitesRoot}`)
+  ? ok(`hand-built demos (Build demo, Record, harvest, publish): ${s.demoSitesRoot}`)
   : warn(`no .claude/launch.json under ${s.demoSitesRoot} - set DEMO_SITES_ROOT to where the demo folders live`));
 
 console.log(`\n  data dir: ${dataPath('')}`);

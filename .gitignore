@@ -12,9 +12,8 @@ secrets/
 client_secret_*.json
 perfect-crow-*.json
 
-
-# demo pipeline fixture runs and builds
-.pipeline-fixture/
+# builds and test output
 dist/
 __pycache__/
 test-results/
+
