@@ -1,5 +1,11 @@
 # Overnight report: `overnight/pipeline-fix`
 
+> **Superseded in part.** The automated demo pipeline this report describes
+> (a generated site, video and email for each lead) was replaced the next day
+> by the **Work Queue**, where you build demos by hand and the machine prepares
+> everything around them. See [docs/WORKFLOW.md](docs/WORKFLOW.md). The
+> fixes, settings, tests and security work below still stand.
+
 **Result: the pipeline now works end to end.** Three fixture businesses go
 through all four stages: found, site built, walkthrough video recorded,
 email drafted. Every stage finishes `done`, in about 40 seconds, fully

@@ -1,8 +1,8 @@
 # CLAUDE.md — pipeline
 
 Client-acquisition pipeline for Metro Manila small businesses. See `HANDOFF.md`
-for the operating manual, `SETUP.md` for credentials, `docs/ARCHITECTURE.md`
-for the stage map.
+for the operating manual, `SETUP.md` for credentials, `docs/WORKFLOW.md` for the
+day-to-day loop (the Work Queue), `docs/ARCHITECTURE.md` for how it is built.
 
 Standing constraints (from earlier sessions, still in force):
 

@@ -30,6 +30,19 @@ needs the owner), or **open**.
 | 19 | Any web page open in your browser could read lead contact data from the console, or start a live campaign. | Binding to 127.0.0.1 keeps other machines out, not other pages. DNS rebinding makes the API same-origin to an attacker's page. A cross-site `GET /api/campaign` spawns a campaign, and a `text/plain` form POST passes as JSON. Found by the security review, and present in the console before tonight. | fixed: `requestRefusal` in `src/http.ts` enforces a Host allowlist on every route, refuses cross-site `Sec-Fetch-Site` or a foreign Origin on `/api/`, and requires JSON POSTs. Unit-tested, and checked against the live console in `test:ui`. |
 | 20 | Running the pipeline from the CLI and the console at once can lose state updates. | Both do read-modify-write on `pipeline-state.json` and `leads.json`. Found by the code review in tonight's new code. | fixed: a cross-process lock file (`<data dir>/pipeline.lock`, pid inside, taken over from a crashed holder) |
 
+## Found while reworking into the Work Queue (branch `workflow/work-queue`)
+
+The automated demo pipeline (#1) has since been replaced by the Work Queue
+(see [docs/WORKFLOW.md](docs/WORKFLOW.md)). Entries above that name
+`pipeline-state.json` or the demo pipeline describe code that no longer exists.
+
+| # | Symptom | Root cause | Status |
+|---|---|---|---|
+| 21 | Every BUILD-PROMPT promised that `npm run publish` moves the lead to `demo_built`. | `publish` never touches the lead store, so a deployed demo stayed `scaffolded` unless the Sheet was edited by hand. | fixed: **Mark built** in the Work Queue records the live URL and the status, and the BUILD-PROMPT says so |
+| 22 | Three leads sat at `scaffolded` with nobody working on them. | The campaign scaffolded up to 3 tier-A demos per run by sort order - a 3-5 hour commitment made without you. | fixed: no scaffold stage; **Build demo** is the only way a demo is scaffolded |
+| 23 | The Tier-1 "hero mockup" in HANDOFF §1 could never be produced. | `mockup.ts` screenshots a running demo, which a Tier-1 lead by definition does not have. | resolved by decision: Tier 1 carries portfolio links (`PORTFOLIO_URLS`) instead; the hero image is made for Tier-2 demos by Record |
+| 24 | Follow-up emails, sent after a demo, would describe *offering* a demo. | The 3/7/14 templates are written for Tier 1. | fixed: a due Tier-2 lead is a personal nudge in the Work Queue (**Mark nudged**), not a template |
+
 ## Not bugs (checked, left alone)
 
 - **Gmail token** (`GMAIL_TOKEN_PATH` has no `refresh_token`). The owner

@@ -1,178 +1,146 @@
 # Architecture
 
-The pipeline finds Metro Manila small businesses that have no website, builds
-each one a demo site, records a walkthrough video of it, and drafts a
-personalized outreach email. It never sends anything, and it never deploys
-anything.
+The pipeline finds Metro Manila small businesses that have no website, and
+helps you turn them into clients. Machines prepare; you craft:
 
-There are two ways to drive it:
+- **Automated:** discovery, verification, first-contact drafts, scheduling,
+  bookkeeping.
+- **Yours:** choosing who gets a demo, designing it (`/demo-site-build`),
+  triggering its recording, and pressing Send.
 
-| Entry point | What it runs | Store |
-|---|---|---|
-| `npm run campaign` | The **discovery campaign**: source, verify, enrich, scaffold, outreach. Makes live calls to Overpass, Google Maps, Bing and Gemini. | The configured store (Google Sheet when credentials exist) |
-| `npm run pipeline` | The **demo pipeline**: find, site, video, email. Tracks per-lead, per-stage status and can be resumed. | The configured store, or the JSON store under `PIPELINE_DATA_DIR` |
+Nothing is ever sent automatically, and nothing is ever deployed
+automatically. [WORKFLOW.md](WORKFLOW.md) is the day-to-day guide; this file
+covers how it is built.
 
-`npm run e2e` runs the demo pipeline against three fixture businesses in a
-throwaway data directory, with no network calls.
+| Entry point | What it does |
+|---|---|
+| `npm run campaign` | **Discovery**: source, verify, enrich, then Tier-1 outreach drafts. Makes live calls to Overpass, Google Maps, Bing and Gemini. |
+| `npm run console` → `/queue` | **Work Queue**: every lead waiting on you, grouped by what you owe it, with a button for each next step. |
+| `npm run console` → `/` | **Lead inbox**: browse and filter every lead; draw areas; launch campaigns. |
+| `worklist`, `sent`, `draft`, `new-demo`, `harvest`, `record`, `mockup`, `publish` | The same operations from the command line. |
 
 ## Data model
 
 `src/lead.ts` defines `Lead`, a flat record of 40 string columns. Column order
-is the Google Sheet's column order. The `status` column is the discovery
-campaign's state machine:
+is the Google Sheet's column order. The **`status` column is the only
+workflow state**: resumable, idempotent, and editable by hand in the Sheet.
 
 ```
-sourced -> shortlisted -> verified -> scaffolded -> drafted -> tier1_sent -> replied
-                  \-> needs_manual       demo_built -> demo_sent -> meeting -> won | lost
+sourced → shortlisted → verified ─┬─ (tier B) drafted → tier1_sent ──┐
+            └→ needs_manual       └─ (tier A, you choose)            ├→ replied → meeting → won | lost
+                                     demo_queued → scaffolded →      │
+                                     demo_built → demo_sent ─────────┘
 ```
 
-`do_not_contact` (any non-empty value) suppresses every outreach path
-(`isSuppressed`). RA 10173 applies.
+Any active lead can go to `nurture` or `disqualified`.
+
+- **One rulebook for moves.** `src/transitions.ts` says which move is legal
+  from which status, what it writes (for example, `pitch_sent` starts the
+  3/7/14 clock via `sentPatch`), and that an opted-out lead can be closed out
+  but never moved toward contact.
+- **Opt-outs.** `do_not_contact` (any non-empty value) suppresses every
+  outreach path (`isSuppressed`). RA 10173 applies.
 
 ### Stores (`src/store.ts`, `src/store-sheets.ts`)
 
-`LeadStore` has two implementations:
-
-- `SheetsStore` - Google Sheets through `spreadsheets.values`. The header row is
-  asserted by position before any write. Production data, 997 rows.
-- `JsonStore` - `<data dir>/leads.json`, written with write-then-rename.
+- **`SheetsStore`.** Google Sheets through `spreadsheets.values`. The header row
+  is asserted by position before any write. This is production data.
+- **`JsonStore`.** `<data dir>/leads.json`, written with write-then-rename.
 
 `openStore()` picks Sheets when `GOOGLE_SHEET_ID` and `GOOGLE_SA_KEY_PATH` are
-set, unless `PIPELINE_STORE=json`. Tests and the e2e always use JSON in a
-temporary directory.
-
-### Stage state (`src/pipeline/state.ts`)
-
-The demo pipeline records, per lead and per stage, one of
-`pending | running | done | failed`, with the error message, the attempt
-count, timestamps and the stage's validated output. It lives in
-`<data dir>/pipeline-state.json`, not in the Sheet, so the production Sheet's
-schema is unchanged.
+set, unless `PIPELINE_STORE=json`. The tests always use JSON in a temporary
+directory.
 
 ## Discovery campaign (`bin/campaign.ts`, `src/stages/`)
 
 | Stage | Reads | Does | Writes | External calls |
 |---|---|---|---|---|
-| source | `config/areas.json`, `categories.json`, `chain-index.json` | Overpass query for the area, then an SME filter that drops chains and categories outside the SME band (`src/sme.ts`) | new leads, status `sourced` | Overpass (retries, mirror failover, 240 s timeout) |
-| verify | leads `sourced`/`shortlisted` | Resolves each lead on Google Maps in headless Chromium, classifies the website (`src/website.ts`), assigns a tier (`src/score.ts`) | `website_*`, `tier`, status `verified`/`needs_manual`/`disqualified` | Google Maps (paced 12 s, one retry) |
-| enrich | `verified` leads with no email | Reads the business's own Facebook/Instagram page, then a Bing search, for contact handles (`src/social.ts`) | `email`, `instagram`, `facebook`, `tiktok` | Facebook, Instagram, Bing (paced 8 s) |
-| scaffold | `verified` tier-A leads | Copies `templates/demo-site` (a Next.js app) to `<sites root>/<slug>`, seeds `content.json`, writes a BUILD-PROMPT, allocates a dev port in `launch.json` | `demo_slug`, status `scaffolded` | none |
-| outreach | `verified` tier-B leads, due follow-ups | Renders first-contact or follow-up copy (`src/outreach.ts`, `templates/outreach/`) | draft files in `<data dir>/drafts/`, status `drafted` | Gmail drafts API (only with a working token) |
+| source | `config/areas.json`, `categories.json`, `chain-index.json` | Overpass query for the area, then an SME filter that drops chains and out-of-band categories (`src/sme.ts`) | new leads, `sourced` | Overpass (retries, mirror failover, 240 s timeout) |
+| verify | `sourced`/`shortlisted` | Resolves each lead on Google Maps in headless Chromium, classifies its website (`src/website.ts`), assigns a tier (`src/score.ts`) | `website_*`, `tier`, `verified`/`needs_manual`/`disqualified` | Google Maps (paced 12 s, one retry) |
+| enrich | `verified` with no email | Reads the business's own Facebook or Instagram page, then a Bing search, for contact handles (`src/social.ts`) | `email`, `instagram`, `facebook`, `tiktok` | Facebook, Instagram, Bing (paced 8 s) |
+| outreach | `verified` tier B, due follow-ups | Renders first-contact or follow-up copy (`src/outreach.ts`, `templates/outreach/`) | draft files in `<data dir>/drafts/`, `drafted` | Gmail drafts API (only with a working token) |
 
-The campaign writes a brief (`<data dir>/campaign-brief-<area>-<date>.md`)
-listing leads that need a person.
+There is deliberately no scaffold stage. A demo is 3–5 hours of your time,
+so choosing which leads get one is a Work Queue decision.
 
-Other discovery-side commands: `worklist` (manual verification in a browser),
-`sent` (a person confirms a send and the 3/7/14 follow-up clock starts),
-`harvest` (Instagram photos with Gemini curation), `mockup` (a phone mockup
-image), `record` (walkthrough video of a Next.js demo), and `publish` (Vercel
-deploy; not run by any automated path).
+## Work Queue (`src/work-queue.ts`, `src/queue-routes.ts`, `console/queue.html`)
 
-## Demo pipeline (`bin/pipeline.ts`, `src/pipeline/`)
+`workQueue(leads, {today, area})` is pure. It groups leads by the action they
+are waiting on:
 
-```
- leads (store or fixtures)
-    |
-    v
- [find]  validate the lead: a real business, no standalone website,
-    |    not suppressed, enough detail to build a page      -> FoundLead
-    v
- [site]  render a static, responsive site from the lead's own
-    |    details into <data dir>/sites/<slug>/index.html      -> SiteArtifact
-    v
- [video] serve the site on loopback, record a scrolled walkthrough
-    |    in headless Chromium, transcode with ffmpeg, probe it -> VideoArtifact
-    v
- [email] render the demo email (site link, video link, sender
-         identity, opt-out line), write it to
-         <data dir>/emails/<slug>.md; send only if SEND_EMAILS=true
-         and a real mailer exists (none does)                 -> EmailDraft
-```
+- `verify`: `needs_manual`, `shortlisted`
+- `choose`: `verified` tier A
+- `build`: `demo_queued`, `scaffolded`
+- `record`: `demo_built` with no video
+- `pitch`: `demo_built` with a video link
+- `send`: `drafted`
+- `followup`: due `tier1_sent` or `demo_sent`
+- `conversations`: everything else still live
 
-Every hand-off is a zod schema in `src/pipeline/schemas.ts`. A stage's output
-is parsed before it is stored, and the next stage parses its input again, so a
-malformed artifact fails at the boundary where it was produced.
+Suppressed and closed leads are left out. `queue-view.ts` adds what each card
+needs: search links, whether a recording exists, and whether a pitch can be
+drafted.
 
-`src/pipeline/runner.ts` runs the stages:
+| Route | Does | Reuses |
+|---|---|---|
+| `GET /api/queue?area=` | the grouped queue, job status, setup warnings | `work-queue.ts`, `queue-view.ts` |
+| `POST /api/queue/transition` | a status move | `transitions.ts` |
+| `POST /api/queue/verify` | a hand verification | `manual-verify.ts` (shared with `worklist --ingest`) |
+| `POST /api/queue/build` | scaffold, or adopt an existing folder | `demo-kit.ts` → `scaffoldDemo` |
+| `POST /api/queue/pitch` | write the Tier-2 pitch draft | `pitch-draft.ts` → `renderTemplate('email-demo')` + `draftFileBody` |
+| `POST /api/queue/record` *(job)* | film the live demo: 16:9 + 9:16 + hero PNG into `<slug>/public/demo/` | `demo-kit.ts` → `recordDemo`, `generateMockup` |
+| `POST /api/queue/harvest` *(job)* | Instagram photos into the demo's `research/` | `harvestAssets` |
+| `POST /api/queue/verify-run` *(job)* | automatic verify, next 40 in the area | `verifyLeads` |
+| `GET /demo-files/<slug>/public/demo/*` | a recording, for preview (only `.mp4`/`.png` under `public/demo`) | `static-server.ts` |
 
-- **Per-lead isolation.** Each lead runs each stage inside its own try/catch.
-  A failure marks that lead's stage `failed` with the error and moves on. Later
-  stages skip a lead whose earlier stage is not `done`.
-- **Resumable and idempotent.** A stage that is `done`, and whose output file
-  still exists, is skipped on the next run. A `running` entry left behind by a
-  crash counts as `pending`. `--retry <lead>:<stage>` resets that stage and
-  every later one.
-- **Retries and timeouts.** External work goes through `withRetry` in
-  `src/retry.ts`, which applies exponential backoff with jitter and a timeout
-  on each attempt.
+Background jobs run one at a time (`src/single-job.ts`) and under a
+cross-process lock file (`src/run-lock.ts`), so the CLI and the console never
+interleave writes. The page polls while a job runs.
 
-### Services
+### Console security (`src/http.ts` `requestRefusal`)
 
-| Service | Used by | Real | In tests / e2e |
-|---|---|---|---|
-| Overpass API | source | `src/overpass.ts` | fixture JSON |
-| Google Maps (Playwright) | verify | `src/fetcher.ts` | not called |
-| Facebook / Instagram / Bing | enrich, harvest | `src/stages/enrich.ts`, `src/harvest.ts` | not called |
-| Gemini | harvest, palette | `src/gemini.ts` | not called |
-| Google Sheets | store | `src/store-sheets.ts` | JSON store in a temp dir |
-| Gmail drafts | outreach | `src/stages/outreach.ts` | not called; drafts go to files |
-| Chromium (Playwright) | video, site render check, dashboard tests | local | local |
-| ffmpeg / ffprobe | video | local | local |
-| Mail transport | email | none exists; `SEND_EMAILS` must stay `false` | a spy mailer that counts calls |
+The console binds to `127.0.0.1` with no login, which keeps other machines
+out but not other web pages. Every request must carry our own `Host` header,
+which defeats DNS rebinding. `/api/` refuses cross-site `Sec-Fetch-Site` and
+foreign `Origin` headers. POST bodies must be `application/json`. File routes
+are path-contained (`resolveStatic`).
+
+## Services
+
+| Service | Used by | In tests |
+|---|---|---|
+| Overpass API | source | fixtures |
+| Google Maps (Playwright) | verify, Verify next 40 | never called |
+| Facebook / Instagram / Bing | enrich, harvest | never called |
+| Gemini | harvest curation, menu OCR | never called |
+| Google Sheets | store | JSON store in a temp dir |
+| Gmail drafts | outreach | never called; drafts go to files |
+| Chromium, ffmpeg, ffprobe | Record, mockup, e2e | local |
+| Vercel | `npm run publish` only, which you run yourself | never called |
 
 ## Configuration (`src/settings.ts`)
 
 Every environment setting is read once and validated with zod. A bad value
-fails at startup with the name of the setting. `.env.local` is loaded first
-(`src/env.ts`), and real environment variables take precedence.
+fails at startup and names the setting. A blank value means unset.
+`.env.local` is loaded first; real environment variables win.
 
 | Setting | Default | Meaning |
 |---|---|---|
-| `PIPELINE_DATA_DIR` | `./data` | Leads (JSON store), drafts, sites, videos, emails, pipeline state |
-| `PIPELINE_STORE` | `auto` | `auto` uses the Sheet when credentials exist; `json` forces the local store |
-| `SEND_EMAILS` | `false` | Must be `false`. No transport is implemented, so `true` is refused |
-| `SENDER_NAME`, `SENDER_EMAIL` | name from `SENDER`, no email | Sender identity in the email signature. The email stage fails without `SENDER_EMAIL` |
-| `PUBLIC_BASE_URL` | `http://localhost:3008` | Prefix for the site and video links in emails |
-| `DEMO_SITES_ROOT` | the repo's parent folder | Where scaffolded Next.js demos and `.claude/launch.json` live |
-| `PIPELINE_VIDEO_MS` | `27000` | Target walkthrough length |
-| `CONSOLE_PORT` | `3008` | Console port; `0` picks a free one (the dashboard tests use this) |
-| `LOG_FORMAT` / `LOG_LEVEL` | `pretty` / `info` | Structured logger (`src/log.ts`) |
+| `DEMO_SITES_ROOT` | the repo's parent folder | Where hand-built demos and `.claude/launch.json` live. **Set it**: the default is wrong since the repo moved out of OneDrive |
+| `SENDER_EMAIL`, `SENDER_NAME` | none / name in `SENDER` | Signs the Tier-2 pitch. Pitch drafts refuse without an email |
+| `PORTFOLIO_URLS` | none | Live demos linked from first-contact emails (an optional `{{?portfolio_line}}`) |
+| `PIPELINE_VIDEO_MS` | `27000` | Target Record length |
+| `SEND_EMAILS` | `false` | Must stay `false`; `true` is refused. Nothing in the codebase sends |
+| `PIPELINE_DATA_DIR`, `PIPELINE_STORE` | `./data`, `auto` | Where the JSON store and drafts live; `json` keeps off the Sheet |
+| `CONSOLE_PORT` | `3008` | `0` picks a free port (the tests use this) |
+| `LOG_FORMAT`, `LOG_LEVEL` | `pretty`, `info` | Structured logger (`src/log.ts`) |
 
-A blank value (`PIPELINE_STORE=`) means unset. `npm run doctor` reports all of
-them, and `test/settings.test.ts` checks that `.env.example`, copied as is, is
-a valid configuration.
-
-## Console (`bin/console.ts`, `console/`)
-
-The console is a loopback-only HTTP server on port 3008 with an ES-module
-frontend. It has these views:
-
-- **Pipeline dashboard**: every lead's status in each of the four stages,
-  a retry button for each failed stage, and previews of the site, video and
-  email.
-- **Lead inbox** and **campaign launcher**: discovery-side.
-
-API:
-
-| Route | Purpose |
-|---|---|
-| `GET /pipeline` | the dashboard page (`console/pipeline.html`, `console/js/pipeline*.js`, `console/dashboard.css`) |
-| `GET /api/pipeline` | one row per lead with each stage's status, attempts and error; stage counts; job status; areas with how many leads are ready |
-| `POST /api/pipeline/retry` | `{lead_id, stage}`: reset that stage and every later one, then rerun that lead in the background (202; 409 while a job runs) |
-| `POST /api/pipeline/run` | `{area, limit}` (1-10): run the area's demo-ready leads in the background |
-| `GET /sites/<slug>/`, `GET /videos/<slug>/<file>` | preview artifacts from the data directory, path-checked, with byte ranges for video |
-| `GET /api/leads`, `/api/draft`, `POST /api/sent`, `/api/areas`, `/api/campaign` | discovery-side |
-
-The email preview comes from the email stage's recorded output in
-`/api/pipeline`, not from a file route. One job runs at a time
-(`SingleJob` in `src/pipeline/dashboard.ts`), because two runs would each
-read-modify-write the same state file.
+`npm run doctor` reports all of them.
 
 ## Tests
 
-| Command | What it covers | Time |
-|---|---|---|
-| `npm test` | Unit and integration tests: every stage, each hand-off schema, the runner (isolation, resume, rebuild), the send gate, settings, the static server, the dashboard view model, plus the discovery campaign's existing suites | ~2 s |
-| `npm run e2e` | The CLI takes the 3 fixture businesses through all four stages in a temp dir, offline; asserts sites render in Chromium, videos have real durations, drafts are complete, zero sent, and a rerun is a no-op | ~45 s |
-| `npm run test:ui` | Playwright against the real console: states, retry, previews, validation, keyboard, phone width, axe, zero console errors | ~15 s |
-| `npm run check` | lint, typecheck, test, build, e2e, test:ui, in that order | ~1.5 min |
+| Command | Covers |
+|---|---|
+| `npm test` | Unit and integration: transitions, the queue, hand verification, the demo kit (a real scaffold into a temp root), pitch drafts, settings, the request guard, the run lock, plus the discovery and outreach suites |
+| `npm run e2e` | Playwright against the real console, on a seeded JSON store and a temp demos folder. It walks choose → Build demo → Mark built → Record (real recorder and ffmpeg) → set video → Draft pitch → Mark pitch sent, plus verify, send, conversations, every page state, the API's refusals, the request guard, phone width, keyboard, axe and zero console errors |
+| `npm run check` | lint, typecheck, test, build, e2e |
