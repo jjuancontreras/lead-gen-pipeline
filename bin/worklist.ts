@@ -15,8 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dataPath, loadAreas } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
-import { classifyWebsite } from '../src/website.ts';
-import { stage2 } from '../src/score.ts';
+import { manualVerifyPatch, hasAnyContact } from '../src/manual-verify.ts';
 import { loadCategories } from '../src/config.ts';
 import { today } from '../src/dates.ts';
 import type { Lead } from '../src/lead.ts';
@@ -101,33 +100,12 @@ if (ingest) {
   let filled = 0, blank = 0;
 
   for (const rec of records) {
-    const hasAny = ['website_url', 'email', 'phone', 'instagram', 'facebook', 'tiktok']
-      .some((k) => (rec[k] ?? '') !== '');
-    if (!hasAny) { blank++; continue; }
-
-    const verdict = classifyWebsite(rec.website_url);
-    const patch: Partial<Lead> = {
-      website_url: rec.website_url ?? '',
-      website_kind: verdict.kind,
-      has_website: verdict.isStandalone ? 'yes' : 'no',
-      verify_method: 'manual',
-      verify_confidence: 'high',
-      status: 'verified',
-    };
-    for (const k of ['email', 'phone', 'instagram', 'facebook', 'tiktok',
-                     'rating', 'review_count', 'ig_followers', 'photo_count', 'notes'] as const) {
-      if ((rec[k] ?? '') !== '') (patch as Record<string, string>)[k] = rec[k]!;
-    }
-    // Score on ingest so tiering is visible without a second command.
-    const merged = { ...(all.find((x) => x.lead_id === rec.id) ?? {}), ...patch } as Lead;
-    const result = stage2(merged, config);
-    patch.tier = result.tier;
-    patch.status = result.status;
-    if (result.reasons.length) {
-      patch.notes = [patch.notes, result.reasons.join('; ')].filter(Boolean).join(' | ');
-    }
-    tally[result.status] = (tally[result.status] ?? 0) + 1;
-    if (result.tier) tallyTier[result.tier] = (tallyTier[result.tier] ?? 0) + 1;
+    if (!hasAnyContact(rec)) { blank++; continue; }
+    // Classified and scored on ingest, so tiering is visible without a second
+    // command - the same rules as the Work Queue's verify form.
+    const patch = manualVerifyPatch(all.find((x) => x.lead_id === rec.id), rec, config);
+    tally[patch.status!] = (tally[patch.status!] ?? 0) + 1;
+    if (patch.tier) tallyTier[patch.tier] = (tallyTier[patch.tier] ?? 0) + 1;
 
     patches.set(rec.id!, { ...patches.get(rec.id!), ...patch });
     filled++;
