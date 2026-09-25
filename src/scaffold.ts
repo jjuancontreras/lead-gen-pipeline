@@ -187,16 +187,20 @@ export function scaffoldDemo(opts: {
   slug: string;
   lead?: Lead;
   force?: boolean;
+  /** Where demo folders live. Defaults to DEMO_SITES_ROOT; tests pass a temp dir. */
+  root?: string;
 }): ScaffoldResult {
   const { slug, lead } = opts;
-  const target = join(WEBSITES_ROOT, slug);
+  const root = opts.root ?? WEBSITES_ROOT;
+  const launchPath = join(root, '.claude', 'launch.json');
+  const target = join(root, slug);
   if (existsSync(target) && !opts.force) {
     throw new Error(`${target} already exists (use --force)`);
   }
   // Fail on a malformed/missing launch.json BEFORE cpSync below copies
   // anything - a missing "configurations" array or bad JSON here used to
   // surface only after the template was already in place.
-  readLaunchConfig();
+  readLaunchConfig(launchPath);
 
   cpSync(TEMPLATE, target, { recursive: true });
   for (const d of ['research/images', 'research/notes', 'public/images']) {
@@ -239,7 +243,7 @@ export function scaffoldDemo(opts: {
   // error (see readLaunchConfig), so .claude/ may not exist yet - create
   // it before withLaunchLock, since the lock file itself lives there too
   // and 'wx' would fail with the same ENOENT if the directory were missing.
-  mkdirSync(dirname(LAUNCH), { recursive: true });
+  mkdirSync(dirname(launchPath), { recursive: true });
 
   // Read launch.json as late as possible, and under the lock: concurrent
   // Claude Code sessions edit this file, and reading it outside the lock
@@ -247,16 +251,16 @@ export function scaffoldDemo(opts: {
   // port set, allocate the same port, and have the second write silently
   // drop the first session's new entry.
   const port = withLaunchLock(() => {
-    const launch = readLaunchConfig();
+    const launch = readLaunchConfig(launchPath);
     const result = allocatePort(launch.configurations, slug);
     if (result.isNew) {
       writeFileSync(
-        LAUNCH,
+        launchPath,
         JSON.stringify({ ...launch, configurations: result.configurations }, null, 2) + '\n',
       );
     }
     return result.port;
-  });
+  }, { lockPath: `${launchPath}.lock` });
 
   return { slug, path: target, port };
 }

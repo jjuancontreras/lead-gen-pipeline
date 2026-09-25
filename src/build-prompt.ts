@@ -86,7 +86,11 @@ Phases: research → palette → content → DESIGN.md → build/lint → parall
 
 ## When done
 
-Run \`npm run publish -- --slug ${slug}\` to move the lead to \`demo_built\`.
+1. Deploy it: \`npm run publish -- --slug ${slug}\` (Vercel). Publishing does not touch the lead.
+2. In the Work Queue (\`npm run console\`, then /queue), click **Mark built** on this lead and
+   paste the live URL. That is what moves the lead to \`demo_built\`.
+3. Click **Record**, redeploy so \`public/demo/\` goes live, then set the video link and draft
+   the pitch.
 `;
 
   writeFileSync(path, md);
