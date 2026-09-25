@@ -12,7 +12,7 @@
  */
 import { nextActionAfter } from './cadence.ts';
 import { slugify } from './normalize.ts';
-import { isSuppressed, type Lead } from './lead.ts';
+import { isSuppressed, type Lead, type Status } from './lead.ts';
 
 /** The status a draft waits in until a human confirms the send. */
 export const DRAFTED: Lead['status'] = 'drafted';
@@ -86,11 +86,11 @@ export function planSent(all: readonly Lead[], sel: SentSelection): SentPlan {
  * to schedule - `nurture` is INACTIVE, which is what stops the orchestrator
  * picking the lead up forever.
  */
-export function sentPatch(lead: Lead, now: string): Partial<Lead> {
+export function sentPatch(lead: Lead, now: string, status: Status = 'tier1_sent'): Partial<Lead> {
   const first = lead.first_contacted_at || now;
   const next = nextActionAfter(first, now);
   return {
-    status: next === '' ? 'nurture' : 'tier1_sent',
+    status: next === '' ? 'nurture' : status,
     ...(lead.first_contacted_at ? {} : { first_contacted_at: first }),
     last_contacted_at: now,
     next_action_date: next,
