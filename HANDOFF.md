@@ -210,8 +210,10 @@ prospect (tier A), not a disqualification. Only a separate standalone site disqu
   contracts, pricing, or inbox contents. Those stay in Claude Code.
 - **Gemini free tier has NO Grounding with Google Search.** It cannot browse. Playwright fetches,
   Gemini reads, Claude Code decides.
-- Scraping Google Maps is against Google's ToS. `VERIFY_PROVIDER` env switch exists so the
-  sanctioned Places API path is a one-line swap.
+- Scraping Google Maps is against Google's ToS. There is **no** Places API path yet (an
+  earlier version of this file claimed a `VERIFY_PROVIDER` switch and `src/providers/`;
+  neither exists). The Places API needs a card on Google Cloud, so verify stays a paced
+  scrape plus the manual verify form in the Work Queue.
 - Don't scrape real Instagram profiles during testing — IP block risk.
 - **Model policy:** main thread = higher model; subagents = **≤3**, each with an explicit
   `model` — **Sonnet** for judgement, **Haiku** for fully-specified mechanical work. Every
@@ -259,7 +261,6 @@ pipeline/
                           seeds content.json, writes BUILD-PROMPT
     mockup.ts record.ts   Tier-1 PNG; Tier-2 Playwright screencast -> ffmpeg MP4
     outreach.ts           template rendering (renderer; never sends)
-    providers/            browser.ts | places.ts behind one interface
     stages/               source, verify, enrich, scaffold, outreach; index.ts = STAGES, in order
   bin/                    campaign console doctor build-chain-index source-area
                           verify-leads worklist new-demo draft-outreach harvest-assets

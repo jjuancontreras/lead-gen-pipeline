@@ -113,7 +113,6 @@ const lines = [
   ['source', true, 'always'],
   ['verify', true, 'always'],
   ['enrich', true, 'always (Gemini only improves it)'],
-  ['scaffold', true, 'always'],
   ['outreach', true, gmailOk ? 'creates Gmail drafts' : 'writes files to data/drafts (no Gmail token)'],
 ] as const;
 for (const [name, on, note] of lines) {

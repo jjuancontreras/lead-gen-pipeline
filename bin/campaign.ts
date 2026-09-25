@@ -7,8 +7,8 @@
  *   npm run campaign -- --area x --dry-run
  *   npm run campaign -- --area x --stage verify
  *
- * Runs unattended and then stops at the handoff, because three things
- * genuinely cannot be automated: designing the demo, sending anything, and
+ * Runs unattended and then stops at the handoff, because four things
+ * genuinely cannot be automated: choosing and designing demos, sending, and
  * leads the browser could not resolve.
  */
 import { createInterface } from 'node:readline/promises';
@@ -57,7 +57,6 @@ const areaLabel = areas.areas[area]!.label;
 
 const caps: Caps = {
   ...DEFAULT_CAPS,
-  maxScaffolds: intFlag('--max-scaffolds', DEFAULT_CAPS.maxScaffolds),
   maxVerify: intFlag('--max-verify', DEFAULT_CAPS.maxVerify),
 };
 
@@ -73,7 +72,7 @@ if (ageDays > 90) {
 }
 
 console.log(`\n  Campaign: ${areaLabel}${dryRun ? '   [DRY RUN - nothing will be written]' : ''}`);
-console.log(`  caps: ${caps.maxVerify} verifications, ${caps.maxScaffolds} scaffolds per run\n`);
+console.log(`  caps: ${caps.maxVerify} verifications per run\n`);
 
 const toRun = onlyStage ? STAGES.filter((s) => s.name === onlyStage) : STAGES;
 if (toRun.length === 0) {
@@ -95,7 +94,7 @@ for (const stage of toRun) {
   try {
     const res = await stage.run(ctx);
     console.log(`      ${res.summary}`);
-    briefLines.push(`- ${stage.name}: ${res.summary}`, ...(res.briefNotes ?? []).map((n) => `  ${n}`));
+    briefLines.push(`- ${stage.name}: ${res.summary}`);
     if (res.handoff) handoff.push(...res.handoff);
   } catch (err) {
     // One failing stage must not lose the work the earlier stages did.
@@ -131,8 +130,9 @@ if (handoff.length) {
 lines.push(
   `## Why this stops here`,
   ``,
-  `Three things are deliberately not automated:`,
+  `Four things are deliberately not automated:`,
   ``,
+  `- **choosing who gets a demo** — a demo is 3-5 hours; pick in the Work Queue`,
   `- **designing the demo** — that is a Claude Code session, not a script`,
   `- **sending anything** — every channel drafts only, you press send`,
   `- **leads the browser could not resolve** — guessing would attach the`,

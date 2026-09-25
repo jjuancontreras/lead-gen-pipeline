@@ -25,19 +25,12 @@ export interface StageContext {
 export interface Caps {
   /** Max page loads the enrich stage may spend in one run. */
   maxFetches: number;
-  /**
-   * Max demo sites scaffolded per run. Default 3: you can service 3-5
-   * clients a month, so there is no reason for one run to scaffold twenty
-   * and burn a morning of disk, quota and attention.
-   */
-  maxScaffolds: number;
   /** Max leads verified in one run. */
   maxVerify: number;
 }
 
 export const DEFAULT_CAPS: Caps = {
   maxFetches: 60,
-  maxScaffolds: 3,
   maxVerify: 40,
 };
 
@@ -47,8 +40,6 @@ export interface StageResult {
   processed: number;
   /** Leads that need a person, with the reason why. */
   handoff?: { lead: Lead; reason: string }[];
-  /** Extra lines the brief prints under this stage's summary. */
-  briefNotes?: string[];
 }
 
 export interface Stage {
