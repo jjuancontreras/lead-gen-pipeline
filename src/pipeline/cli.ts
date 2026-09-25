@@ -13,7 +13,7 @@ import type { Lead } from '../lead.ts';
 import { PipelineState } from './state.ts';
 import { STAGE_NAMES, type StageName } from './schemas.ts';
 import { runPipeline, type LeadResult, type RunSummary } from './runner.ts';
-import { acquireRunLock } from './run-lock.ts';
+import { acquireRunLock } from '../run-lock.ts';
 import { loadFixtureLeads, selectForDemo, stageContext } from './leads.ts';
 
 export const USAGE = `

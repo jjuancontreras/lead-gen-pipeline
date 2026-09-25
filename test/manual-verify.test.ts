@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { emptyLead, type Lead } from '../src/lead.ts';
 import { loadCategories } from '../src/config.ts';
-import { manualVerifyPatch, hasAnyContact, ManualAnswers } from '../src/manual-verify.ts';
+import { manualVerifyPatch, hasAnyContact, ManualAnswers, searchLinks } from '../src/manual-verify.ts';
 
 const config = loadCategories();
 
@@ -53,4 +53,13 @@ test('the form schema trims, and rejects a bad email or an out-of-range rating b
   assert.ok(!bad.success);
   assert.deepEqual(bad.error.issues.map((i) => i.path[0]).sort(), ['email', 'rating', 'review_count']);
   assert.ok(ManualAnswers.safeParse({ email: '', rating: '' }).success, 'blank is fine');
+});
+
+test('searchLinks prebuilds the four places to look, quoting the name for web search', () => {
+  const l = searchLinks({ name: "Gerry's Grill", maps_url: '' }, 'Katipunan');
+  assert.match(l.maps, /^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=Gerry/);
+  assert.equal(l.web, 'https://www.google.com/search?q=%22Gerry\'s%20Grill%22%20Katipunan');
+  assert.match(l.facebook, /facebook\.com\/search\/top\?q=/);
+  assert.match(l.instagram, /instagram\.com\/explore\/search\/keyword\/\?q=Gerry/);
+  assert.equal(searchLinks({ name: 'X', maps_url: 'https://maps.example/x' }, 'Q').maps, 'https://maps.example/x');
 });

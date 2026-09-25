@@ -15,7 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dataPath, loadAreas } from '../src/config.ts';
 import { openStore } from '../src/store.ts';
-import { manualVerifyPatch, hasAnyContact } from '../src/manual-verify.ts';
+import { manualVerifyPatch, hasAnyContact, searchLinks } from '../src/manual-verify.ts';
 import { loadCategories } from '../src/config.ts';
 import { today } from '../src/dates.ts';
 import type { Lead } from '../src/lead.ts';
@@ -29,21 +29,19 @@ const store = openStore();
 const areas = loadAreas();
 const file = (a: string) => dataPath(`worklist-${a}.md`);
 
-const q = (s: string) => encodeURIComponent(s);
-
 function block(lead: Lead, area: string, i: number, total: number): string {
   const name = lead.name;
-  const label = areas.areas[area]?.label ?? area;
+  const links = searchLinks(lead, areas.areas[area]?.label ?? area);
   const branches = Number(lead.chain_locations) > 1
     ? ` · ${lead.chain_locations} branches` : '';
   return `
 ### ${i}/${total} — ${name}
 \`${lead.lead_id}\` · ${lead.category}${branches} · stage-1 score ${lead.osm_score}
 
-- [Google Maps](${lead.maps_url})
-- [Web search](https://www.google.com/search?q=${q(`"${name}" ${label}`)})
-- [Facebook](https://www.facebook.com/search/top?q=${q(`${name} ${label}`)})
-- [Instagram](https://www.instagram.com/explore/search/keyword/?q=${q(name)})
+- [Google Maps](${links.maps})
+- [Web search](${links.web})
+- [Facebook](${links.facebook})
+- [Instagram](${links.instagram})
 
 \`\`\`yaml
 id: ${lead.lead_id}

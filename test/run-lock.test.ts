@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { acquireRunLock, RunLockHeld } from '../src/pipeline/run-lock.ts';
+import { acquireRunLock, RunLockHeld } from '../src/run-lock.ts';
 
 const lockPath = () => join(mkdtempSync(join(tmpdir(), 'pl-lock-')), 'pipeline.lock');
 

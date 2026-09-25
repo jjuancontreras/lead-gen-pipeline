@@ -24,7 +24,7 @@ import { STAGE_NAMES } from './schemas.ts';
 import { runPipeline } from './runner.ts';
 import { selectForDemo, stageContext } from './leads.ts';
 import { dashboardView, SingleJob } from './dashboard.ts';
-import { acquireRunLock, RunLockHeld, type RunLock } from './run-lock.ts';
+import { acquireRunLock, RunLockHeld, type RunLock } from '../run-lock.ts';
 import type { Lead } from '../lead.ts';
 
 export const RetryBody = z.object({

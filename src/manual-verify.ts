@@ -37,6 +37,22 @@ export const ManualAnswers = z.object({
   notes: text(1000),
 }).strict();
 
+export interface SearchLinks { maps: string; web: string; facebook: string; instagram: string }
+
+/**
+ * Where a person looks to verify a lead by hand - prebuilt, so a browser
+ * session is mechanical rather than exploratory.
+ */
+export function searchLinks(lead: Pick<Lead, 'name' | 'maps_url'>, areaLabel: string): SearchLinks {
+  const q = encodeURIComponent;
+  return {
+    maps: lead.maps_url || `https://www.google.com/maps/search/?api=1&query=${q(`${lead.name} ${areaLabel}`)}`,
+    web: `https://www.google.com/search?q=${q(`"${lead.name}" ${areaLabel}`)}`,
+    facebook: `https://www.facebook.com/search/top?q=${q(`${lead.name} ${areaLabel}`)}`,
+    instagram: `https://www.instagram.com/explore/search/keyword/?q=${q(lead.name)}`,
+  };
+}
+
 /** At least a website or one contact channel - otherwise nothing was found. */
 export const hasAnyContact = (a: Answers): boolean =>
   CONTACT_FIELDS.some((k) => (a[k] ?? '').trim() !== '');
